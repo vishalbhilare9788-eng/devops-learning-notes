@@ -1,0 +1,23 @@
+Email — Chandni (Biz2x Platform Private Limited, DevOps Manager, Pune)
+To: Chandni@biz2x.com
+
+Subject: Application for DevOps Manager role (Pune)
+
+Body:
+Hi Chandni,
+
+I'm applying for the DevOps Manager role at Biz2x. Resume's attached.
+
+Quick context: 14+ years in cloud infrastructure and DevOps, working across AWS and Azure, with Terraform and Kubernetes as the backbone of most of what I've built recently. I currently run a Kubernetes platform across dozens of AWS accounts and Azure subscriptions, holding 99.99% uptime, and I treat incident response and RCA as standard practice, not something that only happens after things go badly wrong — including owning the remediation of a zero-day vulnerability across 400 production servers with zero downtime.
+
+On the team side, I manage a hybrid in-house and vendor team, running the day-to-day rhythm — 1:1s, sprint planning and grooming support, capacity planning for round-the-clock coverage, and making sure the team has what it needs to actually hit sprint goals. I'm CSM-certified and have worked closely with Scrum Masters on PI planning, story creation, and capacity planning.
+
+I've also run cloud cost governance and FinOps as an ongoing discipline rather than a quarterly check-in — one program I led cut close to $50,000 a year in cloud waste through automated monitoring and cleanup.
+
+A couple of recognitions, if it's useful context: a Certificate of Appreciation for a multi-year cloud migration program, and a Collaborators Award for cross-functional work.
+
+Happy to talk through fit whenever works for you.
+
+Thanks,
+Vishal
++91-9664126806 | vishalbhilare9788@gmail.com | linkedin.com/in/vishal-bhilare

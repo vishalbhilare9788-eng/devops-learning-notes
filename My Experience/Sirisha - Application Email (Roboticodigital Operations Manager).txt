@@ -1,0 +1,21 @@
+Email — Sirisha (Roboticodigital, Operations Manager - DevOps/Azure & Engineering, Bangalore)
+To: m.sirisha@roboticodigital.com
+
+Subject: Application for Operations Manager – DevOps/Azure & Engineering (Bangalore)
+
+Body:
+Hi Sirisha,
+
+I'm writing to apply for the Operations Manager – DevOps/Azure & Engineering role in Bangalore. My resume is attached.
+
+I'm a results-driven Cloud Operations Manager with 14+ years of experience turning complex IT infrastructure into scalable, secure, highly available, and cost-efficient cloud environments. My background spans Azure, AWS, Kubernetes, GitOps, Linux, DevOps, Infrastructure as Code, observability, and automation, combined with people leadership, change management, incident and problem management, cloud governance, disaster recovery, security, and FinOps. I'm certified across AWS, Kubernetes, Red Hat, DevOps, ITIL, and Scrum, with a strong foundation in enterprise infrastructure and Linux administration.
+
+On the technical side, I currently own 24x7 operations for a Kubernetes platform on Azure — AKS clusters spanning multiple subscriptions — sustaining 99.99% uptime through proactive monitoring, GitOps-driven deployments, and structured incident management with RCA built in as a requirement, not an afterthought. I've closed a zero-day vulnerability across 400 production servers with zero downtime, built a certificate-lifecycle escalation process that took recurring production outages from 2-3 a month down to zero, and led a cost optimization program that cut close to $50,000 a year in cloud waste through automated monitoring and cleanup. I've also built per-service alerting pipelines — dashboards, threshold-based alerts, and automatic on-call routing — to move teams from reactive firefighting to proactive detection. On the people side, I manage hybrid in-house and vendor teams of up to 25 engineers across shifts, running structured 1:1s, coaching, and performance management, and building the documentation and cross-training discipline that lets a team absorb sudden attrition without service disruption. I mentor engineers directly through complex technical work rather than just assigning tickets, balance staffing for round-the-clock coverage, and act as the escalation point during critical incidents.
+
+Along the way, I've been recognized with a Certificate of Appreciation for my contribution to a multi-year cloud migration program, a Collaborators Award for cross-functional teamwork, and I completed a leadership development program that sharpened how I coach and develop my team.
+
+I'd welcome the opportunity to discuss how this experience fits the Atlas5 platform's operational needs. I'm available to start immediately and happy to jump on a call at your convenience.
+
+Regards,
+Vishal Bhilare
++91-9664126806 | vishalbhilare9788@gmail.com | linkedin.com/in/vishal-bhilare

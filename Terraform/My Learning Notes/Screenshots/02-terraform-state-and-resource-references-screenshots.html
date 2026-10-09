@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Screenshots — Terraform State Files, HCL Block Syntax & Resource References</title>
+<style>
+  @page { size: A4 landscape; margin: 12mm 14mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    color: #1c2530;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 {
+    font-size: 18pt;
+    color: #0f2942;
+    margin-bottom: 2px;
+  }
+  .subtitle {
+    color: #62727f;
+    font-style: italic;
+    margin-top: 0;
+    margin-bottom: 18px;
+    font-size: 10pt;
+  }
+  .print-hint {
+    background: #fff8e1;
+    border: 1px solid #f0d98c;
+    color: #6b5410;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 9.5pt;
+    margin-bottom: 20px;
+  }
+  .shot {
+    page-break-inside: avoid;
+    page-break-after: always;
+    padding-top: 10px;
+  }
+  .shot:last-child { page-break-after: auto; }
+  .shot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid #2b6cb0;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+  }
+  .shot-num {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #123a63;
+  }
+  .shot-caption {
+    font-size: 11pt;
+    color: #1c2530;
+  }
+  .shot-timestamp {
+    font-size: 9pt;
+    color: #8a97a3;
+    font-family: Consolas, monospace;
+  }
+  .shot-img-wrap {
+    text-align: center;
+  }
+  img {
+    max-width: 100%;
+    max-height: 165mm;
+    border: 1px solid #d7dfe6;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  @media print {
+    .print-hint { display: none; }
+    body { padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="print-hint">This is a print-ready gallery page. Use your browser's <b>Print &rarr; Save as PDF</b> (Ctrl/Cmd+P, landscape) to save it as <code>02-terraform-state-and-resource-references-screenshots.pdf</code> in this folder.</div>
+
+<h1>Screenshots &mdash; Terraform State Files, HCL Block Syntax &amp; Resource References</h1>
+<div class="subtitle">Lecture 2 &middot; 25 shots, chronological &middot; source stills from the session (2026-09-22 22:42 &ndash; 2026-09-23 00:37)</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">01 / 25</span><span class="shot-caption">Title slide &mdash; Desired &amp; Current Terraform States (config files &rarr; terraform.tfstate &rarr; real EC2 resource)</span><span class="shot-timestamp">22:42:04</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/01.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">02 / 25</span><span class="shot-caption">"What is State File?" &mdash; definition, database analogy, default terraform.tfstate location</span><span class="shot-timestamp">22:43:43</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/02.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">03 / 25</span><span class="shot-caption">Block syntax diagram &mdash; block_type / block_label / block_name (aws_vpc "vpc" example)</span><span class="shot-timestamp">22:49:06</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/03.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">04 / 25</span><span class="shot-caption">Declarative language + common block types (provider, resource, variable, output, module) with aws_s3_bucket example</span><span class="shot-timestamp">22:58:47</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/04.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">05 / 25</span><span class="shot-caption">Terminal &mdash; <code>nl main.tf</code>: EC2 instance + S3 bucket resource blocks</span><span class="shot-timestamp">23:06:34</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/05.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">06 / 25</span><span class="shot-caption">Terminal &mdash; <code>terraform state list</code>: aws_instance.linux, aws_s3_bucket.first</span><span class="shot-timestamp">23:14:14</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/06.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">07 / 25</span><span class="shot-caption">Terminal &mdash; <code>ll</code>: main.tf + auto-created terraform.tfstate</span><span class="shot-timestamp">23:15:16</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/07.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">08 / 25</span><span class="shot-caption">Terminal &mdash; <code>terraform plan</code>: "No changes. Your infrastructure matches the configuration."</span><span class="shot-timestamp">23:23:35</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/08.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">09 / 25</span><span class="shot-caption">Desired State definition &mdash; "the state mentioned in your resource block of tf file"</span><span class="shot-timestamp">23:25:37</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/09.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">10 / 25</span><span class="shot-caption">Current State definition &mdash; "the present state of the resources in the infrastructure"</span><span class="shot-timestamp">23:26:27</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/10.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">11 / 25</span><span class="shot-caption">Reconciliation logic &mdash; create/update/delete delta rules, "Terraform is a state based engine"</span><span class="shot-timestamp">23:28:48</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/11.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">12 / 25</span><span class="shot-caption">Terminal &mdash; <code>terraform state show aws_s3_bucket.first</code> (command entered)</span><span class="shot-timestamp">23:34:15</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/12.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">13 / 25</span><span class="shot-caption">Terminal &mdash; <code>terraform plan</code> diff after adding a Team=Linux tag: "1 to change" in-place update</span><span class="shot-timestamp">23:36:34</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/13.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">14 / 25</span><span class="shot-caption">Terminal &mdash; <code>ll</code>: terraform.tfstate.backup auto-created after the apply</span><span class="shot-timestamp">23:38:30</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/14.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">15 / 25</span><span class="shot-caption">Docs &mdash; <code>terraform graph -type=plan | dot -Tpng &gt; graph.png</code> with an example rendered dependency graph</span><span class="shot-timestamp">23:51:54</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/15.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">16 / 25</span><span class="shot-caption">Code &mdash; aws_security_group "allow_ssh" + aws_vpc_security_group_ingress_rule referencing its .id</span><span class="shot-timestamp">00:06:09</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/16.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">17 / 25</span><span class="shot-caption">Terminal &mdash; apply output: security group created first, then the ingress rule (2 to add)</span><span class="shot-timestamp">00:08:24</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/17.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">18 / 25</span><span class="shot-caption">Code &mdash; ec2.tf: <code>vpc_security_group_ids = [aws_security_group.allow_ssh.id]</code></span><span class="shot-timestamp">00:17:57</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/18.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">19 / 25</span><span class="shot-caption">Code &mdash; aws_volume_attachment "ebs_att" + aws_ebs_volume "example" referencing instance/volume .id</span><span class="shot-timestamp">00:24:28</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/19.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">20 / 25</span><span class="shot-caption">Terminal &mdash; apply output: EBS volume created, then volume attachment (2 to add)</span><span class="shot-timestamp">00:26:00</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/20.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">21 / 25</span><span class="shot-caption">Terminal &mdash; <code>yum install graphviz</code></span><span class="shot-timestamp">00:28:54</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/21.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">22 / 25</span><span class="shot-caption">Terminal &mdash; <code>man dot</code>; <code>terraform graph -type=plan | dot -Tpng &gt; graph.png</code></span><span class="shot-timestamp">00:29:50</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/22.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">23 / 25</span><span class="shot-caption">Terminal &mdash; <code>ls</code>: graph.png generated alongside ec2.tf, key.tf, sg.tf, state files</span><span class="shot-timestamp">00:30:39</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/23.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">24 / 25</span><span class="shot-caption">Final graph.png &mdash; full dependency graph: key pair, security group, EBS volume, instance, volume attachment, ingress rule, all rooted at the AWS provider</span><span class="shot-timestamp">00:31:36</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/24.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">25 / 25</span><span class="shot-caption">Bonus reference &mdash; terraform graph/taint/import/workspace/refresh/logging/provisioners/plugin cache/user data, one-line definitions</span><span class="shot-timestamp">00:37:09</span></div>
+  <div class="shot-img-wrap"><img src="assets/02-terraform-state-and-resource-references/25.png"></div>
+</div>
+
+</body>
+</html>

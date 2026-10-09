@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Screenshots — Terraform Backend</title>
+<style>
+  @page { size: A4 landscape; margin: 12mm 14mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    color: #1c2530;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 {
+    font-size: 18pt;
+    color: #0f2942;
+    margin-bottom: 2px;
+  }
+  .subtitle {
+    color: #62727f;
+    font-style: italic;
+    margin-top: 0;
+    margin-bottom: 18px;
+    font-size: 10pt;
+  }
+  .print-hint {
+    background: #fff8e1;
+    border: 1px solid #f0d98c;
+    color: #6b5410;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 9.5pt;
+    margin-bottom: 20px;
+  }
+  .shot {
+    page-break-inside: avoid;
+    page-break-after: always;
+    padding-top: 10px;
+  }
+  .shot:last-child { page-break-after: auto; }
+  .shot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid #2b6cb0;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+  }
+  .shot-num {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #123a63;
+  }
+  .shot-caption {
+    font-size: 11pt;
+    color: #1c2530;
+  }
+  .shot-timestamp {
+    font-size: 9pt;
+    color: #8a97a3;
+    font-family: Consolas, monospace;
+  }
+  .shot-img-wrap {
+    text-align: center;
+  }
+  img {
+    max-width: 100%;
+    max-height: 165mm;
+    border: 1px solid #d7dfe6;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  @media print {
+    .print-hint { display: none; }
+    body { padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+
+<div class="print-hint">This is a print-ready gallery page. Use your browser's <b>Print &rarr; Save as PDF</b> (Ctrl/Cmd+P, landscape) to save it as <code>08-terraform-backend-screenshots.pdf</code> in this folder.</div>
+
+<h1>Screenshots &mdash; Terraform Backend</h1>
+<div class="subtitle">Lecture 8 &middot; 32 shots, chronological &middot; source stills from the session (2026-10-05 23:21 &ndash; 2026-10-06 00:21)</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">01 / 32</span><span class="shot-caption">Definition &mdash; a backend defines where Terraform stores its state; saving locally vs remotely</span><span class="shot-timestamp">23:21:52</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/01.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">02 / 32</span><span class="shot-caption">Advantages of a remote backend; what is locking and why we need it (S3 + DynamoDB)</span><span class="shot-timestamp">23:26:43</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/02.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">03 / 32</span><span class="shot-caption">Backend initialization &mdash; <code>backend "s3"</code> with bucket, key, region, <code>dynamodb_table</code></span><span class="shot-timestamp">23:32:25</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/03.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">04 / 32</span><span class="shot-caption">Local state file (only Admin1 can update) vs Remote state file in S3 &rarr; race conditions &rarr; implement state locking</span><span class="shot-timestamp">23:33:33</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/04.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">05 / 32</span><span class="shot-caption">Lab region &mdash; EC2, S3 and DynamoDB consoles in ap-south-1</span><span class="shot-timestamp">23:38:32</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/05.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">06 / 32</span><span class="shot-caption">Recommended production setup &mdash; Terraform &rarr; S3 (state) &rarr; DynamoDB (locking); why locking matters</span><span class="shot-timestamp">23:41:11</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/06.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">07 / 32</span><span class="shot-caption"><code>aws_s3_bucket</code> <code>ramprateek</code> (<code>force_destroy = true</code>) + <code>aws_s3_bucket_versioning</code> Enabled</span><span class="shot-timestamp">23:44:42</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/07.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">08 / 32</span><span class="shot-caption"><code>aws_dynamodb_table</code> <code>terraform-state-locking</code> &mdash; PAY_PER_REQUEST, hash_key must be <code>LockID</code> (S)</span><span class="shot-timestamp">23:55:33</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/08.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">09 / 32</span><span class="shot-caption"><code>terraform state list</code> &mdash; table, bucket, versioning</span><span class="shot-timestamp">23:56:59</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/09.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">10 / 32</span><span class="shot-caption">DynamoDB <code>terraform-state-locking</code> &mdash; 0 items</span><span class="shot-timestamp">23:57:53</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/10.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">11 / 32</span><span class="shot-caption"><code>ll</code> &mdash; state still local: <code>terraform.tfstate</code> 6540 bytes</span><span class="shot-timestamp">23:59:38</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/11.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">12 / 32</span><span class="shot-caption">S3 bucket <code>ramprateek</code> &mdash; 0 objects</span><span class="shot-timestamp">00:00:31</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/12.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">13 / 32</span><span class="shot-caption"><code>back.tf</code> &mdash; <code>backend "s3"</code>: bucket ramprateek, key <code>state/terraform.tfstate</code>, dynamodb_table</span><span class="shot-timestamp">00:01:33</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/13.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">14 / 32</span><span class="shot-caption"><code>terraform plan</code> &rarr; <em>Backend initialization required</em> (initial configuration of backend "s3")</span><span class="shot-timestamp">00:03:45</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/14.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">15 / 32</span><span class="shot-caption"><code>terraform init</code> &rarr; <em>Do you want to copy existing state to the new backend?</em></span><span class="shot-timestamp">00:05:16</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/15.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">16 / 32</span><span class="shot-caption">Answer <code>yes</code> &rarr; <em>Successfully configured the backend "s3"!</em></span><span class="shot-timestamp">00:05:41</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/16.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">17 / 32</span><span class="shot-caption">S3 <code>state/terraform.tfstate</code> &mdash; 6.4 KB (09:14:27)</span><span class="shot-timestamp">00:06:07</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/17.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">18 / 32</span><span class="shot-caption">DynamoDB &mdash; 1 item: <code>ramprateek/state/terraform.tfstate-md5</code> with Digest (checksum, not a lock)</span><span class="shot-timestamp">00:06:41</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/18.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">19 / 32</span><span class="shot-caption"><code>ec2.tf</code> &mdash; test instance <code>Test_server</code></span><span class="shot-timestamp">00:07:44</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/19.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">20 / 32</span><span class="shot-caption"><code>terraform apply</code> started (held at the approval prompt)</span><span class="shot-timestamp">00:09:13</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/20.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">21 / 32</span><span class="shot-caption">DynamoDB during apply &mdash; 2 items: the <code>-md5</code> digest + the lock <code>ramprateek/state/terraform.tfstate</code></span><span class="shot-timestamp">00:10:22</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/21.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">22 / 32</span><span class="shot-caption">Lock item Info &mdash; OperationTypeApply, Who <code>root@Devops-server</code>, Version 1.13.3</span><span class="shot-timestamp">00:10:53</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/22.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">23 / 32</span><span class="shot-caption"><code>whoami</code> &rarr; root, <code>hostname</code> &rarr; Devops-server</span><span class="shot-timestamp">00:11:42</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/23.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">24 / 32</span><span class="shot-caption">Second terminal <code>terraform plan</code> &rarr; <em>Error acquiring the state lock</em> (ConditionalCheckFailedException)</span><span class="shot-timestamp">00:12:56</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/24.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">25 / 32</span><span class="shot-caption"><code>ll</code> &mdash; local <code>terraform.tfstate</code> is now 0 bytes</span><span class="shot-timestamp">00:15:11</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/25.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">26 / 32</span><span class="shot-caption">S3 state still 6.4 KB before the EC2 apply finished</span><span class="shot-timestamp">00:15:55</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/26.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">27 / 32</span><span class="shot-caption">After apply &mdash; S3 state grows to 11.6 KB (09:18:36)</span><span class="shot-timestamp">00:16:25</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/27.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">28 / 32</span><span class="shot-caption">Show versions &mdash; current 11.6 KB + previous 6.4 KB version kept (benefit of versioning)</span><span class="shot-timestamp">00:17:01</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/28.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">29 / 32</span><span class="shot-caption">Back to local &mdash; <code>rm back.tf</code></span><span class="shot-timestamp">00:19:01</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/29.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">30 / 32</span><span class="shot-caption"><code>terraform plan</code> &rarr; <em>Unsetting the previously set backend "s3"</em></span><span class="shot-timestamp">00:19:52</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/30.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">31 / 32</span><span class="shot-caption"><code>terraform init -migrate-state</code></span><span class="shot-timestamp">00:20:53</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/31.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">32 / 32</span><span class="shot-caption"><em>Unconfiguring your previously set "s3" backend</em> &mdash; copy state to the new "local" backend?</span><span class="shot-timestamp">00:21:18</span></div>
+  <div class="shot-img-wrap"><img src="assets/08-terraform-backend/32.png"></div>
+</div>
+
+</body>
+</html>

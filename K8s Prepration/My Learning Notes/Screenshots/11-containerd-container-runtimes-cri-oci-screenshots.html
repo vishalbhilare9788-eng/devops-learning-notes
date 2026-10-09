@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Screenshots — Terraform Modules</title>
+<style>
+  @page { size: A4 landscape; margin: 12mm 14mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    color: #1c2530;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 {
+    font-size: 18pt;
+    color: #0f2942;
+    margin-bottom: 2px;
+  }
+  .subtitle {
+    color: #62727f;
+    font-style: italic;
+    margin-top: 0;
+    margin-bottom: 18px;
+    font-size: 10pt;
+  }
+  .print-hint {
+    background: #fff8e1;
+    border: 1px solid #f0d98c;
+    color: #6b5410;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 9.5pt;
+    margin-bottom: 20px;
+  }
+  .shot {
+    page-break-inside: avoid;
+    page-break-after: always;
+    padding-top: 10px;
+  }
+  .shot:last-child { page-break-after: auto; }
+  .shot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid #2b6cb0;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+  }
+  .shot-num {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #123a63;
+  }
+  .shot-caption {
+    font-size: 11pt;
+    color: #1c2530;
+  }
+  .shot-timestamp {
+    font-size: 9pt;
+    color: #8a97a3;
+    font-family: Consolas, monospace;
+  }
+  .shot-img-wrap {
+    text-align: center;
+  }
+  img {
+    max-width: 100%;
+    max-height: 165mm;
+    border: 1px solid #d7dfe6;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  @media print {
+    .print-hint { display: none; }
+    body { padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+
+<div class="print-hint">This is a print-ready gallery page. Use your browser's <b>Print &rarr; Save as PDF</b> (Ctrl/Cmd+P, landscape) to save it as <code>11-containerd-container-runtimes-cri-oci-screenshots.pdf</code> in this folder.</div>
+
+<h1>Screenshots &mdash; containerd &amp; Container Runtimes (CRI, OCI)</h1>
+<div class="subtitle">Kubernetes Lecture 11 &middot; 7 shots, chronological &middot; source stills from the session (2026-10-07 22:41 &ndash; 23:21)</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">01 / 7</span><span class="shot-caption">Whiteboard &mdash; <code>docker run nginx</code>: docker CLI &rarr; docker daemon &rarr; containerd (image pull, set network/storage, container manage) &rarr; runc &rarr; process</span><span class="shot-timestamp">22:41:18</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-containerd-container-runtimes-cri-oci/01.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">02 / 7</span><span class="shot-caption">The 4 players &mdash; 1 docker CLI, 2 docker daemon, 3 containerd (container runtime), 4 runc</span><span class="shot-timestamp">22:45:31</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-containerd-container-runtimes-cri-oci/02.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">03 / 7</span><span class="shot-caption">Same flow &mdash; containerd hands the nginx image to runc</span><span class="shot-timestamp">22:49:18</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-containerd-container-runtimes-cri-oci/03.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">04 / 7</span><span class="shot-caption">CRI &mdash; Container Runtime Interface (an API)</span><span class="shot-timestamp">22:58:18</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-containerd-container-runtimes-cri-oci/04.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">05 / 7</span><span class="shot-caption">CRI-API between K8s and runtimes &mdash; rkt, containerd (from Docker), CRI-O</span><span class="shot-timestamp">23:01:22</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-containerd-container-runtimes-cri-oci/05.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">06 / 7</span><span class="shot-caption">OCI &mdash; Open Container Initiative</span><span class="shot-timestamp">23:06:43</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-containerd-container-runtimes-cri-oci/06.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">07 / 7</span><span class="shot-caption">Summary &mdash; CLI, daemon, high-level (containerd, crio), low-level (runc, crun), CRI = k8s, OCI = image + runtime spec</span><span class="shot-timestamp">23:21:55</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-containerd-container-runtimes-cri-oci/07.png"></div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+Email — Chandni (TJX Companies, Engineering Manager - Platform Infrastructure Engineering, Pune)
+
+Subject: Application for Engineering Manager – Platform Infrastructure Engineering (Pune)
+
+Body:
+Hi Chandni,
+
+I'm applying for the Engineering Manager – Platform Infrastructure Engineering role with TJX in Pune. Resume's attached.
+
+Quick summary of where I'm coming from: 14+ years in cloud and infrastructure operations, the last three as a people manager. Most of my recent work lines up closely with what this role is built around — vulnerability and patch management run as an SLA-based discipline rather than a flat monthly cycle, RCA-driven incident response, and monitoring/observability at scale. A couple of examples: I led the remediation of a zero-day vulnerability across 400 production RHEL servers with zero downtime, and separately built out per-service alerting and monitoring pipelines to cut down on noisy, non-actionable alerts. I also run a Kubernetes platform across dozens of AWS accounts and Azure subscriptions, holding 99.99% uptime.
+
+On the people side, I manage a hybrid in-house and vendor team of up to 25 engineers — 1:1s, coaching, performance conversations, the usual, but also making sure documentation and cross-training are solid enough that the team doesn't fall apart if someone leaves suddenly. That's been tested for real, not just theory.
+
+A few recognitions along the way, if it helps give context: a Certificate of Appreciation for my part in a multi-year cloud migration program, a Collaborators Award for cross-functional work, and I've completed a leadership development program as well.
+
+Happy to jump on a call whenever works for you.
+
+Thanks,
+Vishal
++91-9664126806 | vishalbhilare9788@gmail.com | linkedin.com/in/vishal-bhilare

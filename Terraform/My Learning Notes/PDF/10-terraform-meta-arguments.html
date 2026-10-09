@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Terraform Meta-Arguments</title>
+<style>
+  @page { size: A4; margin: 22mm 18mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    color: #1c2530;
+    line-height: 1.55;
+    font-size: 11.5pt;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+  h1 {
+    font-size: 21pt;
+    color: #0f2942;
+    margin-bottom: 2px;
+    border-bottom: 3px solid #2b6cb0;
+    padding-bottom: 10px;
+  }
+  .subtitle {
+    color: #62727f;
+    font-style: italic;
+    margin-top: 4px;
+    margin-bottom: 22px;
+    font-size: 10.5pt;
+  }
+  h2 {
+    font-size: 15pt;
+    color: #123a63;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    padding-bottom: 4px;
+    border-bottom: 1.5px solid #cbd8e3;
+    page-break-after: avoid;
+  }
+  h3 {
+    font-size: 12.5pt;
+    color: #1a4a7a;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    page-break-after: avoid;
+  }
+  p { margin: 8px 0; }
+  blockquote {
+    margin: 10px 0;
+    padding: 8px 14px;
+    background: #eef4fa;
+    border-left: 4px solid #2b6cb0;
+    border-radius: 0 4px 4px 0;
+    font-size: 11pt;
+  }
+  code {
+    font-family: "Consolas", "SFMono-Regular", Menlo, monospace;
+    background: #eef1f4;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 10pt;
+    color: #b3261e;
+  }
+  pre {
+    background: #1e2530;
+    color: #e6e9ef;
+    padding: 12px 14px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 9.6pt;
+    line-height: 1.45;
+    page-break-inside: avoid;
+    margin: 10px 0 16px;
+  }
+  pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: inherit;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 12px 0 18px;
+    font-size: 10pt;
+    page-break-inside: avoid;
+  }
+  th, td {
+    border: 1px solid #cdd7e1;
+    padding: 6px 9px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: #dfeaf5; color: #123a63; }
+  tr:nth-child(even) td { background: #f6f9fb; }
+  ul, ol { margin: 8px 0; padding-left: 24px; }
+  li { margin: 4px 0; }
+  hr {
+    border: none;
+    border-top: 1px solid #d7dfe6;
+    margin: 26px 0;
+  }
+  .task-list li { list-style: none; }
+  .task-list li::before { content: "\2610  "; color: #2b6cb0; }
+  .ascii-graph {
+    background: #f6f9fb;
+    border: 1px solid #cdd7e1;
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-family: "Consolas", monospace;
+    font-size: 9.3pt;
+    white-space: pre;
+    line-height: 1.35;
+    page-break-inside: avoid;
+  }
+  .footer-note {
+    margin-top: 30px;
+    font-size: 9.5pt;
+    color: #7a8894;
+    font-style: italic;
+    border-top: 1px dashed #cdd7e1;
+    padding-top: 10px;
+  }
+  .print-hint {
+    background: #fff8e1;
+    border: 1px solid #f0d98c;
+    color: #6b5410;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 9.5pt;
+    margin-bottom: 20px;
+  }
+  @media print {
+    .print-hint { display: none; }
+    body { padding: 0; }
+  }
+</style>
+<style>
+  blockquote pre { margin: 8px 0; }
+  blockquote p:first-child { margin-top: 2px; }
+  h1 + p em { color: #62727f; font-size: 10.5pt; }
+</style>
+<script>
+/**
+ * marked v12.0.2 - a markdown parser
+ * Copyright (c) 2011-2024, Christopher Jeffrey. (MIT Licensed)
+ * https://github.com/markedjs/marked
+ */
+!function(e,t){"object"==typeof exports&&"undefined"!=typeof module?t(exports):"function"==typeof define&&define.amd?define(["exports"],t):t((e="undefined"!=typeof globalThis?globalThis:e||self).marked={})}(this,(function(e){"use strict";function t(){return{async:!1,breaks:!1,extensions:null,gfm:!0,hooks:null,pedantic:!1,renderer:null,silent:!1,tokenizer:null,walkTokens:null}}function n(t){e.defaults=t}e.defaults={async:!1,breaks:!1,extensions:null,gfm:!0,hooks:null,pedantic:!1,renderer:null,silent:!1,tokenizer:null,walkTokens:null};const s=/[&<>"']/,r=new RegExp(s.source,"g"),i=/[<>"']|&(?!(#\d{1,7}|#[Xx][a-fA-F0-9]{1,6}|\w+);)/,l=new RegExp(i.source,"g"),o={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"},a=e=>o[e];function c(e,t){if(t){if(s.test(e))return e.replace(r,a)}else if(i.test(e))return e.replace(l,a);return e}const h=/&(#(?:\d+)|(?:#x[0-9A-Fa-f]+)|(?:\w+));?/gi;function p(e){return e.replace(h,((e,t)=>"colon"===(t=t.toLowerCase())?":":"#"===t.charAt(0)?"x"===t.charAt(1)?String.fromCharCode(parseInt(t.substring(2),16)):String.fromCharCode(+t.substring(1)):""))}const u=/(^|[^\[])\^/g;function k(e,t){let n="string"==typeof e?e:e.source;t=t||"";const s={replace:(e,t)=>{let r="string"==typeof t?t:t.source;return r=r.replace(u,"$1"),n=n.replace(e,r),s},getRegex:()=>new RegExp(n,t)};return s}function g(e){try{e=encodeURI(e).replace(/%25/g,"%")}catch(e){return null}return e}const f={exec:()=>null};function d(e,t){const n=e.replace(/\|/g,((e,t,n)=>{let s=!1,r=t;for(;--r>=0&&"\\"===n[r];)s=!s;return s?"|":" |"})).split(/ \|/);let s=0;if(n[0].trim()||n.shift(),n.length>0&&!n[n.length-1].trim()&&n.pop(),t)if(n.length>t)n.splice(t);else for(;n.length<t;)n.push("");for(;s<n.length;s++)n[s]=n[s].trim().replace(/\\\|/g,"|");return n}function x(e,t,n){const s=e.length;if(0===s)return"";let r=0;for(;r<s;){const i=e.charAt(s-r-1);if(i!==t||n){if(i===t||!n)break;r++}else r++}return e.slice(0,s-r)}function b(e,t,n,s){const r=t.href,i=t.title?c(t.title):null,l=e[1].replace(/\\([\[\]])/g,"$1");if("!"!==e[0].charAt(0)){s.state.inLink=!0;const e={type:"link",raw:n,href:r,title:i,text:l,tokens:s.inlineTokens(l)};return s.state.inLink=!1,e}return{type:"image",raw:n,href:r,title:i,text:c(l)}}class w{options;rules;lexer;constructor(t){this.options=t||e.defaults}space(e){const t=this.rules.block.newline.exec(e);if(t&&t[0].length>0)return{type:"space",raw:t[0]}}code(e){const t=this.rules.block.code.exec(e);if(t){const e=t[0].replace(/^ {1,4}/gm,"");return{type:"code",raw:t[0],codeBlockStyle:"indented",text:this.options.pedantic?e:x(e,"\n")}}}fences(e){const t=this.rules.block.fences.exec(e);if(t){const e=t[0],n=function(e,t){const n=e.match(/^(\s+)(?:```)/);if(null===n)return t;const s=n[1];return t.split("\n").map((e=>{const t=e.match(/^\s+/);if(null===t)return e;const[n]=t;return n.length>=s.length?e.slice(s.length):e})).join("\n")}(e,t[3]||"");return{type:"code",raw:e,lang:t[2]?t[2].trim().replace(this.rules.inline.anyPunctuation,"$1"):t[2],text:n}}}heading(e){const t=this.rules.block.heading.exec(e);if(t){let e=t[2].trim();if(/#$/.test(e)){const t=x(e,"#");this.options.pedantic?e=t.trim():t&&!/ $/.test(t)||(e=t.trim())}return{type:"heading",raw:t[0],depth:t[1].length,text:e,tokens:this.lexer.inline(e)}}}hr(e){const t=this.rules.block.hr.exec(e);if(t)return{type:"hr",raw:t[0]}}blockquote(e){const t=this.rules.block.blockquote.exec(e);if(t){let e=t[0].replace(/\n {0,3}((?:=+|-+) *)(?=\n|$)/g,"\n    $1");e=x(e.replace(/^ *>[ \t]?/gm,""),"\n");const n=this.lexer.state.top;this.lexer.state.top=!0;const s=this.lexer.blockTokens(e);return this.lexer.state.top=n,{type:"blockquote",raw:t[0],tokens:s,text:e}}}list(e){let t=this.rules.block.list.exec(e);if(t){let n=t[1].trim();const s=n.length>1,r={type:"list",raw:"",ordered:s,start:s?+n.slice(0,-1):"",loose:!1,items:[]};n=s?`\\d{1,9}\\${n.slice(-1)}`:`\\${n}`,this.options.pedantic&&(n=s?n:"[*+-]");const i=new RegExp(`^( {0,3}${n})((?:[\t ][^\\n]*)?(?:\\n|$))`);let l="",o="",a=!1;for(;e;){let n=!1;if(!(t=i.exec(e)))break;if(this.rules.block.hr.test(e))break;l=t[0],e=e.substring(l.length);let s=t[2].split("\n",1)[0].replace(/^\t+/,(e=>" ".repeat(3*e.length))),c=e.split("\n",1)[0],h=0;this.options.pedantic?(h=2,o=s.trimStart()):(h=t[2].search(/[^ ]/),h=h>4?1:h,o=s.slice(h),h+=t[1].length);let p=!1;if(!s&&/^ *$/.test(c)&&(l+=c+"\n",e=e.substring(c.length+1),n=!0),!n){const t=new RegExp(`^ {0,${Math.min(3,h-1)}}(?:[*+-]|\\d{1,9}[.)])((?:[ \t][^\\n]*)?(?:\\n|$))`),n=new RegExp(`^ {0,${Math.min(3,h-1)}}((?:- *){3,}|(?:_ *){3,}|(?:\\* *){3,})(?:\\n+|$)`),r=new RegExp(`^ {0,${Math.min(3,h-1)}}(?:\`\`\`|~~~)`),i=new RegExp(`^ {0,${Math.min(3,h-1)}}#`);for(;e;){const a=e.split("\n",1)[0];if(c=a,this.options.pedantic&&(c=c.replace(/^ {1,4}(?=( {4})*[^ ])/g,"  ")),r.test(c))break;if(i.test(c))break;if(t.test(c))break;if(n.test(e))break;if(c.search(/[^ ]/)>=h||!c.trim())o+="\n"+c.slice(h);else{if(p)break;if(s.search(/[^ ]/)>=4)break;if(r.test(s))break;if(i.test(s))break;if(n.test(s))break;o+="\n"+c}p||c.trim()||(p=!0),l+=a+"\n",e=e.substring(a.length+1),s=c.slice(h)}}r.loose||(a?r.loose=!0:/\n *\n *$/.test(l)&&(a=!0));let u,k=null;this.options.gfm&&(k=/^\[[ xX]\] /.exec(o),k&&(u="[ ] "!==k[0],o=o.replace(/^\[[ xX]\] +/,""))),r.items.push({type:"list_item",raw:l,task:!!k,checked:u,loose:!1,text:o,tokens:[]}),r.raw+=l}r.items[r.items.length-1].raw=l.trimEnd(),r.items[r.items.length-1].text=o.trimEnd(),r.raw=r.raw.trimEnd();for(let e=0;e<r.items.length;e++)if(this.lexer.state.top=!1,r.items[e].tokens=this.lexer.blockTokens(r.items[e].text,[]),!r.loose){const t=r.items[e].tokens.filter((e=>"space"===e.type)),n=t.length>0&&t.some((e=>/\n.*\n/.test(e.raw)));r.loose=n}if(r.loose)for(let e=0;e<r.items.length;e++)r.items[e].loose=!0;return r}}html(e){const t=this.rules.block.html.exec(e);if(t){return{type:"html",block:!0,raw:t[0],pre:"pre"===t[1]||"script"===t[1]||"style"===t[1],text:t[0]}}}def(e){const t=this.rules.block.def.exec(e);if(t){const e=t[1].toLowerCase().replace(/\s+/g," "),n=t[2]?t[2].replace(/^<(.*)>$/,"$1").replace(this.rules.inline.anyPunctuation,"$1"):"",s=t[3]?t[3].substring(1,t[3].length-1).replace(this.rules.inline.anyPunctuation,"$1"):t[3];return{type:"def",tag:e,raw:t[0],href:n,title:s}}}table(e){const t=this.rules.block.table.exec(e);if(!t)return;if(!/[:|]/.test(t[2]))return;const n=d(t[1]),s=t[2].replace(/^\||\| *$/g,"").split("|"),r=t[3]&&t[3].trim()?t[3].replace(/\n[ \t]*$/,"").split("\n"):[],i={type:"table",raw:t[0],header:[],align:[],rows:[]};if(n.length===s.length){for(const e of s)/^ *-+: *$/.test(e)?i.align.push("right"):/^ *:-+: *$/.test(e)?i.align.push("center"):/^ *:-+ *$/.test(e)?i.align.push("left"):i.align.push(null);for(const e of n)i.header.push({text:e,tokens:this.lexer.inline(e)});for(const e of r)i.rows.push(d(e,i.header.length).map((e=>({text:e,tokens:this.lexer.inline(e)}))));return i}}lheading(e){const t=this.rules.block.lheading.exec(e);if(t)return{type:"heading",raw:t[0],depth:"="===t[2].charAt(0)?1:2,text:t[1],tokens:this.lexer.inline(t[1])}}paragraph(e){const t=this.rules.block.paragraph.exec(e);if(t){const e="\n"===t[1].charAt(t[1].length-1)?t[1].slice(0,-1):t[1];return{type:"paragraph",raw:t[0],text:e,tokens:this.lexer.inline(e)}}}text(e){const t=this.rules.block.text.exec(e);if(t)return{type:"text",raw:t[0],text:t[0],tokens:this.lexer.inline(t[0])}}escape(e){const t=this.rules.inline.escape.exec(e);if(t)return{type:"escape",raw:t[0],text:c(t[1])}}tag(e){const t=this.rules.inline.tag.exec(e);if(t)return!this.lexer.state.inLink&&/^<a /i.test(t[0])?this.lexer.state.inLink=!0:this.lexer.state.inLink&&/^<\/a>/i.test(t[0])&&(this.lexer.state.inLink=!1),!this.lexer.state.inRawBlock&&/^<(pre|code|kbd|script)(\s|>)/i.test(t[0])?this.lexer.state.inRawBlock=!0:this.lexer.state.inRawBlock&&/^<\/(pre|code|kbd|script)(\s|>)/i.test(t[0])&&(this.lexer.state.inRawBlock=!1),{type:"html",raw:t[0],inLink:this.lexer.state.inLink,inRawBlock:this.lexer.state.inRawBlock,block:!1,text:t[0]}}link(e){const t=this.rules.inline.link.exec(e);if(t){const e=t[2].trim();if(!this.options.pedantic&&/^</.test(e)){if(!/>$/.test(e))return;const t=x(e.slice(0,-1),"\\");if((e.length-t.length)%2==0)return}else{const e=function(e,t){if(-1===e.indexOf(t[1]))return-1;let n=0;for(let s=0;s<e.length;s++)if("\\"===e[s])s++;else if(e[s]===t[0])n++;else if(e[s]===t[1]&&(n--,n<0))return s;return-1}(t[2],"()");if(e>-1){const n=(0===t[0].indexOf("!")?5:4)+t[1].length+e;t[2]=t[2].substring(0,e),t[0]=t[0].substring(0,n).trim(),t[3]=""}}let n=t[2],s="";if(this.options.pedantic){const e=/^([^'"]*[^\s])\s+(['"])(.*)\2/.exec(n);e&&(n=e[1],s=e[3])}else s=t[3]?t[3].slice(1,-1):"";return n=n.trim(),/^</.test(n)&&(n=this.options.pedantic&&!/>$/.test(e)?n.slice(1):n.slice(1,-1)),b(t,{href:n?n.replace(this.rules.inline.anyPunctuation,"$1"):n,title:s?s.replace(this.rules.inline.anyPunctuation,"$1"):s},t[0],this.lexer)}}reflink(e,t){let n;if((n=this.rules.inline.reflink.exec(e))||(n=this.rules.inline.nolink.exec(e))){const e=t[(n[2]||n[1]).replace(/\s+/g," ").toLowerCase()];if(!e){const e=n[0].charAt(0);return{type:"text",raw:e,text:e}}return b(n,e,n[0],this.lexer)}}emStrong(e,t,n=""){let s=this.rules.inline.emStrongLDelim.exec(e);if(!s)return;if(s[3]&&n.match(/[\p{L}\p{N}]/u))return;if(!(s[1]||s[2]||"")||!n||this.rules.inline.punctuation.exec(n)){const n=[...s[0]].length-1;let r,i,l=n,o=0;const a="*"===s[0][0]?this.rules.inline.emStrongRDelimAst:this.rules.inline.emStrongRDelimUnd;for(a.lastIndex=0,t=t.slice(-1*e.length+n);null!=(s=a.exec(t));){if(r=s[1]||s[2]||s[3]||s[4]||s[5]||s[6],!r)continue;if(i=[...r].length,s[3]||s[4]){l+=i;continue}if((s[5]||s[6])&&n%3&&!((n+i)%3)){o+=i;continue}if(l-=i,l>0)continue;i=Math.min(i,i+l+o);const t=[...s[0]][0].length,a=e.slice(0,n+s.index+t+i);if(Math.min(n,i)%2){const e=a.slice(1,-1);return{type:"em",raw:a,text:e,tokens:this.lexer.inlineTokens(e)}}const c=a.slice(2,-2);return{type:"strong",raw:a,text:c,tokens:this.lexer.inlineTokens(c)}}}}codespan(e){const t=this.rules.inline.code.exec(e);if(t){let e=t[2].replace(/\n/g," ");const n=/[^ ]/.test(e),s=/^ /.test(e)&&/ $/.test(e);return n&&s&&(e=e.substring(1,e.length-1)),e=c(e,!0),{type:"codespan",raw:t[0],text:e}}}br(e){const t=this.rules.inline.br.exec(e);if(t)return{type:"br",raw:t[0]}}del(e){const t=this.rules.inline.del.exec(e);if(t)return{type:"del",raw:t[0],text:t[2],tokens:this.lexer.inlineTokens(t[2])}}autolink(e){const t=this.rules.inline.autolink.exec(e);if(t){let e,n;return"@"===t[2]?(e=c(t[1]),n="mailto:"+e):(e=c(t[1]),n=e),{type:"link",raw:t[0],text:e,href:n,tokens:[{type:"text",raw:e,text:e}]}}}url(e){let t;if(t=this.rules.inline.url.exec(e)){let e,n;if("@"===t[2])e=c(t[0]),n="mailto:"+e;else{let s;do{s=t[0],t[0]=this.rules.inline._backpedal.exec(t[0])?.[0]??""}while(s!==t[0]);e=c(t[0]),n="www."===t[1]?"http://"+t[0]:t[0]}return{type:"link",raw:t[0],text:e,href:n,tokens:[{type:"text",raw:e,text:e}]}}}inlineText(e){const t=this.rules.inline.text.exec(e);if(t){let e;return e=this.lexer.state.inRawBlock?t[0]:c(t[0]),{type:"text",raw:t[0],text:e}}}}const m=/^ {0,3}((?:-[\t ]*){3,}|(?:_[ \t]*){3,}|(?:\*[ \t]*){3,})(?:\n+|$)/,y=/(?:[*+-]|\d{1,9}[.)])/,$=k(/^(?!bull |blockCode|fences|blockquote|heading|html)((?:.|\n(?!\s*?\n|bull |blockCode|fences|blockquote|heading|html))+?)\n {0,3}(=+|-+) *(?:\n+|$)/).replace(/bull/g,y).replace(/blockCode/g,/ {4}/).replace(/fences/g,/ {0,3}(?:`{3,}|~{3,})/).replace(/blockquote/g,/ {0,3}>/).replace(/heading/g,/ {0,3}#{1,6}/).replace(/html/g,/ {0,3}<[^\n>]+>\n/).getRegex(),z=/^([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html|table| +\n)[^\n]+)*)/,T=/(?!\s*\])(?:\\.|[^\[\]\\])+/,R=k(/^ {0,3}\[(label)\]: *(?:\n *)?([^<\s][^\s]*|<.*?>)(?:(?: +(?:\n *)?| *\n *)(title))? *(?:\n+|$)/).replace("label",T).replace("title",/(?:"(?:\\"?|[^"\\])*"|'[^'\n]*(?:\n[^'\n]+)*\n?'|\([^()]*\))/).getRegex(),_=k(/^( {0,3}bull)([ \t][^\n]+?)?(?:\n|$)/).replace(/bull/g,y).getRegex(),A="address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option|p|param|search|section|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul",S=/<!--(?:-?>|[\s\S]*?(?:-->|$))/,I=k("^ {0,3}(?:<(script|pre|style|textarea)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)|comment[^\\n]*(\\n+|$)|<\\?[\\s\\S]*?(?:\\?>\\n*|$)|<![A-Z][\\s\\S]*?(?:>\\n*|$)|<!\\[CDATA\\[[\\s\\S]*?(?:\\]\\]>\\n*|$)|</?(tag)(?: +|\\n|/?>)[\\s\\S]*?(?:(?:\\n *)+\\n|$)|<(?!script|pre|style|textarea)([a-z][\\w-]*)(?:attribute)*? */?>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$)|</(?!script|pre|style|textarea)[a-z][\\w-]*\\s*>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$))","i").replace("comment",S).replace("tag",A).replace("attribute",/ +[a-zA-Z:_][\w.:-]*(?: *= *"[^"\n]*"| *= *'[^'\n]*'| *= *[^\s"'=<>`]+)?/).getRegex(),E=k(z).replace("hr",m).replace("heading"," {0,3}#{1,6}(?:\\s|$)").replace("|lheading","").replace("|table","").replace("blockquote"," {0,3}>").replace("fences"," {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list"," {0,3}(?:[*+-]|1[.)]) ").replace("html","</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag",A).getRegex(),q={blockquote:k(/^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/).replace("paragraph",E).getRegex(),code:/^( {4}[^\n]+(?:\n(?: *(?:\n|$))*)?)+/,def:R,fences:/^ {0,3}(`{3,}(?=[^`\n]*(?:\n|$))|~{3,})([^\n]*)(?:\n|$)(?:|([\s\S]*?)(?:\n|$))(?: {0,3}\1[~`]* *(?=\n|$)|$)/,heading:/^ {0,3}(#{1,6})(?=\s|$)(.*)(?:\n+|$)/,hr:m,html:I,lheading:$,list:_,newline:/^(?: *(?:\n|$))+/,paragraph:E,table:f,text:/^[^\n]+/},Z=k("^ *([^\\n ].*)\\n {0,3}((?:\\| *)?:?-+:? *(?:\\| *:?-+:? *)*(?:\\| *)?)(?:\\n((?:(?! *\\n|hr|heading|blockquote|code|fences|list|html).*(?:\\n|$))*)\\n*|$)").replace("hr",m).replace("heading"," {0,3}#{1,6}(?:\\s|$)").replace("blockquote"," {0,3}>").replace("code"," {4}[^\\n]").replace("fences"," {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list"," {0,3}(?:[*+-]|1[.)]) ").replace("html","</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag",A).getRegex(),L={...q,table:Z,paragraph:k(z).replace("hr",m).replace("heading"," {0,3}#{1,6}(?:\\s|$)").replace("|lheading","").replace("table",Z).replace("blockquote"," {0,3}>").replace("fences"," {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list"," {0,3}(?:[*+-]|1[.)]) ").replace("html","</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag",A).getRegex()},P={...q,html:k("^ *(?:comment *(?:\\n|\\s*$)|<(tag)[\\s\\S]+?</\\1> *(?:\\n{2,}|\\s*$)|<tag(?:\"[^\"]*\"|'[^']*'|\\s[^'\"/>\\s]*)*?/?> *(?:\\n{2,}|\\s*$))").replace("comment",S).replace(/tag/g,"(?!(?:a|em|strong|small|s|cite|q|dfn|abbr|data|time|code|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)\\b)\\w+(?!:|[^\\w\\s@]*@)\\b").getRegex(),def:/^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +(["(][^\n]+[")]))? *(?:\n+|$)/,heading:/^(#{1,6})(.*)(?:\n+|$)/,fences:f,lheading:/^(.+?)\n {0,3}(=+|-+) *(?:\n+|$)/,paragraph:k(z).replace("hr",m).replace("heading"," *#{1,6} *[^\n]").replace("lheading",$).replace("|table","").replace("blockquote"," {0,3}>").replace("|fences","").replace("|list","").replace("|html","").replace("|tag","").getRegex()},Q=/^\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/,v=/^( {2,}|\\)\n(?!\s*$)/,B="\\p{P}\\p{S}",C=k(/^((?![*_])[\spunctuation])/,"u").replace(/punctuation/g,B).getRegex(),M=k(/^(?:\*+(?:((?!\*)[punct])|[^\s*]))|^_+(?:((?!_)[punct])|([^\s_]))/,"u").replace(/punct/g,B).getRegex(),O=k("^[^_*]*?__[^_*]*?\\*[^_*]*?(?=__)|[^*]+(?=[^*])|(?!\\*)[punct](\\*+)(?=[\\s]|$)|[^punct\\s](\\*+)(?!\\*)(?=[punct\\s]|$)|(?!\\*)[punct\\s](\\*+)(?=[^punct\\s])|[\\s](\\*+)(?!\\*)(?=[punct])|(?!\\*)[punct](\\*+)(?!\\*)(?=[punct])|[^punct\\s](\\*+)(?=[^punct\\s])","gu").replace(/punct/g,B).getRegex(),D=k("^[^_*]*?\\*\\*[^_*]*?_[^_*]*?(?=\\*\\*)|[^_]+(?=[^_])|(?!_)[punct](_+)(?=[\\s]|$)|[^punct\\s](_+)(?!_)(?=[punct\\s]|$)|(?!_)[punct\\s](_+)(?=[^punct\\s])|[\\s](_+)(?!_)(?=[punct])|(?!_)[punct](_+)(?!_)(?=[punct])","gu").replace(/punct/g,B).getRegex(),j=k(/\\([punct])/,"gu").replace(/punct/g,B).getRegex(),H=k(/^<(scheme:[^\s\x00-\x1f<>]*|email)>/).replace("scheme",/[a-zA-Z][a-zA-Z0-9+.-]{1,31}/).replace("email",/[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+(@)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(?![-_])/).getRegex(),U=k(S).replace("(?:--\x3e|$)","--\x3e").getRegex(),X=k("^comment|^</[a-zA-Z][\\w:-]*\\s*>|^<[a-zA-Z][\\w-]*(?:attribute)*?\\s*/?>|^<\\?[\\s\\S]*?\\?>|^<![a-zA-Z]+\\s[\\s\\S]*?>|^<!\\[CDATA\\[[\\s\\S]*?\\]\\]>").replace("comment",U).replace("attribute",/\s+[a-zA-Z:_][\w.:-]*(?:\s*=\s*"[^"]*"|\s*=\s*'[^']*'|\s*=\s*[^\s"'=<>`]+)?/).getRegex(),F=/(?:\[(?:\\.|[^\[\]\\])*\]|\\.|`[^`]*`|[^\[\]\\`])*?/,N=k(/^!?\[(label)\]\(\s*(href)(?:\s+(title))?\s*\)/).replace("label",F).replace("href",/<(?:\\.|[^\n<>\\])+>|[^\s\x00-\x1f]*/).replace("title",/"(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)/).getRegex(),G=k(/^!?\[(label)\]\[(ref)\]/).replace("label",F).replace("ref",T).getRegex(),J=k(/^!?\[(ref)\](?:\[\])?/).replace("ref",T).getRegex(),K={_backpedal:f,anyPunctuation:j,autolink:H,blockSkip:/\[[^[\]]*?\]\([^\(\)]*?\)|`[^`]*?`|<[^<>]*?>/g,br:v,code:/^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/,del:f,emStrongLDelim:M,emStrongRDelimAst:O,emStrongRDelimUnd:D,escape:Q,link:N,nolink:J,punctuation:C,reflink:G,reflinkSearch:k("reflink|nolink(?!\\()","g").replace("reflink",G).replace("nolink",J).getRegex(),tag:X,text:/^(`+|[^`])(?:(?= {2,}\n)|[\s\S]*?(?:(?=[\\<!\[`*_]|\b_|$)|[^ ](?= {2,}\n)))/,url:f},V={...K,link:k(/^!?\[(label)\]\((.*?)\)/).replace("label",F).getRegex(),reflink:k(/^!?\[(label)\]\s*\[([^\]]*)\]/).replace("label",F).getRegex()},W={...K,escape:k(Q).replace("])","~|])").getRegex(),url:k(/^((?:ftp|https?):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/,"i").replace("email",/[A-Za-z0-9._+-]+(@)[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9-_]*[a-zA-Z0-9])+(?![-_])/).getRegex(),_backpedal:/(?:[^?!.,:;*_'"~()&]+|\([^)]*\)|&(?![a-zA-Z0-9]+;$)|[?!.,:;*_'"~)]+(?!$))+/,del:/^(~~?)(?=[^\s~])([\s\S]*?[^\s~])\1(?=[^~]|$)/,text:/^([`~]+|[^`~])(?:(?= {2,}\n)|(?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)|[\s\S]*?(?:(?=[\\<!\[`*~_]|\b_|https?:\/\/|ftp:\/\/|www\.|$)|[^ ](?= {2,}\n)|[^a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-](?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)))/},Y={...W,br:k(v).replace("{2,}","*").getRegex(),text:k(W.text).replace("\\b_","\\b_| {2,}\\n").replace(/\{2,\}/g,"*").getRegex()},ee={normal:q,gfm:L,pedantic:P},te={normal:K,gfm:W,breaks:Y,pedantic:V};class ne{tokens;options;state;tokenizer;inlineQueue;constructor(t){this.tokens=[],this.tokens.links=Object.create(null),this.options=t||e.defaults,this.options.tokenizer=this.options.tokenizer||new w,this.tokenizer=this.options.tokenizer,this.tokenizer.options=this.options,this.tokenizer.lexer=this,this.inlineQueue=[],this.state={inLink:!1,inRawBlock:!1,top:!0};const n={block:ee.normal,inline:te.normal};this.options.pedantic?(n.block=ee.pedantic,n.inline=te.pedantic):this.options.gfm&&(n.block=ee.gfm,this.options.breaks?n.inline=te.breaks:n.inline=te.gfm),this.tokenizer.rules=n}static get rules(){return{block:ee,inline:te}}static lex(e,t){return new ne(t).lex(e)}static lexInline(e,t){return new ne(t).inlineTokens(e)}lex(e){e=e.replace(/\r\n|\r/g,"\n"),this.blockTokens(e,this.tokens);for(let e=0;e<this.inlineQueue.length;e++){const t=this.inlineQueue[e];this.inlineTokens(t.src,t.tokens)}return this.inlineQueue=[],this.tokens}blockTokens(e,t=[]){let n,s,r,i;for(e=this.options.pedantic?e.replace(/\t/g,"    ").replace(/^ +$/gm,""):e.replace(/^( *)(\t+)/gm,((e,t,n)=>t+"    ".repeat(n.length)));e;)if(!(this.options.extensions&&this.options.extensions.block&&this.options.extensions.block.some((s=>!!(n=s.call({lexer:this},e,t))&&(e=e.substring(n.raw.length),t.push(n),!0)))))if(n=this.tokenizer.space(e))e=e.substring(n.raw.length),1===n.raw.length&&t.length>0?t[t.length-1].raw+="\n":t.push(n);else if(n=this.tokenizer.code(e))e=e.substring(n.raw.length),s=t[t.length-1],!s||"paragraph"!==s.type&&"text"!==s.type?t.push(n):(s.raw+="\n"+n.raw,s.text+="\n"+n.text,this.inlineQueue[this.inlineQueue.length-1].src=s.text);else if(n=this.tokenizer.fences(e))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.heading(e))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.hr(e))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.blockquote(e))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.list(e))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.html(e))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.def(e))e=e.substring(n.raw.length),s=t[t.length-1],!s||"paragraph"!==s.type&&"text"!==s.type?this.tokens.links[n.tag]||(this.tokens.links[n.tag]={href:n.href,title:n.title}):(s.raw+="\n"+n.raw,s.text+="\n"+n.raw,this.inlineQueue[this.inlineQueue.length-1].src=s.text);else if(n=this.tokenizer.table(e))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.lheading(e))e=e.substring(n.raw.length),t.push(n);else{if(r=e,this.options.extensions&&this.options.extensions.startBlock){let t=1/0;const n=e.slice(1);let s;this.options.extensions.startBlock.forEach((e=>{s=e.call({lexer:this},n),"number"==typeof s&&s>=0&&(t=Math.min(t,s))})),t<1/0&&t>=0&&(r=e.substring(0,t+1))}if(this.state.top&&(n=this.tokenizer.paragraph(r)))s=t[t.length-1],i&&"paragraph"===s.type?(s.raw+="\n"+n.raw,s.text+="\n"+n.text,this.inlineQueue.pop(),this.inlineQueue[this.inlineQueue.length-1].src=s.text):t.push(n),i=r.length!==e.length,e=e.substring(n.raw.length);else if(n=this.tokenizer.text(e))e=e.substring(n.raw.length),s=t[t.length-1],s&&"text"===s.type?(s.raw+="\n"+n.raw,s.text+="\n"+n.text,this.inlineQueue.pop(),this.inlineQueue[this.inlineQueue.length-1].src=s.text):t.push(n);else if(e){const t="Infinite loop on byte: "+e.charCodeAt(0);if(this.options.silent){console.error(t);break}throw new Error(t)}}return this.state.top=!0,t}inline(e,t=[]){return this.inlineQueue.push({src:e,tokens:t}),t}inlineTokens(e,t=[]){let n,s,r,i,l,o,a=e;if(this.tokens.links){const e=Object.keys(this.tokens.links);if(e.length>0)for(;null!=(i=this.tokenizer.rules.inline.reflinkSearch.exec(a));)e.includes(i[0].slice(i[0].lastIndexOf("[")+1,-1))&&(a=a.slice(0,i.index)+"["+"a".repeat(i[0].length-2)+"]"+a.slice(this.tokenizer.rules.inline.reflinkSearch.lastIndex))}for(;null!=(i=this.tokenizer.rules.inline.blockSkip.exec(a));)a=a.slice(0,i.index)+"["+"a".repeat(i[0].length-2)+"]"+a.slice(this.tokenizer.rules.inline.blockSkip.lastIndex);for(;null!=(i=this.tokenizer.rules.inline.anyPunctuation.exec(a));)a=a.slice(0,i.index)+"++"+a.slice(this.tokenizer.rules.inline.anyPunctuation.lastIndex);for(;e;)if(l||(o=""),l=!1,!(this.options.extensions&&this.options.extensions.inline&&this.options.extensions.inline.some((s=>!!(n=s.call({lexer:this},e,t))&&(e=e.substring(n.raw.length),t.push(n),!0)))))if(n=this.tokenizer.escape(e))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.tag(e))e=e.substring(n.raw.length),s=t[t.length-1],s&&"text"===n.type&&"text"===s.type?(s.raw+=n.raw,s.text+=n.text):t.push(n);else if(n=this.tokenizer.link(e))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.reflink(e,this.tokens.links))e=e.substring(n.raw.length),s=t[t.length-1],s&&"text"===n.type&&"text"===s.type?(s.raw+=n.raw,s.text+=n.text):t.push(n);else if(n=this.tokenizer.emStrong(e,a,o))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.codespan(e))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.br(e))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.del(e))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.autolink(e))e=e.substring(n.raw.length),t.push(n);else if(this.state.inLink||!(n=this.tokenizer.url(e))){if(r=e,this.options.extensions&&this.options.extensions.startInline){let t=1/0;const n=e.slice(1);let s;this.options.extensions.startInline.forEach((e=>{s=e.call({lexer:this},n),"number"==typeof s&&s>=0&&(t=Math.min(t,s))})),t<1/0&&t>=0&&(r=e.substring(0,t+1))}if(n=this.tokenizer.inlineText(r))e=e.substring(n.raw.length),"_"!==n.raw.slice(-1)&&(o=n.raw.slice(-1)),l=!0,s=t[t.length-1],s&&"text"===s.type?(s.raw+=n.raw,s.text+=n.text):t.push(n);else if(e){const t="Infinite loop on byte: "+e.charCodeAt(0);if(this.options.silent){console.error(t);break}throw new Error(t)}}else e=e.substring(n.raw.length),t.push(n);return t}}class se{options;constructor(t){this.options=t||e.defaults}code(e,t,n){const s=(t||"").match(/^\S*/)?.[0];return e=e.replace(/\n$/,"")+"\n",s?'<pre><code class="language-'+c(s)+'">'+(n?e:c(e,!0))+"</code></pre>\n":"<pre><code>"+(n?e:c(e,!0))+"</code></pre>\n"}blockquote(e){return`<blockquote>\n${e}</blockquote>\n`}html(e,t){return e}heading(e,t,n){return`<h${t}>${e}</h${t}>\n`}hr(){return"<hr>\n"}list(e,t,n){const s=t?"ol":"ul";return"<"+s+(t&&1!==n?' start="'+n+'"':"")+">\n"+e+"</"+s+">\n"}listitem(e,t,n){return`<li>${e}</li>\n`}checkbox(e){return"<input "+(e?'checked="" ':"")+'disabled="" type="checkbox">'}paragraph(e){return`<p>${e}</p>\n`}table(e,t){return t&&(t=`<tbody>${t}</tbody>`),"<table>\n<thead>\n"+e+"</thead>\n"+t+"</table>\n"}tablerow(e){return`<tr>\n${e}</tr>\n`}tablecell(e,t){const n=t.header?"th":"td";return(t.align?`<${n} align="${t.align}">`:`<${n}>`)+e+`</${n}>\n`}strong(e){return`<strong>${e}</strong>`}em(e){return`<em>${e}</em>`}codespan(e){return`<code>${e}</code>`}br(){return"<br>"}del(e){return`<del>${e}</del>`}link(e,t,n){const s=g(e);if(null===s)return n;let r='<a href="'+(e=s)+'"';return t&&(r+=' title="'+t+'"'),r+=">"+n+"</a>",r}image(e,t,n){const s=g(e);if(null===s)return n;let r=`<img src="${e=s}" alt="${n}"`;return t&&(r+=` title="${t}"`),r+=">",r}text(e){return e}}class re{strong(e){return e}em(e){return e}codespan(e){return e}del(e){return e}html(e){return e}text(e){return e}link(e,t,n){return""+n}image(e,t,n){return""+n}br(){return""}}class ie{options;renderer;textRenderer;constructor(t){this.options=t||e.defaults,this.options.renderer=this.options.renderer||new se,this.renderer=this.options.renderer,this.renderer.options=this.options,this.textRenderer=new re}static parse(e,t){return new ie(t).parse(e)}static parseInline(e,t){return new ie(t).parseInline(e)}parse(e,t=!0){let n="";for(let s=0;s<e.length;s++){const r=e[s];if(this.options.extensions&&this.options.extensions.renderers&&this.options.extensions.renderers[r.type]){const e=r,t=this.options.extensions.renderers[e.type].call({parser:this},e);if(!1!==t||!["space","hr","heading","code","table","blockquote","list","html","paragraph","text"].includes(e.type)){n+=t||"";continue}}switch(r.type){case"space":continue;case"hr":n+=this.renderer.hr();continue;case"heading":{const e=r;n+=this.renderer.heading(this.parseInline(e.tokens),e.depth,p(this.parseInline(e.tokens,this.textRenderer)));continue}case"code":{const e=r;n+=this.renderer.code(e.text,e.lang,!!e.escaped);continue}case"table":{const e=r;let t="",s="";for(let t=0;t<e.header.length;t++)s+=this.renderer.tablecell(this.parseInline(e.header[t].tokens),{header:!0,align:e.align[t]});t+=this.renderer.tablerow(s);let i="";for(let t=0;t<e.rows.length;t++){const n=e.rows[t];s="";for(let t=0;t<n.length;t++)s+=this.renderer.tablecell(this.parseInline(n[t].tokens),{header:!1,align:e.align[t]});i+=this.renderer.tablerow(s)}n+=this.renderer.table(t,i);continue}case"blockquote":{const e=r,t=this.parse(e.tokens);n+=this.renderer.blockquote(t);continue}case"list":{const e=r,t=e.ordered,s=e.start,i=e.loose;let l="";for(let t=0;t<e.items.length;t++){const n=e.items[t],s=n.checked,r=n.task;let o="";if(n.task){const e=this.renderer.checkbox(!!s);i?n.tokens.length>0&&"paragraph"===n.tokens[0].type?(n.tokens[0].text=e+" "+n.tokens[0].text,n.tokens[0].tokens&&n.tokens[0].tokens.length>0&&"text"===n.tokens[0].tokens[0].type&&(n.tokens[0].tokens[0].text=e+" "+n.tokens[0].tokens[0].text)):n.tokens.unshift({type:"text",text:e+" "}):o+=e+" "}o+=this.parse(n.tokens,i),l+=this.renderer.listitem(o,r,!!s)}n+=this.renderer.list(l,t,s);continue}case"html":{const e=r;n+=this.renderer.html(e.text,e.block);continue}case"paragraph":{const e=r;n+=this.renderer.paragraph(this.parseInline(e.tokens));continue}case"text":{let i=r,l=i.tokens?this.parseInline(i.tokens):i.text;for(;s+1<e.length&&"text"===e[s+1].type;)i=e[++s],l+="\n"+(i.tokens?this.parseInline(i.tokens):i.text);n+=t?this.renderer.paragraph(l):l;continue}default:{const e='Token with "'+r.type+'" type was not found.';if(this.options.silent)return console.error(e),"";throw new Error(e)}}}return n}parseInline(e,t){t=t||this.renderer;let n="";for(let s=0;s<e.length;s++){const r=e[s];if(this.options.extensions&&this.options.extensions.renderers&&this.options.extensions.renderers[r.type]){const e=this.options.extensions.renderers[r.type].call({parser:this},r);if(!1!==e||!["escape","html","link","image","strong","em","codespan","br","del","text"].includes(r.type)){n+=e||"";continue}}switch(r.type){case"escape":{const e=r;n+=t.text(e.text);break}case"html":{const e=r;n+=t.html(e.text);break}case"link":{const e=r;n+=t.link(e.href,e.title,this.parseInline(e.tokens,t));break}case"image":{const e=r;n+=t.image(e.href,e.title,e.text);break}case"strong":{const e=r;n+=t.strong(this.parseInline(e.tokens,t));break}case"em":{const e=r;n+=t.em(this.parseInline(e.tokens,t));break}case"codespan":{const e=r;n+=t.codespan(e.text);break}case"br":n+=t.br();break;case"del":{const e=r;n+=t.del(this.parseInline(e.tokens,t));break}case"text":{const e=r;n+=t.text(e.text);break}default:{const e='Token with "'+r.type+'" type was not found.';if(this.options.silent)return console.error(e),"";throw new Error(e)}}}return n}}class le{options;constructor(t){this.options=t||e.defaults}static passThroughHooks=new Set(["preprocess","postprocess","processAllTokens"]);preprocess(e){return e}postprocess(e){return e}processAllTokens(e){return e}}class oe{defaults={async:!1,breaks:!1,extensions:null,gfm:!0,hooks:null,pedantic:!1,renderer:null,silent:!1,tokenizer:null,walkTokens:null};options=this.setOptions;parse=this.#e(ne.lex,ie.parse);parseInline=this.#e(ne.lexInline,ie.parseInline);Parser=ie;Renderer=se;TextRenderer=re;Lexer=ne;Tokenizer=w;Hooks=le;constructor(...e){this.use(...e)}walkTokens(e,t){let n=[];for(const s of e)switch(n=n.concat(t.call(this,s)),s.type){case"table":{const e=s;for(const s of e.header)n=n.concat(this.walkTokens(s.tokens,t));for(const s of e.rows)for(const e of s)n=n.concat(this.walkTokens(e.tokens,t));break}case"list":{const e=s;n=n.concat(this.walkTokens(e.items,t));break}default:{const e=s;this.defaults.extensions?.childTokens?.[e.type]?this.defaults.extensions.childTokens[e.type].forEach((s=>{const r=e[s].flat(1/0);n=n.concat(this.walkTokens(r,t))})):e.tokens&&(n=n.concat(this.walkTokens(e.tokens,t)))}}return n}use(...e){const t=this.defaults.extensions||{renderers:{},childTokens:{}};return e.forEach((e=>{const n={...e};if(n.async=this.defaults.async||n.async||!1,e.extensions&&(e.extensions.forEach((e=>{if(!e.name)throw new Error("extension name required");if("renderer"in e){const n=t.renderers[e.name];t.renderers[e.name]=n?function(...t){let s=e.renderer.apply(this,t);return!1===s&&(s=n.apply(this,t)),s}:e.renderer}if("tokenizer"in e){if(!e.level||"block"!==e.level&&"inline"!==e.level)throw new Error("extension level must be 'block' or 'inline'");const n=t[e.level];n?n.unshift(e.tokenizer):t[e.level]=[e.tokenizer],e.start&&("block"===e.level?t.startBlock?t.startBlock.push(e.start):t.startBlock=[e.start]:"inline"===e.level&&(t.startInline?t.startInline.push(e.start):t.startInline=[e.start]))}"childTokens"in e&&e.childTokens&&(t.childTokens[e.name]=e.childTokens)})),n.extensions=t),e.renderer){const t=this.defaults.renderer||new se(this.defaults);for(const n in e.renderer){if(!(n in t))throw new Error(`renderer '${n}' does not exist`);if("options"===n)continue;const s=n,r=e.renderer[s],i=t[s];t[s]=(...e)=>{let n=r.apply(t,e);return!1===n&&(n=i.apply(t,e)),n||""}}n.renderer=t}if(e.tokenizer){const t=this.defaults.tokenizer||new w(this.defaults);for(const n in e.tokenizer){if(!(n in t))throw new Error(`tokenizer '${n}' does not exist`);if(["options","rules","lexer"].includes(n))continue;const s=n,r=e.tokenizer[s],i=t[s];t[s]=(...e)=>{let n=r.apply(t,e);return!1===n&&(n=i.apply(t,e)),n}}n.tokenizer=t}if(e.hooks){const t=this.defaults.hooks||new le;for(const n in e.hooks){if(!(n in t))throw new Error(`hook '${n}' does not exist`);if("options"===n)continue;const s=n,r=e.hooks[s],i=t[s];le.passThroughHooks.has(n)?t[s]=e=>{if(this.defaults.async)return Promise.resolve(r.call(t,e)).then((e=>i.call(t,e)));const n=r.call(t,e);return i.call(t,n)}:t[s]=(...e)=>{let n=r.apply(t,e);return!1===n&&(n=i.apply(t,e)),n}}n.hooks=t}if(e.walkTokens){const t=this.defaults.walkTokens,s=e.walkTokens;n.walkTokens=function(e){let n=[];return n.push(s.call(this,e)),t&&(n=n.concat(t.call(this,e))),n}}this.defaults={...this.defaults,...n}})),this}setOptions(e){return this.defaults={...this.defaults,...e},this}lexer(e,t){return ne.lex(e,t??this.defaults)}parser(e,t){return ie.parse(e,t??this.defaults)}#e(e,t){return(n,s)=>{const r={...s},i={...this.defaults,...r};!0===this.defaults.async&&!1===r.async&&(i.silent||console.warn("marked(): The async option was set to true by an extension. The async: false option sent to parse will be ignored."),i.async=!0);const l=this.#t(!!i.silent,!!i.async);if(null==n)return l(new Error("marked(): input parameter is undefined or null"));if("string"!=typeof n)return l(new Error("marked(): input parameter is of type "+Object.prototype.toString.call(n)+", string expected"));if(i.hooks&&(i.hooks.options=i),i.async)return Promise.resolve(i.hooks?i.hooks.preprocess(n):n).then((t=>e(t,i))).then((e=>i.hooks?i.hooks.processAllTokens(e):e)).then((e=>i.walkTokens?Promise.all(this.walkTokens(e,i.walkTokens)).then((()=>e)):e)).then((e=>t(e,i))).then((e=>i.hooks?i.hooks.postprocess(e):e)).catch(l);try{i.hooks&&(n=i.hooks.preprocess(n));let s=e(n,i);i.hooks&&(s=i.hooks.processAllTokens(s)),i.walkTokens&&this.walkTokens(s,i.walkTokens);let r=t(s,i);return i.hooks&&(r=i.hooks.postprocess(r)),r}catch(e){return l(e)}}}#t(e,t){return n=>{if(n.message+="\nPlease report this to https://github.com/markedjs/marked.",e){const e="<p>An error occurred:</p><pre>"+c(n.message+"",!0)+"</pre>";return t?Promise.resolve(e):e}if(t)return Promise.reject(n);throw n}}}const ae=new oe;function ce(e,t){return ae.parse(e,t)}ce.options=ce.setOptions=function(e){return ae.setOptions(e),ce.defaults=ae.defaults,n(ce.defaults),ce},ce.getDefaults=t,ce.defaults=e.defaults,ce.use=function(...e){return ae.use(...e),ce.defaults=ae.defaults,n(ce.defaults),ce},ce.walkTokens=function(e,t){return ae.walkTokens(e,t)},ce.parseInline=ae.parseInline,ce.Parser=ie,ce.parser=ie.parse,ce.Renderer=se,ce.TextRenderer=re,ce.Lexer=ne,ce.lexer=ne.lex,ce.Tokenizer=w,ce.Hooks=le,ce.parse=ce;const he=ce.options,pe=ce.setOptions,ue=ce.use,ke=ce.walkTokens,ge=ce.parseInline,fe=ce,de=ie.parse,xe=ne.lex;e.Hooks=le,e.Lexer=ne,e.Marked=oe,e.Parser=ie,e.Renderer=se,e.TextRenderer=re,e.Tokenizer=w,e.getDefaults=t,e.lexer=xe,e.marked=ce,e.options=he,e.parse=fe,e.parseInline=ge,e.parser=de,e.setOptions=pe,e.use=ue,e.walkTokens=ke}));
+
+</script>
+</head>
+<body>
+<div class="print-hint">This is a print-ready page. Use your browser's <b>Print &rarr; Save as PDF</b> (Ctrl/Cmd+P) to save it as <code>10-terraform-meta-arguments.pdf</code> in this same folder.</div>
+<div id="content"></div>
+<script type="text/markdown" id="md">
+# Topic: Terraform Meta-Arguments — count, for_each, depends_on, provider, lifecycle + Version Constraints & state rm / mv
+
+*(Your notes, cleaned up from dictation + screenshots — Lecture 10)*
+
+## Quick recall
+
+> **Definition (lecture slide):** These are some special constructs in Terraform which are available
+> for **Resource and Module blocks**. Meta-arguments help us achieve certain requirements within the
+> resource block. They come in handy in situations like creating resources in the same cloud provider
+> but **in different regions**, or when we have to **declare dependencies in places where Terraform
+> is not able to identify the dependency itself**. Meta-arguments let you **customize the behaviour
+> of modules and resources** in your code.
+>
+> **Definition (reference):** Terraform meta-arguments are **special, built-in configuration
+> arguments that control how HashiCorp Terraform manages, scales and deploys infrastructure
+> resources**. Standard arguments define the properties of a resource (like a server's size or
+> name). Meta-arguments change **how Terraform interacts with the resource block itself**. They're
+> universally supported across all providers (AWS, GCP, Azure).
+
+**In one line:** normal arguments describe *the resource*. Meta-arguments describe *how Terraform
+should handle the resource*. They modify its behaviour.
+
+### The 5 meta-arguments
+| # | Meta-argument | One-liner | Works on |
+|---|---|---|---|
+| 1 | `count` | Create **N near-identical copies** | resource, module, data |
+| 2 | `for_each` | **Loop over a map or set** and create one copy per key | resource, module, data |
+| 3 | `depends_on` | **Wait until another resource is ready** (explicit dependency) | resource, module, data |
+| 4 | `provider` | Use a **non-default provider configuration** (another region/account) | resource, data (modules use `providers = {}`) |
+| 5 | `lifecycle` | Override the standard **create / update / destroy** behaviour | resource only |
+
+---
+
+## 1. `count`: create several copies of the same resource
+
+- **Purpose:** creates a **specific number of near-identical infrastructure objects** from a single
+  block.
+- **Behaviour:** accepts a **whole number**.
+- **Tracking:** uses a **zero-indexed** tracking system, **`count.index`**, to distinguish between
+  instances.
+- **Limitation:** adding or removing items **from the middle** of a list indexed by `count` can force
+  Terraform to destroy and recreate unrelated resources.
+
+By default every resource block creates **one** object. When you want more than one, use `count`:
+```hcl
+resource "aws_instance" "linux" {
+  ami           = "ami-0cca134ec43cf708f"
+  instance_type = "t2.micro"
+  key_name      = "ram_aws"
+  count         = 2                              # this makes 2 EC2 instances
+  tags = {
+    Name = "Demo-server-${count.index}"          # Demo-server-0, Demo-server-1
+  }
+}
+```
+Every instance should have a **different name**, so we tell the two apart in the tags with
+**`${count.index}`**.
+```
+[root@Devops-server proejct1]# terraform apply --auto-approve
+Plan: 2 to add, 0 to change, 0 to destroy.
+aws_instance.linux[0]: Creating...
+aws_instance.linux[1]: Creating...
+```
+Console: **Demo-server-0** (`i-0232abcfdc2f2e622`) and **Demo-server-1** (`i-01c5bdbf96b837d89`),
+both t2.micro in ap-south-1a.
+
+> 📝 The addresses are **numbers**: `aws_instance.linux[0]`, `[1]`. If you later remove the *first*
+> item of a list driven by `count`, every item after it shifts one position, and Terraform
+> destroys and recreates them. That's the limitation `for_each` fixes.
+
+## 2. `for_each`: loop over a map or set
+
+- **Purpose:** create multiple resource instances **mapped to specific keys**, to avoid the
+  tracking issues of `count`.
+- *"Loop over a list or map."* (In practice it takes a **map** or a **set of strings**. A list must be
+  converted with `toset()`.)
+
+Use case: we want different settings per item, e.g. dev on t2.micro and prod on t2.nano. In the lab,
+it's a **web** server and a **db** server with different instance types:
+```hcl
+resource "aws_instance" "linux" {
+  ami      = "ami-0cca134ec43cf708f"
+  for_each = {
+    web = "t2.micro"
+    db  = "t2.medium"
+  }
+  instance_type = each.value                    # t2.micro / t2.medium
+  key_name      = "ram_aws"
+  tags = {
+    Name = "Ec2-server-${each.key}"              # Ec2-server-web / Ec2-server-db
+  }
+}
+```
+| Expression | Meaning | Here |
+|---|---|---|
+| `each.key` | the map key (or the set element) | `web`, `db` |
+| `each.value` | the map value (same as key for a set) | `t2.micro`, `t2.medium` |
+
+```
+Plan: 2 to add, 0 to change, 0 to destroy.
+aws_instance.linux["web"]: Creating...
+aws_instance.linux["db"]: Creating...
+```
+Console: **Ec2-server-db** (t2.medium, `i-039ec58a26439b965`) and **Ec2-server-web** (t2.micro,
+`i-0aa0707393cd0a499`).
+
+**Why `for_each` is safer than `count`:** the addresses are **names**, `linux["web"]` and
+`linux["db"]`, not positions. Removing `web` destroys only `web`. `db` is untouched.
+
+> ⚠️ `count` and `for_each` **can't be used together** in the same block. The `for_each` keys must
+> be known at plan time (not values that are only "known after apply").
+
+### `count` vs `for_each`
+| | `count` | `for_each` |
+|---|---|---|
+| Input | number | map or set(string) |
+| Address | `res[0]`, `res[1]` | `res["web"]`, `res["db"]` |
+| Per-item differences | only via `count.index` lookups | natural: `each.key` / `each.value` |
+| Remove an item in the middle | later items **shift → recreated** | only that item is destroyed |
+| Best for | N identical copies, or `count = var.create ? 1 : 0` (on/off switch) | named things with their own settings |
+
+## 3. `depends_on`: wait until another resource is ready
+
+- **Purpose:** enforces an **explicit deployment order** when Terraform can't naturally discover the
+  dependency.
+- **Behaviour:** accepts a **list** of resources or modules.
+- **Usage:** best used as a **last resort**. Overusing it overcomplicates the dependency graph and
+  slows down parallel deployments.
+
+Meaning: one thing depends on the existence of another. Example: **my front-end server shouldn't come
+up until my DB server is up.**
+
+Lab: create the EC2 instance **only if the S3 bucket deployed successfully**.
+```hcl
+# Step 1. create s3 bucket first.
+resource "aws_s3_bucket" "first" {
+  bucket = "demobucket"
+  tags = {
+    Name = "my_buck"
+  }
+}
+# Step 2. create ec2 instance only if s3 resources successfully deployed
+resource "aws_instance" "redhat" {
+  ami           = "ami-0cca134ec43cf708f"
+  instance_type = "t2.micro"
+  depends_on    = [aws_s3_bucket.first]
+  key_name      = "ram_aws"
+  tags = {
+    Name   = "Second_server"
+    source = "terraform"
+  }
+}
+```
+```
+Plan: 2 to add, 0 to change, 0 to destroy.
+aws_s3_bucket.first: Creating...
+
+Error: creating S3 Bucket (demobucket): operation error S3: CreateBucket, https response error
+StatusCode: 409, ... BucketAlreadyExists: The requested bucket name is not available. The bucket
+namespace is shared by all users of the system. Please select a different name and try again.
+```
+**What happened:** the bucket name wasn't unique (S3 names are **global** across all AWS accounts), so
+the bucket wasn't created. **Because of `depends_on`, the EC2 instance wasn't created either.**
+Without `depends_on`, the two have no link, so Terraform would create them **in parallel** and the EC2
+would have been created even though the bucket failed.
+
+> 📝 **Implicit vs explicit dependencies.** If the EC2 *referenced* the bucket (e.g.
+> `user_data = aws_s3_bucket.first.bucket`), Terraform would already know the order (Chapter 02).
+> That's an **implicit** dependency. `depends_on` is for **hidden** dependencies Terraform can't see
+> from the code, e.g. an app that reads a bucket at boot, or an IAM policy that must exist before a
+> Lambda runs.
+
+## 4. `provider`: same cloud, different region (or account)
+
+- **Purpose:** assigns a **non-default provider configuration** or region to a specific block.
+- **Behaviour:** decides which cloud account or region manages the resource.
+- **Usage:** ideal for **multi-region** networking or **cross-account** components.
+
+So far, every EC2 instance was created in one region (Mumbai). Can we create two instances, **one in
+Mumbai and one in North Virginia**, from the same code? By default, no. One `provider "aws"` block =
+one region. The solution is **multiple provider blocks with an `alias`** (a shortcut / short name,
+just like a shell alias), plus the `provider` meta-argument on each resource:
+```hcl
+provider "aws" {
+  region = "ap-south-1"
+  alias  = "mumbai"
+}
+
+provider "aws" {
+  region = "us-east-1"
+  alias  = "NV"
+}
+
+resource "aws_instance" "linux" {
+  ami           = "ami-0cca134ec43cf708f"        # Mumbai AMI
+  instance_type = "t2.micro"
+  key_name      = "ram_aws"                      # Mumbai key pair
+  provider      = aws.mumbai
+  tags = {
+    Name = "Mumbai_server"
+  }
+}
+
+resource "aws_instance" "linux1" {
+  ami           = "ami-03a6eaae9938c858c"        # N. Virginia AMI (AMIs are per region!)
+  instance_type = "t2.micro"
+  key_name      = "ram_nv"                       # key pairs are per region too
+  provider      = aws.NV
+  tags = {
+    Name = "NV_server"
+  }
+}
+```
+```
+Plan: 2 to add, 0 to change, 0 to destroy.
+aws_instance.linux1: Creation complete after 32s [id=i-047dc24d2ab5a8c35]
+aws_instance.linux: Creation complete after 43s [id=i-0f46d9addbc632bf1]
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+```
+Console: **NV_server** in **us-east-1b** and **Mumbai_server** in **ap-south-1a**.
+
+> 📝 Notes:
+> - The syntax is `provider = aws.<alias>`, with **no quotes**.
+> - The **AMI ID and key pair must exist in that region**. The same AMI ID doesn't work in another
+>   region.
+> - A provider block **without** an alias is the **default**, used by every resource that doesn't
+>   set `provider`. If *all* AWS provider blocks have aliases, such resources get an unconfigured
+>   AWS provider and fail (no region). Keep one default and alias the extras.
+> - For **modules**, pass providers with `providers = { aws = aws.NV }`.
+> - **Cross-account:** add `assume_role { role_arn = "arn:aws:iam::<acct>:role/..." }` to an aliased
+>   provider.
+
+## 5. `lifecycle`: override create / update / destroy behaviour
+
+- **Purpose:** a **nested block** used to override Terraform's standard create, update or destroy
+  behaviour.
+
+| Sub-argument | What it does |
+|---|---|
+| `create_before_destroy` | Creates the **replacement before deleting** the old object, to avoid downtime |
+| `prevent_destroy` | **Rejects any plan** that would destroy this resource (e.g. production databases) |
+| `ignore_changes` | **Ignores changes** made outside Terraform (or in code) to the listed attributes |
+| `replace_triggered_by` | Forces **recreation** of this resource when another resource/attribute changes |
+| `precondition` / `postcondition` | Custom checks with a clear error message (Terraform ≥ 1.2) |
+
+### Lab: `prevent_destroy`
+Start with a simple EC2 instance, then add the lifecycle block:
+```hcl
+resource "aws_instance" "linux1" {
+  ami           = "ami-0cca134ec43cf708f"
+  instance_type = "t2.micro"
+  key_name      = "ram_aws"
+  tags = {
+    Name = "Web_server"
+  }
+  lifecycle {
+    prevent_destroy = true   ##### to prevent destroy
+  }
+}
+```
+*(The first draft was missing the `}` that closes `lifecycle`. Every block needs its own closing
+brace.)*
+
+```
+Plan: 1 to add, 0 to change, 0 to destroy.
+aws_instance.linux1: Creation complete after 33s [id=i-07a3ec976057889b7]
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+[root@Devops-server proejct1]# terraform destroy --auto-approve
+```
+**The danger:** we often have the habit of running `terraform destroy --auto-approve`. With
+auto-approve it **doesn't ask any question**. It just deletes. If we didn't want that instance
+deleted, we're now in a panic: rollback, recovery, etc. With `prevent_destroy = true`, Terraform
+refuses:
+```
+Plan: 0 to add, 0 to change, 1 to destroy.
+
+Error: Instance cannot be destroyed
+
+  on main.tf line 1:
+   1: resource "aws_instance" "linux1" {
+
+Resource aws_instance.linux1 has lifecycle.prevent_destroy set, but the plan calls for this
+resource to be destroyed. To avoid this error and continue with the plan, either disable
+lifecycle.prevent_destroy or reduce the scope of the plan using the -target option.
+```
+To really delete it, set **`prevent_destroy = false`** and run destroy again.
+
+> ⚠️ `prevent_destroy` only protects while the **resource block is in the code**. If someone
+> deletes the whole block (or the module call), Terraform destroys it without complaint. It also
+> blocks **replacements** (e.g. an AMI change that forces a new instance). For real protection on
+> databases, also enable the provider-side flag, e.g. `deletion_protection = true` on RDS or
+> `disable_api_termination = true` on EC2.
+
+### Lab: `ignore_changes`
+Sometimes things change and we **don't want Terraform to act on those changes**. A typical case is
+**tags**: they change all the time (cost tools, other teams, the console), and we don't want every
+plan trying to put them back.
+```hcl
+  lifecycle {
+    prevent_destroy = true
+    ignore_changes  = [tags, instance_type]
+  }
+```
+```
+[root@Devops-server proejct1]# terraform apply --auto-approve
+aws_instance.linux1: Refreshing state... [id=i-07a3ec976057889b7]
+
+No changes. Your infrastructure matches the configuration.
+```
+Even though `tags` / `instance_type` differ between the code and AWS, Terraform reports **No
+changes**, because those attributes are ignored.
+
+> 📝 `ignore_changes = all` ignores every attribute (rarely a good idea). Ignoring `instance_type`
+> means even **your own code change** to it is ignored. Use it only for attributes managed
+> elsewhere (autoscaling, a console team, an external tool).
+
+### The other two, in short
+```hcl
+resource "aws_instance" "web" {
+  # ...
+  lifecycle {
+    create_before_destroy = true                          # new one up, then old one removed
+    replace_triggered_by  = [aws_launch_template.web.latest_version]
+    precondition {
+      condition     = startswith(var.ami, "ami-")
+      error_message = "AMI must start with ami-."
+    }
+  }
+}
+```
+*(`create_before_destroy` needs names that can exist twice at the same time. A fixed `name` on,
+for example, a security group will clash, so use `name_prefix`.)*
+
+---
+
+## 6. Terraform & provider version constraints *(very important interview point)*
+
+HashiCorp actively develops Terraform and its providers. **Every new version brings new features or
+changed behaviour.** If you don't fix the version, the same code can behave differently, or break, on
+another machine. Set **`required_version`** (Terraform CLI) and **`required_providers.version`**
+(providers) to make updates **predictable**.
+```hcl
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.52.0"
+    }
+    random = {
+      version = "~> 3.6.2"
+    }
+  }
+
+  required_version = "~> 1.1.9"
+}
+```
+
+### Version constraint operators
+| Required version | Meaning | Considerations |
+|---|---|---|
+| `1.7.5` (or `= 1.7.5`) | Only **exactly** v1.7.5 | To upgrade, first edit the constraint |
+| `>= 1.7.5` | v1.7.5 **or greater** | Includes v2.0.0 and above (risky) |
+| `~> 1.7.5` | Any **v1.7.x ≥ 1.7.5**, but **not v1.8** or later | Patch updates should be non-disruptive |
+| `>= 1.7.5, < 1.9.5` | v1.7.5 or greater, but **less than** v1.9.5 | Avoids specific version updates |
+| `!= 1.8.0` | Anything except that version | Skip a known-bad release |
+
+**`~>` (the pessimistic operator) allows only the rightmost number to increase:**
+- `~> 3.74.0` → `>= 3.74.0, < 3.75.0` (patches only)
+- `~> 3.74` → `>= 3.74, < 4.0` (minors + patches)
+- `~> 5.0` → any 5.x
+
+### Lab: directory A (pinned) vs directory B (unpinned)
+On the Terraform Registry, the **latest AWS provider was v6.52.0** (494 versions available). We
+choose an **old one, 3.74.0** (published Jan 28, 2022), and copy its `aws_s3_bucket` example.
+```
+[root@Devops-server ~]# mkdir a b
+[root@Devops-server ~]# cd a/
+[root@Devops-server a]# vim s3.tf
+[root@Devops-server a]# vim provider.tf
+```
+```hcl
+# a/provider.tf
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~>3.74.0"
+    }
+  }
+}
+# a/s3.tf  (example from the 3.74.0 docs)
+resource "aws_s3_bucket" "b" {
+  bucket = "my-tf-test-bucket"
+  acl    = "private"
+  tags = {
+    Name        = "My bucket"
+    Environment = "Dev"
+  }
+}
+```
+Because we work on a **lower version**, we must **explicitly define it**. `~>3.74.0` means **3.74.x
+only: at least 3.74.0 and below 3.75.0**.
+```
+[root@Devops-server a]# terraform init
+- Finding hashicorp/aws versions matching "~> 3.74.0"...
+- Installing hashicorp/aws v3.74.3...
+- Installed hashicorp/aws v3.74.3 (signed by HashiCorp)
+Terraform has created a lock file .terraform.lock.hcl to record the provider selections it made above.
+```
+It installed **3.74.3** (the newest patch inside `~> 3.74.0`), **not** the latest 6.52.0. The
+selection is **locked** in `.terraform.lock.hcl`:
+```hcl
+provider "registry.terraform.io/hashicorp/aws" {
+  version     = "3.74.3"
+  constraints = "~> 3.74.0"
+  hashes = [
+    "h1:h4TYqgRKTuuWfZtxJnEGcs/NxGCaxZ4jr0IwTfgZDRM=",
+    "zh:25401cd4667d0496caf7e92e74ecef7c98cf74465570705cda2207770c27ff6c",
+    ...
+  ]
+}
+```
+
+**Directory B: someone who doesn't follow the rule.** B asks A: *"I want to create the same thing,
+can you give me your files?"* A gives all the files. **B removes `provider.tf`** and runs init:
+```
+[root@Devops-server b]# cp /root/a/* .
+[root@Devops-server b]# rm -rf provider.tf
+[root@Devops-server b]# terraform init
+- Finding latest version of hashicorp/aws...
+- Installing hashicorp/aws v6.52.0...
+- Installed hashicorp/aws v6.52.0 (signed by HashiCorp)
+
+[root@Devops-server b]# terraform validate
+Warning: Argument is deprecated
+  with aws_s3_bucket.b,
+  on s3.tf line 3, in resource "aws_s3_bucket" "b":
+   3:   acl    = "private"
+acl is deprecated. Use the aws_s3_bucket_acl resource instead.
+
+Success! The configuration is valid, but there were some validation warnings as shown above.
+```
+**Why?** In 3.x, `acl` could be set as an **argument** of `aws_s3_bucket`. In the newer provider
+(4.0 onwards, and 6.52 here) it's a **separate resource**, `aws_s3_bucket_acl`. The code was written
+for one version and run with another, and **that mismatch creates chaos in production.**
+
+> **Rule:** always write Terraform code **with the version**, and state which version it works with,
+> so everyone knows what the code was built for and which arguments are allowed.
+
+**Fixing B:** B realizes the mistake, copies `provider.tf` back from A, and runs `init` again:
+```
+[root@Devops-server b]# terraform init
+- Reusing previous version of hashicorp/aws from the dependency lock file
+
+Error: Failed to query available provider packages
+
+Could not retrieve the list of available versions for provider hashicorp/aws: locked provider
+registry.terraform.io/hashicorp/aws 6.52.0 does not match configured version constraint ~> 3.74.0;
+must use terraform init -upgrade to allow selection of new versions
+```
+B's **lock file already holds 6.52.0**, which conflicts with the new constraint. Plain `init`
+respects the lock file, so it fails. To re-select versions and rewrite the lock:
+```
+[root@Devops-server b]# terraform init --upgrade
+- Finding hashicorp/aws versions matching "~> 3.74.0"...
+[root@Devops-server b]# terraform validate
+Success! The configuration is valid.
+```
+*(`-upgrade` here actually **downgrades** to 3.74.3. The flag means "ignore the lock file and pick
+again within the constraints".)*
+
+> 📝 **Commit `.terraform.lock.hcl` to Git.** That's what makes every engineer and the CI pipeline
+> install **exactly** the same provider build. Don't commit `.terraform/`.
+> **Modern S3 code** (provider ≥ 4): `aws_s3_bucket` + `aws_s3_bucket_ownership_controls` +
+> `aws_s3_bucket_acl` (ACLs are disabled by default on new buckets since April 2023, so usually just
+> skip ACLs).
+
+---
+
+## 7. `terraform state rm` and `terraform state mv` *(interview question)*
+
+Setup: one EC2 instance and one S3 bucket, both managed by Terraform:
+```hcl
+########### Launch Ec2 Instance in Mumbai region
+resource "aws_instance" "linux" {
+  ami           = "ami-0cca134ec43cf708f"
+  instance_type = "t2.micro"
+  key_name      = "ram_aws"
+  tags = { Name = "Test_server", source = "terraform" }
+}
+########### Launch S3 Bucket in Mumbai region
+resource "aws_s3_bucket" "first" {
+  bucket = "linux23212google123"
+  tags   = { Name = "my_buck" }
+}
+```
+
+### `terraform state rm`: stop managing, without destroying
+> The `terraform state rm` command **removes a resource from your Terraform state file without
+> destroying the actual infrastructure**. Once removed, Terraform **stops tracking** the object,
+> leaving it fully intact in your cloud provider.
+
+Use it to **release a resource from Terraform's control**:
+```
+[root@Devops-server project1]# terraform state list
+aws_instance.linux
+aws_s3_bucket.first
+[root@Devops-server project1]# terraform state rm aws_s3_bucket.first
+Removed aws_s3_bucket.first
+Successfully removed 1 resource instance(s).
+[root@Devops-server project1]# terraform state list
+aws_instance.linux
+```
+The bucket still exists in AWS. Terraform just doesn't know about it any more.
+
+> ⚠️ **Also remove the block from the code.** If `resource "aws_s3_bucket" "first"` stays in
+> `main.tf`, the next `plan` wants to **create it again** (and fails, because the name is taken).
+> State rm = "forget"; it's the opposite of `terraform import` (Chapter 03).
+> **Modern alternative (Terraform ≥ 1.7):** a `removed {}` block that reviews like code:
+> ```hcl
+> removed {
+>   from = aws_s3_bucket.first
+>   lifecycle { destroy = false }
+> }
+> ```
+
+### `terraform state mv`: rename / relocate, without recreating
+> The `terraform state mv` command **renames or relocates resources within your Terraform state file
+> without destroying or recreating the actual infrastructure**. It updates the mapping between your
+> updated code and the existing cloud assets.
+
+Use it when you **want to change the name you gave a resource** in the code:
+```
+[root@Devops-server project1]# terraform state mv aws_s3_bucket.first aws_s3_bucket.hello
+```
+**Rename the block in the code too** (`resource "aws_s3_bucket" "hello"`). Otherwise the plan sees
+`hello` in state but `first` in code, and wants to destroy one and create the other.
+
+Why it matters: if you just rename the block in code **without** `state mv`, Terraform thinks
+`first` was deleted and `hello` is new, so it **destroys the real bucket and creates a new one**.
+`state mv` only rewrites the name in state, so the plan shows **No changes**.
+
+Other uses: moving a resource **into a module** (`terraform state mv aws_instance.linux
+module.web.aws_instance.linux`), and `count` → `for_each` conversions (`'aws_instance.linux[0]'` →
+`'aws_instance.linux["web"]'`).
+
+> **Modern alternative (Terraform ≥ 1.1):** a `moved {}` block in code (see Chapter 09). It's
+> reviewed in a PR and applied by `plan`/`apply` for everyone, instead of a one-off command on one
+> laptop.
+
+| Command | State | Real infrastructure | Typical use |
+|---|---|---|---|
+| `terraform state rm <addr>` | removed | **untouched** | Hand a resource to another team or stack, stop managing it |
+| `terraform state mv <old> <new>` | renamed / moved | **untouched** | Rename a resource, move it into a module, `count`→`for_each` |
+| `terraform import <addr> <id>` | added | untouched | Start managing an existing resource |
+| `terraform destroy -target=<addr>` | removed | **deleted** | Really delete one resource |
+
+---
+
+## Command reference (this chapter)
+```bash
+terraform apply --auto-approve                    # count/for_each/provider labs
+terraform destroy --auto-approve                  # blocked by lifecycle.prevent_destroy
+terraform state list                              # linux[0], linux[1] / linux["web"], linux["db"]
+terraform state show 'aws_instance.linux["web"]'  # quote addresses with [ ] or " "
+terraform init                                    # installs versions matching required_providers; writes the lock file
+terraform init -upgrade                           # ignore the lock file, re-select within the constraints
+terraform providers                               # which modules require which provider versions
+terraform version                                 # CLI + provider versions in use
+terraform validate                                # shows deprecation warnings (acl on aws_s3_bucket)
+terraform state rm aws_s3_bucket.first            # forget, don't destroy
+terraform state mv aws_s3_bucket.first aws_s3_bucket.hello   # rename in state, don't recreate
+terraform plan -target=aws_instance.linux1        # scope a plan (the prevent_destroy error suggests this)
+```
+
+## Still to come
+- `dynamic` blocks (a "for_each inside a resource" for nested blocks like `ingress`)
+- Conditional resources with `count = var.enabled ? 1 : 0`
+- `for` expressions, `toset()`, `zipmap()` for building `for_each` inputs
+- `create_before_destroy` with launch templates / ASGs for zero-downtime changes
+</script>
+<script>
+  document.getElementById('content').innerHTML =
+    marked.parse(document.getElementById('md').textContent, { gfm: true });
+</script>
+</body>
+</html>

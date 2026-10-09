@@ -1,0 +1,16 @@
+Energy Exemplar — Manager, Cloud Operations (Dec 2025 - Present)
+LinkedIn Experience section, confirmed accurate (18 AKS clusters / 13 Azure subscriptions matches resume)
+
+• Global Cloud Operations & Service Excellence: Lead 24×7 cloud operations and service delivery across AU, EU, NA, UAE, India, and South Africa, managing Azure infrastructure for 300+ customers while driving service quality, reliability, and customer satisfaction.
+
+• Kubernetes & Platform Reliability: Own operational excellence across 18 AKS Kubernetes & ArgoCD clusters spanning 13 Azure subscriptions and 74 microservices, sustaining 99.99% platform uptime through proactive monitoring, capacity planning, automation, and preventive maintenance.
+
+• Enterprise LLM Gateway Migration: Directed enterprise onboarding and migration of 9+ production application LiteLLM Enterprise, a centralized LLM gateway — managing model registration, per-application virtual key provisioning, and Azure Key Vault secrets integration across preprod and prod environments for Azure OpenAI, Anthropic, and self-hosted model providers.
+
+• Release, Incident & Risk Governance: Govern weekly/monthly releases across global environments with rigorous change control and documentation; lead major incidents, escalations, and customer-facing RCAs while driving vulnerability remediation through SLA- and risk-based governance.
+
+• FinOps, Disaster Recovery & Resilience: Drive end-to-end FinOps, budget governance, cost optimization, and spend analytics, while planning and executing quarterly DR drills to validate failover readiness, identify recovery gaps, and strengthen business continuity.
+
+• People Leadership, Compliance & Operational Transformation: Lead a 25-member operations organization comprising 10 in-house and 15 vendor resources through goal setting, coaching, and biweekly 1:1s; support SOC 1, SOC 2, and ISO 27001 compliance while continuously improving operational processes, monitoring, and runbook maturity.
+
+• Stakeholder Management & Executive Reporting: Meet weekly with product teams to track upcoming projects in the pipeline and align team bandwidth and capacity in advance, so new application onboarding lands without capacity surprises; hold weekly syncs with the Microsoft TAM team to secure the Azure quota AI workloads need ahead of demand and help the team resolve quota issues when they come up; and deliver a monthly report to the Director translating the month's work into the business value it actually created.

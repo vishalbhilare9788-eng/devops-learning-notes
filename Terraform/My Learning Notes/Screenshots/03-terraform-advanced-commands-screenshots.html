@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Screenshots — Terraform Advanced Commands</title>
+<style>
+  @page { size: A4 landscape; margin: 12mm 14mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    color: #1c2530;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 {
+    font-size: 18pt;
+    color: #0f2942;
+    margin-bottom: 2px;
+  }
+  .subtitle {
+    color: #62727f;
+    font-style: italic;
+    margin-top: 0;
+    margin-bottom: 18px;
+    font-size: 10pt;
+  }
+  .print-hint {
+    background: #fff8e1;
+    border: 1px solid #f0d98c;
+    color: #6b5410;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 9.5pt;
+    margin-bottom: 20px;
+  }
+  .shot {
+    page-break-inside: avoid;
+    page-break-after: always;
+    padding-top: 10px;
+  }
+  .shot:last-child { page-break-after: auto; }
+  .shot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid #2b6cb0;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+  }
+  .shot-num {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #123a63;
+  }
+  .shot-caption {
+    font-size: 11pt;
+    color: #1c2530;
+  }
+  .shot-timestamp {
+    font-size: 9pt;
+    color: #8a97a3;
+    font-family: Consolas, monospace;
+  }
+  .shot-img-wrap {
+    text-align: center;
+  }
+  img {
+    max-width: 100%;
+    max-height: 165mm;
+    border: 1px solid #d7dfe6;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  @media print {
+    .print-hint { display: none; }
+    body { padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="print-hint">This is a print-ready gallery page. Use your browser's <b>Print &rarr; Save as PDF</b> (Ctrl/Cmd+P, landscape) to save it as <code>03-terraform-advanced-commands-screenshots.pdf</code> in this folder.</div>
+
+<h1>Screenshots &mdash; Terraform Advanced Commands</h1>
+<div class="subtitle">Lecture 3 &middot; 58 shots, chronological &middot; source stills from the session (2026-09-24 15:06 &ndash; 19:28)</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">01 / 58</span><span class="shot-caption">Lecture slide &mdash; "Terraform Advance Command": graph, taint, import, workspace, refresh, logging, provisioners, plugin cache</span><span class="shot-timestamp">15:06:31</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/01.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">02 / 58</span><span class="shot-caption">Command comparison &mdash; legacy <code>terraform taint</code> vs modern <code>terraform apply -replace</code> (deprecated since v0.15.2)</span><span class="shot-timestamp">15:14:27</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/02.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">03 / 58</span><span class="shot-caption"><code>terraform state list</code> &mdash; aws_instance.web + aws_s3_bucket.my_s3_bucket</span><span class="shot-timestamp">15:24:52</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/03.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">04 / 58</span><span class="shot-caption"><code>terraform taint aws_instance.web</code> &mdash; marked as tainted</span><span class="shot-timestamp">15:25:47</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/04.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">05 / 58</span><span class="shot-caption">terraform.tfstate &mdash; instance now carries <code>"status": "tainted"</code></span><span class="shot-timestamp">15:27:48</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/05.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">06 / 58</span><span class="shot-caption"><code>terraform untaint aws_instance.web</code> &mdash; successfully untainted</span><span class="shot-timestamp">15:29:30</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/06.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">07 / 58</span><span class="shot-caption">Taint the instance again</span><span class="shot-timestamp">15:30:29</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/07.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">08 / 58</span><span class="shot-caption"><code>terraform apply --auto-approve</code></span><span class="shot-timestamp">15:31:24</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/08.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">09 / 58</span><span class="shot-caption">Plan: 1 to add, 0 to change, 1 to destroy &mdash; the replacement</span><span class="shot-timestamp">15:31:51</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/09.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">10 / 58</span><span class="shot-caption">"What is terraform import?" &mdash; maps existing infra into state; does NOT generate .tf; syntax ADDRESS ID</span><span class="shot-timestamp">15:39:10</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/10.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">11 / 58</span><span class="shot-caption">Console &mdash; manually created EC2 Terraform-import-ec2 (i-0c27f664619a950cc, t2.nano)</span><span class="shot-timestamp">15:47:56</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/11.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">12 / 58</span><span class="shot-caption">Console instances list &mdash; Terraform-import-ec2 running in ap-south-1b</span><span class="shot-timestamp">15:48:41</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/12.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">13 / 58</span><span class="shot-caption">Empty <code>resource "aws_instance" "terraform-import" {}</code> block (file named ec2-tf)</span><span class="shot-timestamp">15:56:02</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/13.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">14 / 58</span><span class="shot-caption"><code>terraform import aws_instance.terraform-import i-0c27f664619a950cc</code></span><span class="shot-timestamp">15:58:36</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/14.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">15 / 58</span><span class="shot-caption">Import prepared &rarr; Import successful! Now in Terraform state</span><span class="shot-timestamp">16:00:11</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/15.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">16 / 58</span><span class="shot-caption"><code>ls -l</code>, <code>terraform state list</code>, <code>terraform show</code> &mdash; all attributes imported</span><span class="shot-timestamp">16:01:53</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/16.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">17 / 58</span><span class="shot-caption">ec2.tf still empty &mdash; <code>terraform apply --auto-approve</code></span><span class="shot-timestamp">16:04:39</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/17.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">18 / 58</span><span class="shot-caption">Errors &mdash; one of ami / instance_type / launch_template must be specified</span><span class="shot-timestamp">16:05:06</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/18.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">19 / 58</span><span class="shot-caption">Reconcile drift &mdash; fill config until plan says "No changes"</span><span class="shot-timestamp">16:06:41</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/19.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">20 / 58</span><span class="shot-caption">The <code>import {}</code> block (to / id)</span><span class="shot-timestamp">16:08:09</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/20.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">21 / 58</span><span class="shot-caption">ec2.tf with ami, instance_type = t2.nano, key_name</span><span class="shot-timestamp">16:13:19</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/21.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">22 / 58</span><span class="shot-caption"><code>terraform fmt ec2.tf</code> &mdash; aligned</span><span class="shot-timestamp">16:14:34</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/22.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">23 / 58</span><span class="shot-caption">Plan wants to remove the Name tag (-&gt; null) &mdash; 0 add, 1 change</span><span class="shot-timestamp">16:16:13</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/23.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">24 / 58</span><span class="shot-caption">ec2.tf with tags { Name = "Terraform-import-ec2" } added</span><span class="shot-timestamp">16:19:59</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/24.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">25 / 58</span><span class="shot-caption"><code>terraform plan</code></span><span class="shot-timestamp">16:20:59</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/25.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">26 / 58</span><span class="shot-caption">No changes &mdash; config matches real infrastructure</span><span class="shot-timestamp">16:21:35</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/26.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">27 / 58</span><span class="shot-caption">Edit ec2.tf &mdash; instance_type t2.nano &rarr; t2.micro</span><span class="shot-timestamp">16:23:39</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/27.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">28 / 58</span><span class="shot-caption">Console before the change &mdash; t2.nano</span><span class="shot-timestamp">16:24:46</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/28.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">29 / 58</span><span class="shot-caption"><code>terraform apply -auto-approve</code></span><span class="shot-timestamp">16:25:30</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/29.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">30 / 58</span><span class="shot-caption">Update in-place &mdash; instance_type t2.nano &rarr; t2.micro; public_ip/public_dns known after apply</span><span class="shot-timestamp">16:26:06</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/30.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">31 / 58</span><span class="shot-caption">Apply complete! 0 added, 1 changed, 0 destroyed</span><span class="shot-timestamp">16:26:48</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/31.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">32 / 58</span><span class="shot-caption">Console after &mdash; t2.micro, same instance ID, new public IP 13.235.75.134</span><span class="shot-timestamp">16:27:54</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/32.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">33 / 58</span><span class="shot-caption">Slide &mdash; terraform workspace: manage multiple deployments of the same configuration</span><span class="shot-timestamp">18:02:46</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/33.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">34 / 58</span><span class="shot-caption">Workspaces = separate, isolated state files for dev/staging/prod with the exact same config</span><span class="shot-timestamp">18:05:43</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/34.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">35 / 58</span><span class="shot-caption"><code>terraform workspace</code> &mdash; subcommands delete, list, new, select, show</span><span class="shot-timestamp">18:14:49</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/35.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">36 / 58</span><span class="shot-caption"><code>terraform workspace new Dev-team</code></span><span class="shot-timestamp">18:15:47</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/36.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">37 / 58</span><span class="shot-caption">New workspaces Dev-team, UAT-team, Prod-team</span><span class="shot-timestamp">18:17:07</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/37.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">38 / 58</span><span class="shot-caption"><code>terraform workspace list</code> &mdash; * Prod-team active</span><span class="shot-timestamp">18:18:02</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/38.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">39 / 58</span><span class="shot-caption"><code>terraform workspace show</code> &mdash; Prod-team</span><span class="shot-timestamp">18:19:25</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/39.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">40 / 58</span><span class="shot-caption"><code>ls -ltrha</code> &mdash; terraform.tfstate.d directory created</span><span class="shot-timestamp">18:20:38</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/40.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">41 / 58</span><span class="shot-caption"><code>terraform workspace select Dev-team</code></span><span class="shot-timestamp">18:25:04</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/41.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">42 / 58</span><span class="shot-caption">main.tf &mdash; S3 bucket named with <code>${terraform.workspace}</code></span><span class="shot-timestamp">18:31:11</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/42.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">43 / 58</span><span class="shot-caption">Apply complete &mdash; 1 added (bucket in Dev-team workspace)</span><span class="shot-timestamp">18:41:59</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/43.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">44 / 58</span><span class="shot-caption"><code>tree terraform.tfstate.d/</code> &mdash; per-workspace state (dev-team vs Dev-team: case-sensitive)</span><span class="shot-timestamp">18:44:05</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/44.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">45 / 58</span><span class="shot-caption">Slide &mdash; terraform refresh reads current settings, updates state</span><span class="shot-timestamp">18:52:48</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/45.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">46 / 58</span><span class="shot-caption"><code>terraform refresh</code> &mdash; Refreshing state... (instructor's demo)</span><span class="shot-timestamp">19:04:27</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/46.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">47 / 58</span><span class="shot-caption">Slide &mdash; Terraform logging records internal steps</span><span class="shot-timestamp">19:11:24</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/47.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">48 / 58</span><span class="shot-caption">Set the TF_LOG variable</span><span class="shot-timestamp">19:12:36</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/48.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">49 / 58</span><span class="shot-caption">TF_LOG levels: TRACE, DEBUG, INFO, WARN, ERROR</span><span class="shot-timestamp">19:13:15</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/49.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">50 / 58</span><span class="shot-caption">Logging levels least &rarr; most verbose: OFF, ERROR, WARN, INFO, DEBUG, TRACE</span><span class="shot-timestamp">19:14:05</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/50.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">51 / 58</span><span class="shot-caption"><code>export TF_LOG="TRACE"</code> / <code>export TF_LOG_PATH="./terraform.log"</code></span><span class="shot-timestamp">19:17:49</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/51.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">52 / 58</span><span class="shot-caption">Added to /root/.bashrc and sourced</span><span class="shot-timestamp">19:19:15</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/52.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">53 / 58</span><span class="shot-caption">terraform.log created (2.9K)</span><span class="shot-timestamp">19:21:53</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/53.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">54 / 58</span><span class="shot-caption"><code>less terraform.log</code> &mdash; Terraform 1.16.3, CLI args [terraform plan], TRACE lines</span><span class="shot-timestamp">19:22:24</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/54.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">55 / 58</span><span class="shot-caption">Slide &mdash; user data: instructions a new server runs at startup</span><span class="shot-timestamp">19:24:30</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/55.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">56 / 58</span><span class="shot-caption">ram.sh &mdash; install/start httpd, write index.html, set hostname</span><span class="shot-timestamp">19:27:12</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/56.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">57 / 58</span><span class="shot-caption"><code>ll</code> &mdash; main.tf, ram.sh, state files</span><span class="shot-timestamp">19:28:00</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/57.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">58 / 58</span><span class="shot-caption">main.tf &mdash; <code>user_data = "${file("ram.sh")}"</code></span><span class="shot-timestamp">19:28:29</span></div>
+  <div class="shot-img-wrap"><img src="assets/03-terraform-advanced-commands/58.png"></div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Screenshots — Terraform Plugin Cache</title>
+<style>
+  @page { size: A4 landscape; margin: 12mm 14mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    color: #1c2530;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 {
+    font-size: 18pt;
+    color: #0f2942;
+    margin-bottom: 2px;
+  }
+  .subtitle {
+    color: #62727f;
+    font-style: italic;
+    margin-top: 0;
+    margin-bottom: 18px;
+    font-size: 10pt;
+  }
+  .print-hint {
+    background: #fff8e1;
+    border: 1px solid #f0d98c;
+    color: #6b5410;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 9.5pt;
+    margin-bottom: 20px;
+  }
+  .shot {
+    page-break-inside: avoid;
+    page-break-after: always;
+    padding-top: 10px;
+  }
+  .shot:last-child { page-break-after: auto; }
+  .shot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid #2b6cb0;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+  }
+  .shot-num {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #123a63;
+  }
+  .shot-caption {
+    font-size: 11pt;
+    color: #1c2530;
+  }
+  .shot-timestamp {
+    font-size: 9pt;
+    color: #8a97a3;
+    font-family: Consolas, monospace;
+  }
+  .shot-img-wrap {
+    text-align: center;
+  }
+  img {
+    max-width: 100%;
+    max-height: 165mm;
+    border: 1px solid #d7dfe6;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  @media print {
+    .print-hint { display: none; }
+    body { padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="print-hint">This is a print-ready gallery page. Use your browser's <b>Print &rarr; Save as PDF</b> (Ctrl/Cmd+P, landscape) to save it as <code>05-terraform-plugin-cache-screenshots.pdf</code> in this folder.</div>
+
+<h1>Screenshots &mdash; Terraform Plugin Cache</h1>
+<div class="subtitle">Lecture 5 &middot; 17 shots, chronological &middot; source stills from the session (2026-09-28 17:06 &ndash; 17:46)</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">01 / 17</span><span class="shot-caption">Lecture definition &mdash; plugin cache is a local storage that saves plugins to make Terraform faster and more reliable</span><span class="shot-timestamp">17:06:50</span></div>
+  <div class="shot-img-wrap"><img src="assets/05-terraform-plugin-cache/01.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">02 / 17</span><span class="shot-caption">Reference &mdash; centralized local directory; by default every <code>init</code> downloads a separate copy into <code>.terraform/providers</code></span><span class="shot-timestamp">17:07:38</span></div>
+  <div class="shot-img-wrap"><img src="assets/05-terraform-plugin-cache/02.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">03 / 17</span><span class="shot-caption">Whiteboard &mdash; one server, client projects P1/P2/P3 all using AWS, each running <code>terraform init</code></span><span class="shot-timestamp">17:13:26</span></div>
+  <div class="shot-img-wrap"><img src="assets/05-terraform-plugin-cache/03.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">04 / 17</span><span class="shot-caption">Lab setup &mdash; <code>mkdir a b c</code> in ~/project1, create <code>s3.tf</code> in folder a</span><span class="shot-timestamp">17:21:01</span></div>
+  <div class="shot-img-wrap"><img src="assets/05-terraform-plugin-cache/04.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">05 / 17</span><span class="shot-caption"><code>s3.tf</code> &mdash; <code>aws_s3_bucket.first</code> (linuxterraform12345, tag Name=my_buck)</span><span class="shot-timestamp">17:21:31</span></div>
+  <div class="shot-img-wrap"><img src="assets/05-terraform-plugin-cache/05.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">06 / 17</span><span class="shot-caption"><code>terraform plan</code> before init &rarr; <em>Inconsistent dependency lock file</em>, run <code>terraform init</code></span><span class="shot-timestamp">17:22:30</span></div>
+  <div class="shot-img-wrap"><img src="assets/05-terraform-plugin-cache/06.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">07 / 17</span><span class="shot-caption">Without a cache &mdash; one project&rsquo;s <code>.terraform</code> folder is 874M</span><span class="shot-timestamp">17:24:48</span></div>
+  <div class="shot-img-wrap"><img src="assets/05-terraform-plugin-cache/07.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">08 / 17</span><span class="shot-caption">The CLI config file &mdash; <code>.terraformrc</code></span><span class="shot-timestamp">17:26:56</span></div>
+  <div class="shot-img-wrap"><img src="assets/05-terraform-plugin-cache/08.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">09 / 17</span><span class="shot-caption">Docs &mdash; Configuration File Syntax: <code>plugin_cache_dir</code> and <code>disable_checkpoint</code></span><span class="shot-timestamp">17:28:37</span></div>
+  <div class="shot-img-wrap"><img src="assets/05-terraform-plugin-cache/09.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">10 / 17</span><span class="shot-caption"><code>~/.terraformrc</code> contents in vim</span><span class="shot-timestamp">17:30:46</span></div>
+  <div class="shot-img-wrap"><img src="assets/05-terraform-plugin-cache/10.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">11 / 17</span><span class="shot-caption"><code>touch .terraformrc</code>; <code>~/.terraform.d</code> holds only <code>checkpoint_signature</code> &mdash; no plugin-cache yet</span><span class="shot-timestamp">17:32:18</span></div>
+  <div class="shot-img-wrap"><img src="assets/05-terraform-plugin-cache/11.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">12 / 17</span><span class="shot-caption"><code>terraform init</code> &rarr; <em>plugin cache dir cannot be opened: no such file or directory</em></span><span class="shot-timestamp">17:34:10</span></div>
+  <div class="shot-img-wrap"><img src="assets/05-terraform-plugin-cache/12.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">13 / 17</span><span class="shot-caption">Init still completes &mdash; installs hashicorp/aws v6.66.0 and creates <code>.terraform.lock.hcl</code></span><span class="shot-timestamp">17:39:27</span></div>
+  <div class="shot-img-wrap"><img src="assets/05-terraform-plugin-cache/13.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">14 / 17</span><span class="shot-caption"><code>plugin-cache</code> folder now present in <code>~/.terraform.d</code></span><span class="shot-timestamp">17:40:35</span></div>
+  <div class="shot-img-wrap"><img src="assets/05-terraform-plugin-cache/14.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">15 / 17</span><span class="shot-caption">Walking the cache: registry.terraform.io / hashicorp / aws / 6.66.0 / linux_amd64 / provider binary</span><span class="shot-timestamp">17:42:11</span></div>
+  <div class="shot-img-wrap"><img src="assets/05-terraform-plugin-cache/15.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">16 / 17</span><span class="shot-caption"><code>tree ~/.terraform.d</code> &mdash; 822M plugin-cache holding the single AWS provider copy</span><span class="shot-timestamp">17:43:29</span></div>
+  <div class="shot-img-wrap"><img src="assets/05-terraform-plugin-cache/16.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">17 / 17</span><span class="shot-caption">Project <code>.terraform</code> &mdash; <code>linux_amd64</code> is a symlink into the cache, 0 files</span><span class="shot-timestamp">17:46:12</span></div>
+  <div class="shot-img-wrap"><img src="assets/05-terraform-plugin-cache/17.png"></div>
+</div>
+
+</body>
+</html>

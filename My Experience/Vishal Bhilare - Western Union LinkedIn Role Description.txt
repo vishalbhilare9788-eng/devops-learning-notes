@@ -1,0 +1,29 @@
+Western Union — Associate Manager (06/2023 - 12/2025)
+LinkedIn Experience section
+
+• AWS Cloud Infrastructure & Reliability: Guided end-to-end AWS infrastructure operations across global environments, driving high availability, scalability, performance, and operational resilience across critical cloud services.
+
+• Automation & Operational Transformation: Spearheaded infrastructure automation using Terraform and CloudFormation, enabling standardized, repeatable, and scalable deployments while reducing manual intervention and operational risk.
+
+• Incident, Problem, Change & Certificate Governance: Directed proactive monitoring and major incident management through CloudWatch, EventBridge, and ServiceNow — leading RCAs on production incidents and driving problem tickets to closure with both short-term fixes and longer-term improvement plans. Managed certificate lifecycle and coordinated with vendor teams to keep tickets, incidents, and change requests closing on time, and kept SOPs current instead of letting them go stale.
+
+• Cloud Security, Governance & Compliance: Championed cloud security and disaster recovery using AWS Backup; partnered with the security team to track vulnerabilities and close them ahead of due dates, and kept EC2 patch compliance current through monthly patching cycles and reporting.
+
+• Technical Governance & AWS Partnership: Represented the operations team in Architecture Review Board sessions, raising operational and reliability considerations into design decisions; held weekly syncs with the AWS TAM team to track planned maintenance and get support standing up new services or features.
+
+• Agile Delivery Support: Partnered with the Scrum Master on PI planning, feature and story creation, and capacity planning, keeping sprints closing clean without backlog carryover.
+
+• Team Leadership, FinOps & Continuous Improvement: Supervised and mentored cloud operations teams while driving FinOps, capacity planning, performance optimization, and continuous improvement initiatives to maximize cloud value and operational efficiency.
+
+• Technical POCs & Platform Migrations: Led hands-on technical POCs that became production migrations — an in-place RHEL 7 OS upgrade (Leapp) to close a zero-day vulnerability without server rebuilds or downtime, a RHEL-to-Amazon-Linux AMI migration to cut licensing costs, and an MSK Kafka upgrade from version 2.7 to 3.6.
+
+• Mentoring & Technical Enablement: Mentored junior engineers through hands-on technical guidance, unblocking them on complex tasks directly rather than just reassigning the ticket.
+
+• Go/No-Go Readiness & DR Drills: Represented cloud infrastructure readiness in application go/no-go decisions, bringing facts instead of assumptions to the call; ran quarterly DR drills for mission-critical applications and supported teams through mock-drill completion.
+
+• SRE Practices & Proactive Monitoring: Built proactive monitoring and SRE best practices to hold application uptime at 99.99% — properly tuned alert thresholds, alerts that actually fired instead of going stale, correct ticket creation on trigger, and a complete escalation matrix so the right person got paged instead of an alert going nowhere.
+
+Notes:
+- "Agile Delivery Support" is worded as partnering with the Scrum Master, not owning the role, based on "help scrum master" — strengthen this to direct ownership language if that undersells what was actually done.
+- MSK Kafka 2.7->3.6 upgrade bullet is still thin (no outcome/metric) compared to the rest — gather the real story (risk before upgrade, duration, result) when possible.
+- "SRE Practices" bullet uses 99.99% uptime, the same figure already used for the Energy Exemplar AKS platform on the resume. Confirm this is actually accurate for Western Union too, or swap in the real number — identical figures at two companies invites a pointed interview question.

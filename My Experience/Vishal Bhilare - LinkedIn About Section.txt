@@ -1,0 +1,9 @@
+14+ years running cloud operations for global enterprises — most recently responsible for an environment spanning 25-30 AWS accounts (production and non-production) with roughly 3,000 EC2 instances, plus 14 Azure subscriptions running 30 AKS clusters. In that environment: a zero-day patched across an entire RHEL 7 fleet with zero downtime, recurring certificate outages taken from 2-3 a month to zero, and close to $50,000 a year recovered from two cost-optimization initiatives nobody had looked at closely.
+
+Across Western Union and Energy Exemplar, that's meant owning 24x7 enterprise operations — incident and escalation management, disaster-recovery drills, and the root-cause analysis that turns a bad week into a permanent fix, not just a closed ticket.
+
+None of that scales if I'm the only one doing it. I run an audit-then-delegate model — I do the discovery work myself, then hand the team a clear runbook instead of micromanaging execution. That's how we've cleared out infrastructure sprawl, kept release and change management predictable, closed the loop on incidents instead of just acknowledging them, and tracked the KPIs that show whether operations is actually improving or just staying busy.
+
+Day to day, that's Kubernetes, Terraform, CI/CD pipelines, Grafana and Dynatrace for observability, FinOps cost governance, and vulnerability and compliance programs — run inside Agile teams, with mentoring and cross-team ownership treated as seriously as the technical work.
+
+I'm currently looking for Manager-level SRE, Platform Engineering, or DevOps roles where reliability and cost accountability both matter. I'm available to start immediately — happy to talk through any of the above.

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Screenshots — Docker Internals Hands-On</title>
+<style>
+  @page { size: A4 landscape; margin: 12mm 14mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    color: #1c2530;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 {
+    font-size: 18pt;
+    color: #0f2942;
+    margin-bottom: 2px;
+  }
+  .subtitle {
+    color: #62727f;
+    font-style: italic;
+    margin-top: 0;
+    margin-bottom: 18px;
+    font-size: 10pt;
+  }
+  .print-hint {
+    background: #fff8e1;
+    border: 1px solid #f0d98c;
+    color: #6b5410;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 9.5pt;
+    margin-bottom: 20px;
+  }
+  .shot {
+    page-break-inside: avoid;
+    page-break-after: always;
+    padding-top: 10px;
+  }
+  .shot:last-child { page-break-after: auto; }
+  .shot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid #2b6cb0;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+  }
+  .shot-num {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #123a63;
+  }
+  .shot-caption {
+    font-size: 11pt;
+    color: #1c2530;
+  }
+  .shot-timestamp {
+    font-size: 9pt;
+    color: #8a97a3;
+    font-family: Consolas, monospace;
+  }
+  .shot-img-wrap {
+    text-align: center;
+  }
+  img {
+    max-width: 100%;
+    max-height: 165mm;
+    border: 1px solid #d7dfe6;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  @media print {
+    .print-hint { display: none; }
+    body { padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+
+<div class="print-hint">This is a print-ready gallery page. Use your browser's <b>Print &rarr; Save as PDF</b> (Ctrl/Cmd+P, landscape) to save it as <code>12-docker-internals-hands-on-screenshots.pdf</code> in this folder.</div>
+
+<h1>Screenshots &mdash; Docker Internals Hands-On (dockerd, containerd, shim, runc, /proc)</h1>
+<div class="subtitle">Kubernetes Lecture 12 &middot; 32 shots, chronological &middot; source stills from the session (2026-10-08 14:49 &ndash; 15:53)</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">01 / 32</span><span class="shot-caption">Fresh EC2 (SSM session) &mdash; <code>docker: command not found</code></span><span class="shot-timestamp">14:49:08</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/01.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">02 / 32</span><span class="shot-caption"><code>yum install docker</code> &mdash; 10 packages: docker + containerd + runc + iptables / libcgroup / pigz</span><span class="shot-timestamp">14:51:34</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/02.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">03 / 32</span><span class="shot-caption">Installed &mdash; containerd 1.6.19, docker 20.10.23, runc 1.1.5 and helpers</span><span class="shot-timestamp">14:52:42</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/03.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">04 / 32</span><span class="shot-caption"><code>docker ps</code> &rarr; Cannot connect to the Docker daemon at unix:///var/run/docker.sock</span><span class="shot-timestamp">14:55:16</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/04.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">05 / 32</span><span class="shot-caption"><code>ss -tnlp</code> &mdash; only sshd listening, no docker / containerd yet</span><span class="shot-timestamp">15:04:27</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/05.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">06 / 32</span><span class="shot-caption"><code>systemctl start docker</code></span><span class="shot-timestamp">15:05:32</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/06.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">07 / 32</span><span class="shot-caption"><code>docker ps</code> &mdash; empty table, CLI now reaches the daemon</span><span class="shot-timestamp">15:06:17</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/07.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">08 / 32</span><span class="shot-caption"><code>ps aux</code> &mdash; /usr/bin/containerd (26298) and /usr/bin/dockerd -H fd:// --containerd=...</span><span class="shot-timestamp">15:07:31</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/08.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">09 / 32</span><span class="shot-caption"><code>systemctl status docker</code> &mdash; TriggeredBy docker.socket, Main PID 26307, overlay2, API listen on /run/docker.sock</span><span class="shot-timestamp">15:10:33</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/09.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">10 / 32</span><span class="shot-caption">CGroup line &mdash; <code>/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock</code></span><span class="shot-timestamp">15:17:04</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/10.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">11 / 32</span><span class="shot-caption"><code>systemctl status containerd</code> &mdash; modprobe overlay, serving containerd.sock + containerd.sock.ttrpc</span><span class="shot-timestamp">15:18:34</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/11.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">12 / 32</span><span class="shot-caption"><code>ps aux</code> &mdash; containerd and dockerd both running</span><span class="shot-timestamp">15:19:51</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/12.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">13 / 32</span><span class="shot-caption"><code>ss -tnlp</code> &mdash; containerd listening on 127.0.0.1:41841 (CRI streaming server)</span><span class="shot-timestamp">15:20:45</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/13.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">14 / 32</span><span class="shot-caption"><code>docker ps</code> &mdash; still no containers</span><span class="shot-timestamp">15:22:24</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/14.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">15 / 32</span><span class="shot-caption"><code>docker run -itd nginx</code> &mdash; 7 layers pulled, container ID printed</span><span class="shot-timestamp">15:24:44</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/15.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">16 / 32</span><span class="shot-caption">Same run &mdash; the unique container ID (SHA) underlined</span><span class="shot-timestamp">15:26:20</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/16.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">17 / 32</span><span class="shot-caption">Whiteboard &mdash; runc &rarr; PROCESS &larr; container</span><span class="shot-timestamp">15:27:44</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/17.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">18 / 32</span><span class="shot-caption"><code>ps aux</code> &mdash; containerd-shim-runc-v2 -namespace moby -id ef22ea64a308&hellip; (PID 27017)</span><span class="shot-timestamp">15:29:33</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/18.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">19 / 32</span><span class="shot-caption">Shim command close-up &mdash; <code>-namespace moby</code>, <code>-id</code> = container ID</span><span class="shot-timestamp">15:33:01</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/19.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">20 / 32</span><span class="shot-caption">Whiteboard &mdash; full shim command incl. <code>-address /run/containerd/containerd.sock</code></span><span class="shot-timestamp">15:36:06</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/20.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">21 / 32</span><span class="shot-caption">Whiteboard &mdash; the container takes its resources from the host</span><span class="shot-timestamp">15:41:13</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/21.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">22 / 32</span><span class="shot-caption">Shim process 27017 still running</span><span class="shot-timestamp">15:42:36</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/22.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">23 / 32</span><span class="shot-caption"><code>docker ps</code> &mdash; ef22ea64a308 nginx, Up 11 minutes, adoring_ishizaka</span><span class="shot-timestamp">15:42:55</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/23.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">24 / 32</span><span class="shot-caption"><code>docker kill ef22</code></span><span class="shot-timestamp">15:43:47</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/24.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">25 / 32</span><span class="shot-caption"><code>ps aux</code> after kill &mdash; shim gone; then <code>docker run -itd nginx</code> again &rarr; 80cf84c4&hellip;</span><span class="shot-timestamp">15:45:14</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/25.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">26 / 32</span><span class="shot-caption">New shim 27641 + nginx master 27664 (root) + worker 27714 (uid 101)</span><span class="shot-timestamp">15:45:35</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/26.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">27 / 32</span><span class="shot-caption"><code>/proc</code> &mdash; one directory per PID</span><span class="shot-timestamp">15:46:58</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/27.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">28 / 32</span><span class="shot-caption"><code>/proc/27641</code> &mdash; cmdline, exe, ns, cgroup, root, fd &hellip;</span><span class="shot-timestamp">15:48:04</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/28.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">29 / 32</span><span class="shot-caption"><code>cd /proc/27641/root</code> &mdash; a full <code>/</code> (the shim is a host process, so this is the host root)</span><span class="shot-timestamp">15:50:24</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/29.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">30 / 32</span><span class="shot-caption"><code>touch technohulk</code> in /proc/27641/root/tmp</span><span class="shot-timestamp">15:51:46</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/30.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">31 / 32</span><span class="shot-caption"><code>technohulk</code> created</span><span class="shot-timestamp">15:52:08</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/31.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">32 / 32</span><span class="shot-caption">New session, host <code>/tmp</code> &mdash; technohulk is there (shim root = host root)</span><span class="shot-timestamp">15:53:00</span></div>
+  <div class="shot-img-wrap"><img src="assets/12-docker-internals-hands-on/32.png"></div>
+</div>
+
+</body>
+</html>

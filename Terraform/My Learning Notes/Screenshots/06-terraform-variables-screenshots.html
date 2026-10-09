@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Screenshots — Terraform Variables</title>
+<style>
+  @page { size: A4 landscape; margin: 12mm 14mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    color: #1c2530;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 {
+    font-size: 18pt;
+    color: #0f2942;
+    margin-bottom: 2px;
+  }
+  .subtitle {
+    color: #62727f;
+    font-style: italic;
+    margin-top: 0;
+    margin-bottom: 18px;
+    font-size: 10pt;
+  }
+  .print-hint {
+    background: #fff8e1;
+    border: 1px solid #f0d98c;
+    color: #6b5410;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 9.5pt;
+    margin-bottom: 20px;
+  }
+  .shot {
+    page-break-inside: avoid;
+    page-break-after: always;
+    padding-top: 10px;
+  }
+  .shot:last-child { page-break-after: auto; }
+  .shot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid #2b6cb0;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+  }
+  .shot-num {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #123a63;
+  }
+  .shot-caption {
+    font-size: 11pt;
+    color: #1c2530;
+  }
+  .shot-timestamp {
+    font-size: 9pt;
+    color: #8a97a3;
+    font-family: Consolas, monospace;
+  }
+  .shot-img-wrap {
+    text-align: center;
+  }
+  img {
+    max-width: 100%;
+    max-height: 165mm;
+    border: 1px solid #d7dfe6;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  @media print {
+    .print-hint { display: none; }
+    body { padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="print-hint">This is a print-ready gallery page. Use your browser's <b>Print &rarr; Save as PDF</b> (Ctrl/Cmd+P, landscape) to save it as <code>06-terraform-variables-screenshots.pdf</code> in this folder.</div>
+
+<h1>Screenshots &mdash; Terraform Variables</h1>
+<div class="subtitle">Lecture 6 &middot; 40 shots, chronological &middot; source stills from the session (2026-09-28 22:15 &ndash; 2026-09-29 00:47)</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">01 / 40</span><span class="shot-caption">Lecture &mdash; Terraform variables: 3 types (input, output, local) and the variable block anatomy</span><span class="shot-timestamp">22:15:57</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/01.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">02 / 40</span><span class="shot-caption">Reference &mdash; variables as parameters for IaC, like function arguments, passing values at runtime</span><span class="shot-timestamp">22:16:56</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/02.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">03 / 40</span><span class="shot-caption">Three core types of values &mdash; Input Variables, Local Values (<code>locals</code>), Output Values</span><span class="shot-timestamp">22:18:05</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/03.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">04 / 40</span><span class="shot-caption">Declaring input variables in <code>variables.tf</code> &mdash; <code>instance_type</code> and <code>sensitive</code> <code>database_password</code></span><span class="shot-timestamp">22:19:35</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/04.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">05 / 40</span><span class="shot-caption">Variable example &mdash; name, description, type, default</span><span class="shot-timestamp">22:22:08</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/05.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">06 / 40</span><span class="shot-caption">Data types &mdash; primitive (string, number, bool) vs complex (list/tuple, map/object) and <code>null</code></span><span class="shot-timestamp">22:24:37</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/06.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">07 / 40</span><span class="shot-caption">List &mdash; a numbered catalogue of values, read by index</span><span class="shot-timestamp">22:25:47</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/07.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">08 / 40</span><span class="shot-caption">List <code>var.users[0]</code> and Map <code>plans</code> (5USD / 10USD / 20USD)</span><span class="shot-timestamp">22:26:47</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/08.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">09 / 40</span><span class="shot-caption">Assign values &mdash; <code>-var</code> flag, <code>.tfvars</code> files, <code>TF_VAR_&lt;name&gt;</code> environment variables</span><span class="shot-timestamp">22:29:32</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/09.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">10 / 40</span><span class="shot-caption">Same page &mdash; <code>export TF_VAR_location=eastus</code></span><span class="shot-timestamp">22:31:38</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/10.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">11 / 40</span><span class="shot-caption">Variable preferences &mdash; load order from environment variable (lowest) to <code>-var</code>/<code>-var-file</code> (highest)</span><span class="shot-timestamp">22:32:20</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/11.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">12 / 40</span><span class="shot-caption">First case &mdash; resource code + variables + values all in one <code>main.tf</code></span><span class="shot-timestamp">22:35:05</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/12.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">13 / 40</span><span class="shot-caption"><code>terraform fmt main.tf</code> &mdash; <code>variable "cpu"</code> declared, <code>instance_type</code> still hard-coded t2.nano</span><span class="shot-timestamp">22:46:12</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/13.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">14 / 40</span><span class="shot-caption"><code>instance_type = var.cpu</code></span><span class="shot-timestamp">22:48:53</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/14.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">15 / 40</span><span class="shot-caption">Legacy interpolation form <code>"${var.cpu}"</code> (the <code>var.cpu</code> line commented out)</span><span class="shot-timestamp">22:51:10</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/15.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">16 / 40</span><span class="shot-caption">Second case &mdash; resource code, and variables with values in a separate <code>.tf</code> file</span><span class="shot-timestamp">22:53:28</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/16.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">17 / 40</span><span class="shot-caption"><code>variable.tf</code> &mdash; cpu / ami / key with defaults (note the <code>varaible</code> typo)</span><span class="shot-timestamp">23:00:01</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/17.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">18 / 40</span><span class="shot-caption"><code>main.tf</code> &mdash; <code>var.ami</code>, <code>var.cpu</code>, <code>var.key</code> (note the <code>kay_name</code> typo)</span><span class="shot-timestamp">23:02:38</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/18.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">19 / 40</span><span class="shot-caption"><code>ls -l</code> &mdash; <code>main.tf</code> and <code>variable.tf</code></span><span class="shot-timestamp">23:03:21</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/19.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">20 / 40</span><span class="shot-caption">Third case &mdash; resource code + variables + values each in separate files</span><span class="shot-timestamp">23:08:25</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/20.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">21 / 40</span><span class="shot-caption"><code>main.tf</code> + <code>variable.tf</code> with empty declarations <code>variable "cpu" {}</code></span><span class="shot-timestamp">23:13:19</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/21.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">22 / 40</span><span class="shot-caption">&hellip;plus <code>terraform.tfvars</code> holding the values (ami, cpu = t2.nano, key)</span><span class="shot-timestamp">23:17:24</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/22.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">23 / 40</span><span class="shot-caption">Per-team values &mdash; <code>prod-team.tfvars</code> and <code>dev-team.tfvars</code></span><span class="shot-timestamp">23:22:01</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/23.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">24 / 40</span><span class="shot-caption">Highest precedence &mdash; command-line arguments (<code>-var</code> &amp; <code>-var-file</code>)</span><span class="shot-timestamp">23:22:45</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/24.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">25 / 40</span><span class="shot-caption"><code>terraform plan -var-file="dev-team.tfvars"</code></span><span class="shot-timestamp">23:24:30</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/25.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">26 / 40</span><span class="shot-caption"><code>terraform.tfvars</code> with cpu / ami / key</span><span class="shot-timestamp">23:27:46</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/26.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">27 / 40</span><span class="shot-caption">Runtime override &mdash; <code>terraform plan -var="cpu=t2.medium"</code></span><span class="shot-timestamp">23:29:45</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/27.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">28 / 40</span><span class="shot-caption"><code>terraform.tfvars</code> without <code>cpu</code> &mdash; only ami and key</span><span class="shot-timestamp">23:32:36</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/28.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">29 / 40</span><span class="shot-caption">&hellip;so <code>terraform plan</code> prompts <code>var.cpu Enter a value:</code></span><span class="shot-timestamp">23:34:06</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/29.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">30 / 40</span><span class="shot-caption">Environment variable &mdash; <code>export TF_VAR_cpu=t2.small</code></span><span class="shot-timestamp">23:36:03</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/30.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">31 / 40</span><span class="shot-caption">Production way &mdash; string variable with description, type, default</span><span class="shot-timestamp">23:42:05</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/31.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">32 / 40</span><span class="shot-caption">Number variable &mdash; <code>instance_count</code>, type = number, default 2</span><span class="shot-timestamp">23:46:31</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/32.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">33 / 40</span><span class="shot-caption"><code>count = var.instance_count</code> &mdash; first attempt with the same Name tag for both instances</span><span class="shot-timestamp">23:47:25</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/33.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">34 / 40</span><span class="shot-caption">Indexing pattern &mdash; <code>Name = "web_server_${count.index}"</code></span><span class="shot-timestamp">00:04:11</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/34.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">35 / 40</span><span class="shot-caption">AWS console &mdash; 2 running t2.micro instances, <code>web_server_1</code> and <code>web_server_2</code></span><span class="shot-timestamp">00:07:01</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/35.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">36 / 40</span><span class="shot-caption">Map variable &mdash; <code>amis</code> per region plus a <code>region</code> variable with a description</span><span class="shot-timestamp">00:09:46</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/36.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">37 / 40</span><span class="shot-caption"><code>ami = var.amis[var.region]</code> &mdash; dynamic AMI by selected region</span><span class="shot-timestamp">00:10:58</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/37.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">38 / 40</span><span class="shot-caption"><code>terraform plan</code> prompts for <code>var.region</code>, showing the description as help text</span><span class="shot-timestamp">00:12:09</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/38.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">39 / 40</span><span class="shot-caption">Output values &mdash; <code>instance_id</code> and <code>instance_ip</code> (private_ip) from <code>aws_instance.linux</code></span><span class="shot-timestamp">00:41:37</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/39.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">40 / 40</span><span class="shot-caption">Local values &mdash; <code>locals { environment, instance_type }</code> used as <code>local.instance_type</code> and <code>server-${local.environment}</code></span><span class="shot-timestamp">00:47:52</span></div>
+  <div class="shot-img-wrap"><img src="assets/06-terraform-variables/40.png"></div>
+</div>
+
+</body>
+</html>

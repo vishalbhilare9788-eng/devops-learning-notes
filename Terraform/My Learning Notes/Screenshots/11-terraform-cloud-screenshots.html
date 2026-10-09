@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Screenshots — Terraform Cloud</title>
+<style>
+  @page { size: A4 landscape; margin: 12mm 14mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    color: #1c2530;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 {
+    font-size: 18pt;
+    color: #0f2942;
+    margin-bottom: 2px;
+  }
+  .subtitle {
+    color: #62727f;
+    font-style: italic;
+    margin-top: 0;
+    margin-bottom: 18px;
+    font-size: 10pt;
+  }
+  .print-hint {
+    background: #fff8e1;
+    border: 1px solid #f0d98c;
+    color: #6b5410;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 9.5pt;
+    margin-bottom: 20px;
+  }
+  .shot {
+    page-break-inside: avoid;
+    page-break-after: always;
+    padding-top: 10px;
+  }
+  .shot:last-child { page-break-after: auto; }
+  .shot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid #2b6cb0;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+  }
+  .shot-num {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #123a63;
+  }
+  .shot-caption {
+    font-size: 11pt;
+    color: #1c2530;
+  }
+  .shot-timestamp {
+    font-size: 9pt;
+    color: #8a97a3;
+    font-family: Consolas, monospace;
+  }
+  .shot-img-wrap {
+    text-align: center;
+  }
+  img {
+    max-width: 100%;
+    max-height: 165mm;
+    border: 1px solid #d7dfe6;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  @media print {
+    .print-hint { display: none; }
+    body { padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+
+<div class="print-hint">This is a print-ready gallery page. Use your browser's <b>Print &rarr; Save as PDF</b> (Ctrl/Cmd+P, landscape) to save it as <code>11-terraform-cloud-screenshots.pdf</code> in this folder.</div>
+
+<h1>Screenshots &mdash; Terraform Cloud (HCP Terraform)</h1>
+<div class="subtitle">Lecture 11 &middot; 28 shots, chronological &middot; source stills from the session (2026-10-08 19:46 &ndash; 22:51)</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">01 / 28</span><span class="shot-caption">Definition &mdash; Terraform Cloud is a managed service by HashiCorp; centralized, collaborative platform for IaC</span><span class="shot-timestamp">19:46:55</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/01.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">02 / 28</span><span class="shot-caption">Key capabilities &mdash; remote state, VCS integration, automated runs, policy-as-code + cost, RBAC</span><span class="shot-timestamp">19:48:44</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/02.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">03 / 28</span><span class="shot-caption">Organizations &mdash; &ldquo;Create your first organization&rdquo;</span><span class="shot-timestamp">20:12:56</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/03.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">04 / 28</span><span class="shot-caption">Create organization &mdash; Personal, name <code>helloyello123321456</code>, notification email</span><span class="shot-timestamp">20:14:54</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/04.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">05 / 28</span><span class="shot-caption">New Workspace &mdash; Version Control / CLI-Driven / API-Driven workflow</span><span class="shot-timestamp">20:15:32</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/05.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">06 / 28</span><span class="shot-caption">Step 2 Connect to VCS &mdash; GitHub &rarr; GitHub App</span><span class="shot-timestamp">20:17:35</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/06.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">07 / 28</span><span class="shot-caption">Step 3 Choose a repository &mdash; organization <code>srm71118</code></span><span class="shot-timestamp">20:18:51</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/07.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">08 / 28</span><span class="shot-caption">Step 4 Configure settings &mdash; workspace name <code>demorepo</code> &rarr; Create</span><span class="shot-timestamp">20:19:37</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/08.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">09 / 28</span><span class="shot-caption">Workspace created! &mdash; No variables found; Start new plan</span><span class="shot-timestamp">20:20:10</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/09.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">10 / 28</span><span class="shot-caption">Overview &mdash; Configuration uploaded; execution mode Remote, auto-apply Off, Terraform v1.15.7</span><span class="shot-timestamp">22:09:04</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/10.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">11 / 28</span><span class="shot-caption">Add variable &mdash; Terraform variable vs Environment variable; HCL / Sensitive</span><span class="shot-timestamp">22:10:00</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/11.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">12 / 28</span><span class="shot-caption">Environment variable <code>AWS_ACCESS_KEY_ID</code>, Sensitive</span><span class="shot-timestamp">22:10:51</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/12.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">13 / 28</span><span class="shot-caption">Workspace variables (2) &mdash; access key + secret key, &ldquo;Sensitive - write only&rdquo;, category env</span><span class="shot-timestamp">22:11:35</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/13.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">14 / 28</span><span class="shot-caption">Start a new run &mdash; &ldquo;Triggered via UI&rdquo;, Plan and apply (standard)</span><span class="shot-timestamp">22:14:27</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/14.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">15 / 28</span><span class="shot-caption">Plan &mdash; <code>instance_type = "t2.micro"</code>, <code>key_name = "ram_aws"</code>, known after apply</span><span class="shot-timestamp">22:16:10</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/15.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">16 / 28</span><span class="shot-caption">Apply pending &rarr; Confirm &amp; apply with comment &ldquo;ok go with this plan&hellip;&rdquo;</span><span class="shot-timestamp">22:16:39</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/16.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">17 / 28</span><span class="shot-caption">AWS console (Mumbai) &mdash; Test_server <code>i-0ee11545846aabf1e</code> running, t2.micro</span><span class="shot-timestamp">22:17:43</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/17.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">18 / 28</span><span class="shot-caption">States &mdash; first state version, run <code>#run-i6d97D9oFPgbQQfV</code>, commit 83d4441</span><span class="shot-timestamp">22:18:14</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/18.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">19 / 28</span><span class="shot-caption">Runs &mdash; Current run Applied, branch main; run list filters</span><span class="shot-timestamp">22:18:54</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/19.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">20 / 28</span><span class="shot-caption">GitHub &mdash; edit <code>ec2.tf</code>: <code>instance_type = "t2.nano"</code></span><span class="shot-timestamp">22:21:41</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/20.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">21 / 28</span><span class="shot-caption">Workspace Settings &rarr; Notifications &rarr; Create a Notification</span><span class="shot-timestamp">22:22:34</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/21.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">22 / 28</span><span class="shot-caption">Notification &mdash; Email, name <code>demo</code>, All events</span><span class="shot-timestamp">22:40:12</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/22.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">23 / 28</span><span class="shot-caption">Organization Settings &rarr; Cost estimation &mdash; enable for all workspaces</span><span class="shot-timestamp">22:47:16</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/23.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">24 / 28</span><span class="shot-caption">Run &ldquo;Update ec2.tf&rdquo; triggered from GitHub &mdash; plan running, cost estimation pending</span><span class="shot-timestamp">22:48:33</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/24.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">25 / 28</span><span class="shot-caption">Plan diff &mdash; <code>~ instance_type: "t2.micro" &rarr; "t2.nano"</code>, public IP/DNS known after apply</span><span class="shot-timestamp">22:49:10</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/25.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">26 / 28</span><span class="shot-caption">Cost estimation &mdash; $0.007/h, $5.115/month, delta <b>-$4.315</b></span><span class="shot-timestamp">22:49:28</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/26.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">27 / 28</span><span class="shot-caption">Gmail &mdash; HCP Terraform notifications: Created, Planning, Cost Estimated &ndash; Needs Confirmation, Applying</span><span class="shot-timestamp">22:50:44</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/27.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">28 / 28</span><span class="shot-caption">States &mdash; two versions: &ldquo;Update ec2.tf&rdquo; (5297b1e) + &ldquo;Triggered via UI&rdquo; (83d4441)</span><span class="shot-timestamp">22:51:33</span></div>
+  <div class="shot-img-wrap"><img src="assets/11-terraform-cloud/28.png"></div>
+</div>
+
+</body>
+</html>

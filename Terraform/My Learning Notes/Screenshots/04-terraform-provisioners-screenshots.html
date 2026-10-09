@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Screenshots — Terraform Provisioners</title>
+<style>
+  @page { size: A4 landscape; margin: 12mm 14mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    color: #1c2530;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 {
+    font-size: 18pt;
+    color: #0f2942;
+    margin-bottom: 2px;
+  }
+  .subtitle {
+    color: #62727f;
+    font-style: italic;
+    margin-top: 0;
+    margin-bottom: 18px;
+    font-size: 10pt;
+  }
+  .print-hint {
+    background: #fff8e1;
+    border: 1px solid #f0d98c;
+    color: #6b5410;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 9.5pt;
+    margin-bottom: 20px;
+  }
+  .shot {
+    page-break-inside: avoid;
+    page-break-after: always;
+    padding-top: 10px;
+  }
+  .shot:last-child { page-break-after: auto; }
+  .shot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid #2b6cb0;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+  }
+  .shot-num {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #123a63;
+  }
+  .shot-caption {
+    font-size: 11pt;
+    color: #1c2530;
+  }
+  .shot-timestamp {
+    font-size: 9pt;
+    color: #8a97a3;
+    font-family: Consolas, monospace;
+  }
+  .shot-img-wrap {
+    text-align: center;
+  }
+  img {
+    max-width: 100%;
+    max-height: 165mm;
+    border: 1px solid #d7dfe6;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  @media print {
+    .print-hint { display: none; }
+    body { padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="print-hint">This is a print-ready gallery page. Use your browser's <b>Print &rarr; Save as PDF</b> (Ctrl/Cmd+P, landscape) to save it as <code>04-terraform-provisioners-screenshots.pdf</code> in this folder.</div>
+
+<h1>Screenshots &mdash; Terraform Provisioners</h1>
+<div class="subtitle">Lecture 4 &middot; 25 shots, chronological &middot; source stills from the session (2026-09-26 12:23 &ndash; 14:09)</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">01 / 25</span><span class="shot-caption">Lecture definitions &mdash; Terraform provisioners (execute scripts/commands) and plugin cache (local storage for plugins)</span><span class="shot-timestamp">12:23:01</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/01.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">02 / 25</span><span class="shot-caption">Reference definition &mdash; provisioners as an &ldquo;imperative escape hatch&rdquo; during creation/destruction of a resource</span><span class="shot-timestamp">12:24:47</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/02.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">03 / 25</span><span class="shot-caption">Whiteboard &mdash; SCP / SSH analogy: L1 copying and logging in to L2&ndash;L4</span><span class="shot-timestamp">12:28:18</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/03.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">04 / 25</span><span class="shot-caption">The three built-in provisioners &mdash; <code>local-exec</code>, <code>remote-exec</code>, <code>file</code></span><span class="shot-timestamp">12:34:16</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/04.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">05 / 25</span><span class="shot-caption">Example &mdash; <code>connection</code> block (ssh, ubuntu, private_key, <code>self.public_ip</code>) + <code>file</code> provisioner</span><span class="shot-timestamp">12:35:33</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/05.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">06 / 25</span><span class="shot-caption">Example &mdash; <code>file</code> copies nginx.conf, <code>remote-exec</code> installs and restarts Nginx</span><span class="shot-timestamp">12:36:58</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/06.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">07 / 25</span><span class="shot-caption">Example &mdash; <code>local-exec</code> echoing <code>${self.private_ip}</code></span><span class="shot-timestamp">12:41:07</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/07.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">08 / 25</span><span class="shot-caption"><code>ssh-keygen -f ram</code> &mdash; ed25519 key pair generated</span><span class="shot-timestamp">12:46:31</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/08.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">09 / 25</span><span class="shot-caption"><code>ls</code> &mdash; <code>ram</code> (private) and <code>ram.pub</code> (public)</span><span class="shot-timestamp">12:47:24</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/09.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">10 / 25</span><span class="shot-caption"><code>echo "I LOVE Terraform" &gt; /tmp/redhat.txt</code> &mdash; file for the <code>file</code> provisioner</span><span class="shot-timestamp">12:48:03</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/10.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">11 / 25</span><span class="shot-caption"><code>key.tf</code> &mdash; <code>aws_key_pair.my_blog_key</code>, key_name <code>my_tf_key</code>, public key from <code>ram.pub</code></span><span class="shot-timestamp">12:52:06</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/11.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">12 / 25</span><span class="shot-caption"><code>sg.tf</code> &mdash; security group <code>cw-blog-3-sg-using-terraform</code>, ingress 22/tcp from 0.0.0.0/0</span><span class="shot-timestamp">12:59:31</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/12.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">13 / 25</span><span class="shot-caption"><code>ls</code> &mdash; key.tf, ram, ram.pub, sg.tf, terraform.log &rarr; <code>terraform init</code></span><span class="shot-timestamp">13:00:39</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/13.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">14 / 25</span><span class="shot-caption"><code>terraform init</code> &mdash; reusing hashicorp/aws v6.66.0 from the lock file</span><span class="shot-timestamp">13:02:04</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/14.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">15 / 25</span><span class="shot-caption"><code>terraform apply -auto-approve</code> &mdash; <code>aws_key_pair.my_blog_key</code> will be created</span><span class="shot-timestamp">13:03:21</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/15.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">16 / 25</span><span class="shot-caption">EC2 console (Mumbai) &mdash; &ldquo;No instances&rdquo;: only the key pair and SG exist so far</span><span class="shot-timestamp">13:05:50</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/16.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">17 / 25</span><span class="shot-caption"><code>terraform state list</code> &mdash; aws_key_pair.my_blog_key, aws_security_group.cw_sg_ssh</span><span class="shot-timestamp">13:06:43</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/17.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">18 / 25</span><span class="shot-caption">First draft in vi &mdash; <code>"aws-instance"</code> typo, <code>connection</code> outside the resource, quoted <code>"file(...)"</code></span><span class="shot-timestamp">13:17:29</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/18.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">19 / 25</span><span class="shot-caption"><code>file</code> provisioner (/tmp/redhat.txt &rarr; /tmp/redhat1.txt) + <code>remote-exec</code> (dnf, httpd, index.html)</span><span class="shot-timestamp">13:29:39</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/19.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">20 / 25</span><span class="shot-caption"><code>local-exec</code> &mdash; write <code>${self.private_ip}</code> to /root/project1/my-node-ip.txt</span><span class="shot-timestamp">13:33:52</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/20.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">21 / 25</span><span class="shot-caption">Corrected all-in-one <code>aws_instance.web_server</code> with connection + file + remote-exec + local-exec</span><span class="shot-timestamp">13:45:19</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/21.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">22 / 25</span><span class="shot-caption">Apply result &mdash; &ldquo;Terraform crashed! This is always indicative of a bug within Terraform.&rdquo;</span><span class="shot-timestamp">13:48:55</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/22.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">23 / 25</span><span class="shot-caption">TERRAFORM CRASH &mdash; <code>panic: value is unknown</code> in <code>(*Graph).walk</code></span><span class="shot-timestamp">13:49:02</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/23.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">24 / 25</span><span class="shot-caption">Re-run: 2 to add &mdash; remote-exec connecting via SSH to 13.203.105.46 as ec2-user, <code>Connected!</code></span><span class="shot-timestamp">14:04:01</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/24.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">25 / 25</span><span class="shot-caption">Full apply log &mdash; instance created in 15s, <code>null_resource.configure_server</code> runs file &rarr; remote-exec; dnf waiting on pid 2515</span><span class="shot-timestamp">14:09:07</span></div>
+  <div class="shot-img-wrap"><img src="assets/04-terraform-provisioners/25.png"></div>
+</div>
+
+</body>
+</html>

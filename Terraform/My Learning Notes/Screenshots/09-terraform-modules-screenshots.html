@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Screenshots — Terraform Modules</title>
+<style>
+  @page { size: A4 landscape; margin: 12mm 14mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    color: #1c2530;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 {
+    font-size: 18pt;
+    color: #0f2942;
+    margin-bottom: 2px;
+  }
+  .subtitle {
+    color: #62727f;
+    font-style: italic;
+    margin-top: 0;
+    margin-bottom: 18px;
+    font-size: 10pt;
+  }
+  .print-hint {
+    background: #fff8e1;
+    border: 1px solid #f0d98c;
+    color: #6b5410;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 9.5pt;
+    margin-bottom: 20px;
+  }
+  .shot {
+    page-break-inside: avoid;
+    page-break-after: always;
+    padding-top: 10px;
+  }
+  .shot:last-child { page-break-after: auto; }
+  .shot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid #2b6cb0;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+  }
+  .shot-num {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #123a63;
+  }
+  .shot-caption {
+    font-size: 11pt;
+    color: #1c2530;
+  }
+  .shot-timestamp {
+    font-size: 9pt;
+    color: #8a97a3;
+    font-family: Consolas, monospace;
+  }
+  .shot-img-wrap {
+    text-align: center;
+  }
+  img {
+    max-width: 100%;
+    max-height: 165mm;
+    border: 1px solid #d7dfe6;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  @media print {
+    .print-hint { display: none; }
+    body { padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+
+<div class="print-hint">This is a print-ready gallery page. Use your browser's <b>Print &rarr; Save as PDF</b> (Ctrl/Cmd+P, landscape) to save it as <code>09-terraform-modules-screenshots.pdf</code> in this folder.</div>
+
+<h1>Screenshots &mdash; Terraform Modules</h1>
+<div class="subtitle">Lecture 9 &middot; 35 shots, chronological &middot; source stills from the session (2026-10-06 21:47 &ndash; 23:09)</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">01 / 35</span><span class="shot-caption">Definition &mdash; modules let you group resources and reuse them; module vs root module vs child module</span><span class="shot-timestamp">21:47:09</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/01.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">02 / 35</span><span class="shot-caption">Reference &mdash; a self-contained collection of .tf files in one directory; a reusable building block like a function</span><span class="shot-timestamp">21:49:35</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/02.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">03 / 35</span><span class="shot-caption">Syntax &mdash; <code>module "&lt;NAME&gt;" { source = "&lt;SOURCE&gt;" [CONFIG ...] }</code></span><span class="shot-timestamp">22:07:29</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/03.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">04 / 35</span><span class="shot-caption"><code>mkdir project1</code></span><span class="shot-timestamp">22:11:04</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/04.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">05 / 35</span><span class="shot-caption"><code>mkdir modules</code></span><span class="shot-timestamp">22:11:49</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/05.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">06 / 35</span><span class="shot-caption"><code>mkdir ec2_modules vpc_modules</code></span><span class="shot-timestamp">22:15:59</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/06.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">07 / 35</span><span class="shot-caption">Full directory setup sequence</span><span class="shot-timestamp">22:16:26</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/07.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">08 / 35</span><span class="shot-caption">Root module <code>s3.tf</code> &mdash; <code>aws_s3_bucket.first</code> (ramprateek)</span><span class="shot-timestamp">22:17:48</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/08.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">09 / 35</span><span class="shot-caption">Child module <code>ec2_modules/varibale.tf</code> &mdash; <code>instance_count</code> number, default 1</span><span class="shot-timestamp">22:18:58</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/09.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">10 / 35</span><span class="shot-caption">Child module <code>ec2_modules/ec2.tf</code> &mdash; <code>count = var.instance_count</code>, Name <code>web-server-${count.index}</code></span><span class="shot-timestamp">22:19:50</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/10.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">11 / 35</span><span class="shot-caption"><code>tree .</code> &mdash; s3.tf (root) + modules/ec2_modules + vpc_modules (children)</span><span class="shot-timestamp">22:20:38</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/11.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">12 / 35</span><span class="shot-caption">Standard layout &mdash; modules/server-module + storage-module = child, top-level main.tf = root</span><span class="shot-timestamp">22:24:11</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/12.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">13 / 35</span><span class="shot-caption">Copied modules folder in project1 &mdash; but a plain apply would create only the S3 bucket</span><span class="shot-timestamp">22:26:15</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/13.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">14 / 35</span><span class="shot-caption"><code>ll</code> / <code>cat</code> of the shared ec2_modules files</span><span class="shot-timestamp">22:27:00</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/14.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">15 / 35</span><span class="shot-caption">Calling the child &mdash; <code>module "my_module" { source = "./modules/ec2_modules", instance_count = 2 }</code></span><span class="shot-timestamp">22:30:49</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/15.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">16 / 35</span><span class="shot-caption"><code>terraform plan</code> &rarr; <em>Module not installed</em> &mdash; run terraform init</span><span class="shot-timestamp">22:32:46</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/16.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">17 / 35</span><span class="shot-caption"><code>terraform init</code> &rarr; <em>- my_module in modules/ec2_modules</em> (aws v6.52.0)</span><span class="shot-timestamp">22:34:04</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/17.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">18 / 35</span><span class="shot-caption">Lab 2 &mdash; into <code>vpc_modules</code> to add the shared VPC code</span><span class="shot-timestamp">22:39:55</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/18.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">19 / 35</span><span class="shot-caption"><code>vpc.tf</code> 1/5 &mdash; provider ap-south-1 + variables vpc_cidr, subnet_cidr, AZ, AMI, instance_type</span><span class="shot-timestamp">22:40:23</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/19.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">20 / 35</span><span class="shot-caption"><code>vpc.tf</code> 2/5 &mdash; env_tag, <code>aws_vpc.vpcone</code>, <code>aws_internet_gateway.vpcone-ig</code></span><span class="shot-timestamp">22:41:30</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/20.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">21 / 35</span><span class="shot-caption"><code>vpc.tf</code> 3/5 &mdash; public subnet + route table with 0.0.0.0/0 via the IGW</span><span class="shot-timestamp">22:42:03</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/21.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">22 / 35</span><span class="shot-caption"><code>vpc.tf</code> 4/5 &mdash; route table association + security group (SSH in)</span><span class="shot-timestamp">22:42:28</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/22.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">23 / 35</span><span class="shot-caption"><code>vpc.tf</code> 5/5 &mdash; egress all + <code>aws_instance.test</code> in the subnet</span><span class="shot-timestamp">22:43:05</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/23.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">24 / 35</span><span class="shot-caption">Root calls <code>module "vpc-module" { source = "./modules/vpc_modules" }</code></span><span class="shot-timestamp">22:44:15</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/24.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">25 / 35</span><span class="shot-caption">Overriding inputs &mdash; <code>vpc_cidr = 192.168.0.0/16</code>, <code>subnet_cidr = 192.168.1.0/24</code></span><span class="shot-timestamp">22:48:11</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/25.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">26 / 35</span><span class="shot-caption">GitHub <code>srm71118/adamrepo</code> &mdash; <code>variable.tf</code> (instance_name, ami, instance_type, key)</span><span class="shot-timestamp">22:54:46</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/26.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">27 / 35</span><span class="shot-caption">GitHub <code>adamrepo/ec2.tf</code> &mdash; provider ap-south-1 + <code>aws_instance.server-instance</code></span><span class="shot-timestamp">22:55:37</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/27.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">28 / 35</span><span class="shot-caption">Public repo <code>adamrepo</code> on main &mdash; ec2.tf + variable.tf</span><span class="shot-timestamp">22:56:12</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/28.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">29 / 35</span><span class="shot-caption">Root calls <code>module "adam-module"</code> with a GitHub source + 4 inputs (note the stray <code>}</code> on line 15)</span><span class="shot-timestamp">22:57:59</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/29.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">30 / 35</span><span class="shot-caption">Apply &mdash; <code>module.adam-module.aws_instance.server-instance</code> creating; bucket created</span><span class="shot-timestamp">23:00:12</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/30.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">31 / 35</span><span class="shot-caption">Terraform Registry &mdash; 6,795 providers, 22,408 modules &amp; counting</span><span class="shot-timestamp">23:02:36</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/31.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">32 / 35</span><span class="shot-caption">Registry module &mdash; <code>terraform-aws-modules/s3-bucket/aws</code> with acl, ownership, versioning</span><span class="shot-timestamp">23:05:43</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/32.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">33 / 35</span><span class="shot-caption"><code>terraform init</code> &rarr; downloading s3-bucket/aws <b>5.14.1</b> into <code>.terraform/modules/s3_bucket</code></span><span class="shot-timestamp">23:06:33</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/33.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">34 / 35</span><span class="shot-caption"><code>ls .terraform/modules/</code> &rarr; adam-module, modules.json, s3_bucket</span><span class="shot-timestamp">23:08:39</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/34.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">35 / 35</span><span class="shot-caption">Destroy (2 destroyed), <code>rm -rf *</code>, init re-downloads 5.14.1</span><span class="shot-timestamp">23:09:54</span></div>
+  <div class="shot-img-wrap"><img src="assets/09-terraform-modules/35.png"></div>
+</div>
+
+</body>
+</html>

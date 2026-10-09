@@ -1,0 +1,15 @@
+LinkedIn Message — Pankaj Joshi (Reltio, Sr Manager Engineering - DevOps)
+
+Subject: Applying for your Sr Manager, Engineering – DevOps role at Reltio
+
+Message:
+Hi Pankaj,
+
+I applied for the Sr Manager, Engineering – DevOps role at Reltio today, and wanted to reach out directly rather than leave it sitting in a queue.
+
+I've spent 14+ years in cloud operations, the last three as a people manager running 24x7, incident-heavy environments. Most recently I led a hybrid in-house/vendor team supporting a SaaS platform serving 300+ enterprise customers across six regions, with incident management and RCA governance built into how the team operates day to day. Two examples: I owned end-to-end remediation of a zero-day vulnerability across 400 production servers with zero customer-facing downtime, and separately built a certificate-lifecycle escalation process that took recurring production outages from 2-3 a month down to zero.
+
+The follow-the-sun, KPI-driven model you're building sounds close to what I already run. I'd welcome a short conversation about the role, and I'm happy to send my resume directly if that's useful.
+
+Thanks for taking the time to read this,
+Vishal

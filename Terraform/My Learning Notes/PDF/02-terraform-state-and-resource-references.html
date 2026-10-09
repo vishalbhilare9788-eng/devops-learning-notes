@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Terraform State Files, HCL Block Syntax & Resource References</title>
+<style>
+  @page { size: A4; margin: 22mm 18mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    color: #1c2530;
+    line-height: 1.55;
+    font-size: 11.5pt;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+  h1 {
+    font-size: 21pt;
+    color: #0f2942;
+    margin-bottom: 2px;
+    border-bottom: 3px solid #2b6cb0;
+    padding-bottom: 10px;
+  }
+  .subtitle {
+    color: #62727f;
+    font-style: italic;
+    margin-top: 4px;
+    margin-bottom: 22px;
+    font-size: 10.5pt;
+  }
+  h2 {
+    font-size: 15pt;
+    color: #123a63;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    padding-bottom: 4px;
+    border-bottom: 1.5px solid #cbd8e3;
+    page-break-after: avoid;
+  }
+  h3 {
+    font-size: 12.5pt;
+    color: #1a4a7a;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    page-break-after: avoid;
+  }
+  p { margin: 8px 0; }
+  blockquote {
+    margin: 10px 0;
+    padding: 8px 14px;
+    background: #eef4fa;
+    border-left: 4px solid #2b6cb0;
+    border-radius: 0 4px 4px 0;
+    font-size: 11pt;
+  }
+  code {
+    font-family: "Consolas", "SFMono-Regular", Menlo, monospace;
+    background: #eef1f4;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 10pt;
+    color: #b3261e;
+  }
+  pre {
+    background: #1e2530;
+    color: #e6e9ef;
+    padding: 12px 14px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 9.6pt;
+    line-height: 1.45;
+    page-break-inside: avoid;
+    margin: 10px 0 16px;
+  }
+  pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: inherit;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 12px 0 18px;
+    font-size: 10pt;
+    page-break-inside: avoid;
+  }
+  th, td {
+    border: 1px solid #cdd7e1;
+    padding: 6px 9px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: #dfeaf5; color: #123a63; }
+  tr:nth-child(even) td { background: #f6f9fb; }
+  ul, ol { margin: 8px 0; padding-left: 24px; }
+  li { margin: 4px 0; }
+  hr {
+    border: none;
+    border-top: 1px solid #d7dfe6;
+    margin: 26px 0;
+  }
+  .task-list li { list-style: none; }
+  .task-list li::before { content: "\2610  "; color: #2b6cb0; }
+  .ascii-graph {
+    background: #f6f9fb;
+    border: 1px solid #cdd7e1;
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-family: "Consolas", monospace;
+    font-size: 9.3pt;
+    white-space: pre;
+    line-height: 1.35;
+    page-break-inside: avoid;
+  }
+  .footer-note {
+    margin-top: 30px;
+    font-size: 9.5pt;
+    color: #7a8894;
+    font-style: italic;
+    border-top: 1px dashed #cdd7e1;
+    padding-top: 10px;
+  }
+  .print-hint {
+    background: #fff8e1;
+    border: 1px solid #f0d98c;
+    color: #6b5410;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 9.5pt;
+    margin-bottom: 20px;
+  }
+  @media print {
+    .print-hint { display: none; }
+    body { padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="print-hint">This is a print-ready page. Use your browser's <b>Print &rarr; Save as PDF</b> (Ctrl/Cmd+P) to save it as <code>02-terraform-state-and-resource-references.pdf</code> in this same folder.</div>
+
+<h1>Terraform State Files, HCL Block Syntax &amp; Resource References</h1>
+<div class="subtitle">Your notes, cleaned up from dictation + screenshots &mdash; Lecture 2</div>
+
+<h2>Quick recall</h2>
+<p>Two things tie together in this session:</p>
+<ol>
+  <li><code>terraform.tfstate</code> &mdash; the file Terraform uses to track what it created, so it can compare <i>desired</i> vs <i>actual</i> infrastructure on every run.</li>
+  <li><b>HCL block syntax</b> &mdash; the declarative <code>block_type "block_label" "block_name" { }</code> shape every <code>.tf</code> file is built from, and how one resource <b>references</b> another resource's attributes to create implicit dependencies (visualized with <code>terraform graph</code>).</li>
+</ol>
+
+<hr>
+
+<h2>1. What is the State File?</h2>
+<blockquote>The state of a Terraform project is a file that stores all details about resources that were created in the context of a given project.</blockquote>
+<ul>
+  <li>Stored by default as a local file named <code>terraform.tfstate</code> (JSON format).</li>
+  <li>Contains <b>all information about the provisioned infrastructure that Terraform manages</b> &mdash; both the attributes you gave it <i>and</i> the ones Terraform/AWS filled in automatically (public/private IP, availability zone, default security group, volume IDs, etc.).</li>
+  <li>Created and updated every time you run <code>terraform apply</code> or <code>terraform destroy</code>.</li>
+  <li><b>"It basically acts as a database for provisioned resources."</b> Terraform uses it to:
+    <ul>
+      <li>map real-world resources back to your <code>.tf</code> configuration,</li>
+      <li>keep track of resource metadata,</li>
+      <li>improve performance for large infrastructures (so it doesn't have to query the cloud API for every resource on every run).</li>
+    </ul>
+  </li>
+  <li>Before any operation, Terraform does a <b>refresh</b> &mdash; it re-checks the real infrastructure and syncs the state file with what's actually there.</li>
+</ul>
+
+<h3>Desired State vs Current State</h3>
+<table>
+  <tr><th></th><th>Definition</th></tr>
+  <tr><td><b>Desired State</b></td><td>The state <i>mentioned in your resource block</i> of the <code>.tf</code> file &mdash; i.e. what the infra <i>should</i> look like according to your code.</td></tr>
+  <tr><td><b>Current State</b></td><td>The <i>present</i> state of the resources in the actual infrastructure. Can differ from desired state (manual changes, drift, etc.).</td></tr>
+</table>
+
+<h3>The reconciliation logic (<code>terraform plan</code> / <code>apply</code>)</h3>
+<pre>Tf config files  &rarr;  tf state file  &rarr;  Target Environment</pre>
+<p>Terraform first looks at what you <b>want</b> (desired state, from your <code>.tf</code> files), then scans what's <b>actually</b> in your cloud platform (current/actual state), and calculates a simple delta:</p>
+<ul>
+  <li>In desired but not actual &rarr; <b>it gets created</b></li>
+  <li>In both, but configured differently &rarr; <b>it gets updated</b></li>
+  <li>In actual but not desired &rarr; <b>it gets deleted</b></li>
+</ul>
+<blockquote><b>In short: Terraform is a state-based engine.</b></blockquote>
+
+<h3>State file safety net: the <code>.backup</code> file</h3>
+<p>Any time Terraform is about to <b>modify</b> the state file (add, update, delete), it first backs up the current state file <i>before</i> writing the new one &mdash; automatically, no extra command needed. This creates <code>terraform.tfstate.backup</code> right alongside <code>terraform.tfstate</code>.</p>
+
+<h3>Inspecting state</h3>
+<pre>terraform state list                    <span style="color:#8aa1b3"># every resource tracked in this state file</span>
+terraform state show &lt;resource_addr&gt;    <span style="color:#8aa1b3"># full attributes of one resource, e.g.:</span>
+terraform state show aws_s3_bucket.first</pre>
+
+<hr>
+
+<h2>2. HCL Block Syntax (how a <code>.tf</code> file is actually written)</h2>
+<p>Terraform code lives in <code>.tf</code> files, written in <b>HCL</b> (HashiCorp Configuration Language). HCL is a <b>declarative</b> language &mdash; you describe the end state you <i>want</i>, not the imperative steps to get there.</p>
+
+<h3>The block shape</h3>
+<pre>&lt;block_type&gt; "&lt;block_label&gt;" "&lt;block_name&gt;" {
+  <span style="color:#8aa1b3"># Configuration settings for the resource</span>
+  attribute1 = value1
+  attribute2 = value2
+}</pre>
+<blockquote><b>A block in Terraform is like a section of code that tells Terraform what to do.</b></blockquote>
+
+<table>
+  <tr><th>Part</th><th>What it is</th><th>Examples</th></tr>
+  <tr><td><b>Block type</b></td><td>Reserved keyword &mdash; the <i>kind</i> of block</td><td><code>resource</code>, <code>provider</code>, <code>variable</code>, <code>output</code>, <code>module</code></td></tr>
+  <tr><td><b>Block label</b></td><td>Depends on the provider + resource type</td><td>AWS: <code>aws_instance</code>, <code>aws_s3_bucket</code>, <code>aws_vpc</code>, <code>aws_security_group</code> &middot; Azure: <code>azurerm_virtual_machine</code></td></tr>
+  <tr><td><b>Block name</b></td><td>Your own reference name &mdash; a unique identifier for <i>this</i> block</td><td><code>linux</code>, <code>first</code>, <code>allow_ssh</code></td></tr>
+</table>
+<p>Inside the <code>{ }</code> you write <b>attributes</b> &mdash; key/value pairs. Some are <b>mandatory</b> (resource won't create without them), others <b>optional</b> (Terraform/the provider fills in a default, recorded into the state file once the resource exists &mdash; e.g. AZ, public/private IP, default SG).</p>
+
+<h3>Worked example &mdash; two resource blocks in one <code>main.tf</code></h3>
+<pre>########## Launch Ec2 Instance in Mumbai region
+resource "aws_instance" "linux" {
+  ami           = "ami-0cca134ec43cf708f"
+  instance_type = "t2.micro"
+  key_name      = "ram_aws"
+  tags = {
+    Name   = "Test_server"
+    source = "terraform"
+  }
+}
+
+########## Launch S3 Bucket in Mumbai region
+resource "aws_s3_bucket" "first" {
+  bucket = "linux23212google123"
+  tags = {
+    Name = "my_buck"
+  }
+}</pre>
+<p>One <code>.tf</code> file can hold <b>multiple resource blocks</b> &mdash; each independent, addressed as <code>block_type.block_label.block_name</code> (e.g. <code>aws_instance.linux</code>, <code>aws_s3_bucket.first</code>).</p>
+
+<p><b>What happened when this got applied:</b></p>
+<pre>[root@Devops-server project1]# terraform state list
+aws_instance.linux
+aws_s3_bucket.first</pre>
+<p>Only <code>main.tf</code> was written by hand &mdash; <code>terraform.tfstate</code> was <b>generated automatically</b> during <code>init</code>/<code>apply</code>, tracking both resources.</p>
+
+<p><b>Re-running <code>terraform plan</code> with no code changes:</b></p>
+<pre>aws_s3_bucket.first: Refreshing state... [id=linux23212google123]
+aws_instance.linux: Refreshing state... [id=i-0360dc4b6f1fe0859]
+
+No changes. Your infrastructure matches the configuration.</pre>
+<p>Desired state (code) == current state (real infra) == state file &rarr; nothing to do.</p>
+
+<p><b>Editing an attribute (adding a tag) and re-planning:</b></p>
+<pre>Terraform will perform the following actions:
+
+  # aws_s3_bucket.first will be updated in-place
+  ~ resource "aws_s3_bucket" "first" {
+        id   = "linux23212google123"
+      ~ tags = {
+            "Name" = "my_buck"
+          + "Team" = "Linux"
+        }
+      ~ tags_all = {
+          + "Team" = "Linux"
+            # (1 unchanged element hidden)
+        }
+        # (14 unchanged attributes hidden)
+        # (3 unchanged blocks hidden)
+    }
+
+Plan: 0 to add, 1 to change, 0 to destroy.</pre>
+<p>Only the <b>delta</b> shows. After <code>apply</code>, <code>terraform.tfstate.backup</code> appears &mdash; a backup of the state <i>before</i> this change was applied.</p>
+
+<hr>
+
+<h2>3. <code>terraform graph</code> &mdash; visualizing dependencies</h2>
+<blockquote>Generates a visual representation of your infrastructure's configuration or execution plan. Maps out resource dependencies using the machine-readable <b>DOT</b> language. This text output can be passed to a visualization tool like <b>Graphviz</b> to create an architecture diagram.</blockquote>
+<pre>yum install graphviz                        <span style="color:#8aa1b3"># provides the `dot` renderer</span>
+terraform graph -type=plan | dot -Tpng > graph.png</pre>
+<ul>
+  <li><code>terraform graph</code> alone emits DOT-format text describing the dependency graph.</li>
+  <li>Piping through <code>dot -Tpng</code> (Graphviz) renders that text into an actual <code>.png</code> image.</li>
+  <li>Read the resulting graph <b>bottom-up</b>: resources at the bottom (only depending on the provider) get created first; resources above them depend on what's below.</li>
+</ul>
+
+<hr>
+
+<h2>4. Resource references (how one resource "finds" another)</h2>
+<p>Reference syntax:</p>
+<pre>&lt;block_label&gt;.&lt;block_name&gt;.&lt;attribute&gt;</pre>
+<p>Once you've written a security group block, you can reference its generated <code>id</code> from <b>any other block</b> as <code>aws_security_group.allow_ssh.id</code> &mdash; even though that security group doesn't exist yet when you write the code. Terraform resolves the actual value at apply time and, critically, uses this reference to figure out <b>creation order automatically</b> (implicit dependency &mdash; no <code>depends_on</code> needed).</p>
+
+<h3>Worked example &mdash; SG &rarr; ingress rule</h3>
+<pre>resource "aws_security_group" "allow_ssh" {
+  name        = "my_sg"
+  description = "Allow ssh traffic and all outbound traffic"
+  tags = {
+    Name = "allow_ssh"
+  }
+}
+
+resource "aws_vpc_security_group_ingress_rule" "allow_ssh_ipv4" {
+  security_group_id = aws_security_group.allow_ssh.id
+  cidr_ipv4          = aws_vpc.main.cidr_block
+  from_port          = 443
+  ip_protocol        = "tcp"
+  to_port             = 443
+}</pre>
+<pre>Plan: 2 to add, 0 to change, 0 to destroy.
+aws_security_group.allow_ssh: Creating...
+aws_security_group.allow_ssh: Creation complete after 3s [id=sg-04b12c00bff517016]
+aws_vpc_security_group_ingress_rule.allow_ssh_ipv4: Creating...
+aws_vpc_security_group_ingress_rule.allow_ssh_ipv4: Creation complete after 0s [id=sgr-0ae57fd45cd4349d0]</pre>
+<p>The security group <b>must</b> exist before the ingress rule can reference its <code>id</code> &mdash; Terraform enforces that automatically.</p>
+
+<h3>Worked example &mdash; attaching that SG to an EC2 instance</h3>
+<pre>resource "aws_instance" "linux" {
+  ami                    = "ami-0cca134ec43cf708f"
+  instance_type          = "t2.micro"
+  key_name               = "deployer-key"
+  vpc_security_group_ids = [aws_security_group.allow_ssh.id]
+  tags = {
+    Name   = "Test_server"
+    source = "terraform"
+  }
+}</pre>
+<blockquote><b>HCL gotcha:</b> <code>vpc_security_group_ids</code> expects a <b>list</b>, so the reference must be wrapped in square brackets &mdash; <code>[aws_security_group.allow_ssh.id]</code> &mdash; even for a single value. Without the brackets it's the wrong type for that attribute.</blockquote>
+
+<h3>Worked example &mdash; EBS volume + attachment referencing the instance</h3>
+<pre>resource "aws_volume_attachment" "ebs_att" {
+  device_name = "/dev/sdc"
+  volume_id   = aws_ebs_volume.example.id
+  instance_id = aws_instance.linux.id
+}
+
+resource "aws_ebs_volume" "example" {
+  availability_zone = "ap-south-1b"
+  size              = 5
+}</pre>
+<pre>Plan: 2 to add, 0 to change, 0 to destroy.
+aws_ebs_volume.example: Creating...
+aws_ebs_volume.example: Still creating... [00m10s elapsed]
+aws_ebs_volume.example: Creation complete after 11s [id=vol-01555d00742df9baa]
+aws_volume_attachment.ebs_att: Creating...
+aws_volume_attachment.ebs_att: Still creating... [00m10s elapsed]</pre>
+<p>Again the order is automatic: the <b>volume</b> must exist before the <b>attachment</b> can reference its <code>id</code>, and the <b>instance</b> must exist before the attachment can reference <i>its</i> <code>id</code>.</p>
+
+<h3>Final dependency graph</h3>
+<p>Built up: <b>key pair &rarr; security group &rarr; EBS volume &rarr; EC2 instance &rarr; volume attachment &rarr; ingress rule</b>, read bottom-to-top:</p>
+<div class="ascii-graph">[root] root
+   |
+   v
+[root] provider["registry.terraform.io/hashicorp/aws"] (close)
+   |--------------------------------+
+   v                                v
+aws_volume_attachment.ebs_att     aws_vpc_security_group_ingress_rule.allow_ssh_ipv4
+   |            |                        |
+   v            v                        v
+aws_ebs_volume  aws_instance.linux --> aws_security_group.allow_ssh
+  .example           |                        |
+   |                 v                        |
+   |          (uses SG above)                 |
+   v                                          v
+aws_key_pair.deployer  ------------------->  provider["registry.terraform.io/hashicorp/aws"]</div>
+<p>The graph visually proves what the reference syntax already implied: Terraform figured out the whole build order from <code>resource_x.resource_y.id</code>-style references, with <b>zero</b> manual ordering or <code>depends_on</code>.</p>
+
+<hr>
+
+<h2>CLI additions from this session</h2>
+<table>
+  <tr><th>Command</th><th>What it does</th></tr>
+  <tr><td><code>terraform state list</code></td><td>List every resource currently tracked in state</td></tr>
+  <tr><td><code>terraform state show &lt;resource&gt;</code></td><td>Show full attributes of one resource from state</td></tr>
+  <tr><td><code>terraform graph</code></td><td>Emit the dependency graph in DOT format</td></tr>
+  <tr><td><code>terraform graph -type=plan | dot -Tpng &gt; graph.png</code></td><td>Render the dependency graph to a PNG (needs <code>graphviz</code>)</td></tr>
+  <tr><td><code>yum install graphviz</code></td><td>Install the Graphviz renderer (<code>dot</code>) used above</td></tr>
+</table>
+
+<h3>Bonus &mdash; more commands referenced this session (not yet hands-on, good to know)</h3>
+<table>
+  <tr><th>Command</th><th>What it does</th></tr>
+  <tr><td><code>terraform taint</code></td><td>Manually marks a specific resource as <b>tainted</b> &mdash; treated as damaged/needing replacement on next <code>apply</code></td></tr>
+  <tr><td><code>terraform import</code></td><td>Brings <b>existing infrastructure</b> (created outside Terraform) under Terraform's management</td></tr>
+  <tr><td><code>terraform workspace</code></td><td>Manage multiple <b>deployments of the same configuration</b> (e.g. dev/stage/prod) via separate state per workspace</td></tr>
+  <tr><td><code>terraform refresh</code></td><td>Reads current settings from all managed remote objects and updates state to match &mdash; the same refresh that happens implicitly before <code>plan</code>/<code>apply</code></td></tr>
+  <tr><td><i>(logging)</i></td><td>Terraform logging records the <b>internal steps</b> Terraform takes while managing infrastructure</td></tr>
+  <tr><td><i>(provisioners)</i></td><td>Tools used within a config to <b>execute scripts/commands</b> on a local or remote machine as part of provisioning</td></tr>
+  <tr><td><i>(plugin cache)</i></td><td>Local storage that saves provider plugins so <code>init</code> is faster and more reliable</td></tr>
+  <tr><td><i>(user data)</i></td><td>Instructions given to a new server (e.g. EC2) to run automatically at startup</td></tr>
+</table>
+
+<hr>
+
+<h2>Practice Tasks</h2>
+<ul class="task-list">
+  <li>Apply a config with two independent resources (e.g. EC2 + S3), then confirm <code>terraform.tfstate</code> is auto-created and both show up in <code>terraform state list</code>.</li>
+  <li>Run <code>terraform plan</code> twice in a row with no code changes and confirm "No changes. Your infrastructure matches the configuration."</li>
+  <li>Add one new tag to an existing resource's <code>tags</code> block, run <code>plan</code>, and read the <code>~ update in-place</code> diff carefully &mdash; confirm only the delta is shown.</li>
+  <li>Apply that tag change and confirm <code>terraform.tfstate.backup</code> appears automatically, with no separate command.</li>
+  <li>Write a security group + an ingress rule as two separate resource blocks, reference the SG's <code>.id</code> in the ingress rule, and watch the apply log to confirm the SG is created <i>before</i> the ingress rule.</li>
+  <li>Attach that security group to an EC2 instance via <code>vpc_security_group_ids = [aws_security_group.&lt;name&gt;.id]</code> &mdash; deliberately drop the <code>[ ]</code> once to see the type error HCL throws.</li>
+  <li>Create an EBS volume and an <code>aws_volume_attachment</code> resource referencing both the volume's and the instance's <code>.id</code>, and confirm creation order in the apply log.</li>
+  <li>Install <code>graphviz</code>, run <code>terraform graph -type=plan | dot -Tpng &gt; graph.png</code>, and open the PNG &mdash; trace the dependency chain bottom-up and match it to the reference chain you wrote in code.</li>
+</ul>
+
+<h2>What I practiced</h2>
+<ul>
+  <li>Understood what the state file is, why it exists ("database for provisioned resources"), and how it maps real-world resources back to <code>.tf</code> config.</li>
+  <li>Learned the Desired State vs Current State distinction and the create/update/delete delta logic Terraform uses on every <code>plan</code>/<code>apply</code>.</li>
+  <li>Confirmed the automatic <code>terraform.tfstate.backup</code> behavior before any state-modifying operation.</li>
+  <li>Practiced <code>terraform state list</code> and <code>terraform state show &lt;resource&gt;</code>.</li>
+  <li>Learned the <code>block_type "block_label" "block_name" { attributes }</code> HCL shape and wrote a two-resource <code>main.tf</code> (EC2 instance + S3 bucket) from scratch.</li>
+  <li>Wrote implicit resource references (<code>aws_security_group.allow_ssh.id</code>) across a security group &rarr; ingress rule &rarr; EC2 instance &rarr; EBS volume/attachment chain, and watched Terraform resolve creation order automatically &mdash; no <code>depends_on</code> needed.</li>
+  <li>Installed <code>graphviz</code> and generated a real dependency graph PNG with <code>terraform graph -type=plan | dot -Tpng &gt; graph.png</code>, matching it against the reference chain in code.</li>
+</ul>
+
+<div class="footer-note">Merged into the master reference notes: terraform-master-notes.md &mdash; "2. Terraform State Files, HCL Block Syntax &amp; Resource References" section.<br>Screenshots for this session: ../Screenshots/02-terraform-state-and-resource-references-screenshots.html (25 shots)</div>
+
+</body>
+</html>

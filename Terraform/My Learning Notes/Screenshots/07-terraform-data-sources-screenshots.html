@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Screenshots — Terraform Data Sources</title>
+<style>
+  @page { size: A4 landscape; margin: 12mm 14mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    color: #1c2530;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 {
+    font-size: 18pt;
+    color: #0f2942;
+    margin-bottom: 2px;
+  }
+  .subtitle {
+    color: #62727f;
+    font-style: italic;
+    margin-top: 0;
+    margin-bottom: 18px;
+    font-size: 10pt;
+  }
+  .print-hint {
+    background: #fff8e1;
+    border: 1px solid #f0d98c;
+    color: #6b5410;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 9.5pt;
+    margin-bottom: 20px;
+  }
+  .shot {
+    page-break-inside: avoid;
+    page-break-after: always;
+    padding-top: 10px;
+  }
+  .shot:last-child { page-break-after: auto; }
+  .shot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid #2b6cb0;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+  }
+  .shot-num {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #123a63;
+  }
+  .shot-caption {
+    font-size: 11pt;
+    color: #1c2530;
+  }
+  .shot-timestamp {
+    font-size: 9pt;
+    color: #8a97a3;
+    font-family: Consolas, monospace;
+  }
+  .shot-img-wrap {
+    text-align: center;
+  }
+  img {
+    max-width: 100%;
+    max-height: 165mm;
+    border: 1px solid #d7dfe6;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  @media print {
+    .print-hint { display: none; }
+    body { padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+
+<div class="print-hint">This is a print-ready gallery page. Use your browser's <b>Print &rarr; Save as PDF</b> (Ctrl/Cmd+P, landscape) to save it as <code>07-terraform-data-sources-screenshots.pdf</code> in this folder.</div>
+
+<h1>Screenshots &mdash; Terraform Data Sources</h1>
+<div class="subtitle">Lecture 7 &middot; 9 shots, chronological &middot; source stills from the session (2026-10-05 22:25 &ndash; 23:07)</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">01 / 9</span><span class="shot-caption">Chapter title &mdash; Data Sources</span><span class="shot-timestamp">22:25:37</span></div>
+  <div class="shot-img-wrap"><img src="assets/07-terraform-data-sources/01.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">02 / 9</span><span class="shot-caption">Definition &mdash; fetch or compute information defined outside Terraform; a <b>read-only view</b> of your infrastructure</span><span class="shot-timestamp">22:26:20</span></div>
+  <div class="shot-img-wrap"><img src="assets/07-terraform-data-sources/02.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">03 / 9</span><span class="shot-caption">Whiteboard &mdash; <b>Import</b> (console-built EC2 brought under Terraform) vs <b>Data Source</b> (launch new resources on the basis of existing ones)</span><span class="shot-timestamp">22:31:14</span></div>
+  <div class="shot-img-wrap"><img src="assets/07-terraform-data-sources/03.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">04 / 9</span><span class="shot-caption">AWS console &mdash; existing security group <code>ram_sg</code> = <code>sg-060a09f2f6b974ced</code> in <code>vpc-2ab1794d</code> (us-east-1)</span><span class="shot-timestamp">22:41:24</span></div>
+  <div class="shot-img-wrap"><img src="assets/07-terraform-data-sources/04.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">05 / 9</span><span class="shot-caption"><code>main.tf</code> &mdash; <code>data "aws_security_group" "example"</code> looked up by name + output of its ID</span><span class="shot-timestamp">22:45:43</span></div>
+  <div class="shot-img-wrap"><img src="assets/07-terraform-data-sources/05.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">06 / 9</span><span class="shot-caption"><code>terraform apply</code> &mdash; Reading&hellip; Read complete, output = SG ID, <b>0 added, 0 changed, 0 destroyed</b></span><span class="shot-timestamp">22:50:16</span></div>
+  <div class="shot-img-wrap"><img src="assets/07-terraform-data-sources/06.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">07 / 9</span><span class="shot-caption">New EC2 <code>NV_server</code> attached to the existing SG via <code>vpc_security_group_ids = [data.aws_security_group.example.id]</code></span><span class="shot-timestamp">22:52:46</span></div>
+  <div class="shot-img-wrap"><img src="assets/07-terraform-data-sources/07.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">08 / 9</span><span class="shot-caption">Reference &mdash; <code>data "aws_ami" "ubuntu"</code> with <code>most_recent</code>, name/virtualization filters, Canonical owner</span><span class="shot-timestamp">23:00:59</span></div>
+  <div class="shot-img-wrap"><img src="assets/07-terraform-data-sources/08.png"></div>
+</div>
+
+<div class="shot">
+  <div class="shot-header"><span class="shot-num">09 / 9</span><span class="shot-caption"><code>data.tf</code> &mdash; latest Amazon Linux 2 AMI (<code>owners = ["amazon"]</code>, <code>amzn2-ami-hvm-*-x86_64-gp2</code>)</span><span class="shot-timestamp">23:07:36</span></div>
+  <div class="shot-img-wrap"><img src="assets/07-terraform-data-sources/09.png"></div>
+</div>
+
+</body>
+</html>
