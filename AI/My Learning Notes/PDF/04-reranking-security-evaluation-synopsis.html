@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Rerank Secure Evaluate Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #fffdf6;
+    --rule: #dce7f5;
+    --margin: #f2a7a7;
+    --ink: #1f3a7a;
+    --ink-soft: #3d5a99;
+    --red: #c0392b;
+    --green: #2e7d32;
+    --purple: #6a3fa0;
+    --hl-yellow: #fff27a;
+    --hl-pink: #ffc9dc;
+    --hl-green: #c6f0c2;
+    --hl-blue: #c9e6ff;
+  }
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; background: #e9e4d8; font-family: "Patrick Hand", "Comic Sans MS", cursive; color: var(--ink); }
+  .page {
+    position: relative; width: 210mm; height: 297mm; overflow: hidden;
+    margin: 0 auto 10mm; padding: 14mm 12mm 12mm 24mm;
+    background:
+      linear-gradient(90deg, transparent 19mm, var(--margin) 19mm, var(--margin) 19.5mm, transparent 19.5mm),
+      repeating-linear-gradient(180deg, transparent 0, transparent 7.4mm, var(--rule) 7.4mm, var(--rule) 7.6mm),
+      var(--paper);
+    break-after: page; page-break-after: always;
+    font-size: 12.4pt; line-height: 1.32;
+  }
+  .page:last-child { break-after: auto; page-break-after: auto; }
+  @media screen { .page { box-shadow: 0 6px 24px rgba(0,0,0,.18); margin-top: 10mm; } }
+  @media print { body { background: none; } .page { margin: 0; } .overflow-flag { display: none; } }
+  .holes { position: absolute; left: 7mm; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: space-around; }
+  .holes i { width: 5mm; height: 5mm; border-radius: 50%; background: #e9e4d8; box-shadow: inset 0 1px 2px rgba(0,0,0,.25); }
+  .pgno { position: absolute; bottom: 6mm; right: 12mm; font-family: Caveat, cursive; font-size: 15pt; color: var(--ink-soft); }
+  .tag { position: absolute; top: 7mm; right: 12mm; font-family: Caveat, cursive; font-size: 13pt; color: var(--red); transform: rotate(2deg); }
+
+  h1, h2, h3 { font-family: Caveat, cursive; font-weight: 700; margin: 0; line-height: 1.05; }
+  h1 { font-size: 36pt; color: var(--ink); }
+  h1 .u { background: linear-gradient(transparent 58%, var(--hl-yellow) 58%, var(--hl-yellow) 92%, transparent 92%); padding: 0 4px; }
+  .sub { font-size: 12.5pt; color: var(--ink-soft); margin: 1mm 0 4mm; }
+  h2 { font-size: 22pt; color: var(--red); margin: 3.5mm 0 1.5mm; }
+  h2 .n { display: inline-grid; place-items: center; width: 9mm; height: 9mm; border: 2px solid var(--red); border-radius: 50%; font-size: 15pt; margin-right: 2mm; transform: rotate(-6deg); vertical-align: 1mm; }
+  h3 { font-size: 18pt; color: var(--purple); margin: 2mm 0 1mm; }
+  p { margin: 1mm 0; }
+  b { color: #0f2457; }
+  .hl  { background: var(--hl-yellow); padding: 0 3px; border-radius: 3px; }
+  .hlp { background: var(--hl-pink);   padding: 0 3px; border-radius: 3px; }
+  .hlg { background: var(--hl-green);  padding: 0 3px; border-radius: 3px; }
+  .hlb { background: var(--hl-blue);   padding: 0 3px; border-radius: 3px; }
+  .red { color: var(--red); } .green { color: var(--green); }
+  .an { color: var(--green); }
+  .an::before { content: "🔧 "; }
+  ul { margin: 1mm 0; padding-left: 6mm; } li { margin: .6mm 0; } li::marker { content: "✎  "; color: var(--red); }
+
+  /* hand-drawn boxes */
+  .box { border: 2.2px solid var(--ink); padding: 2.5mm 3.5mm; margin: 2mm 0;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background: rgba(255,255,255,.55); }
+  .box.red { border-color: var(--red); } .box.green { border-color: var(--green); } .box.purple { border-color: var(--purple); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .sticky { background: #fff59d; padding: 3mm 4mm; margin: 2.5mm 0; box-shadow: 2px 4px 8px rgba(0,0,0,.16); transform: rotate(-1.2deg); position: relative; }
+  .sticky.pink { background: #ffd6e4; transform: rotate(1deg); }
+  .sticky.green { background: #d6f5d0; transform: rotate(-.6deg); }
+  .sticky.blue { background: #d4ebff; transform: rotate(.8deg); }
+  .sticky::before { content: ""; position: absolute; top: -3mm; left: 50%; width: 18mm; height: 6mm; margin-left: -9mm; background: rgba(255,255,255,.6); transform: rotate(-3deg); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+  .sticky h3 { margin-top: 0; }
+
+  /* pipeline doodle */
+  .flow { display: flex; align-items: center; flex-wrap: nowrap; gap: 1.5mm; margin: 1.5mm 0 1mm; }
+  .flow .s { border: 2px solid var(--ink); padding: 1mm 2.4mm; background: #fff; font-size: 12pt; white-space: nowrap;
+    border-radius: 12px 4px 14px 5px / 5px 14px 4px 12px; }
+  .flow .s.db { border-color: var(--purple); background: #efe6fb; }
+  .flow .s.llm { border-color: var(--red); background: #ffe9e6; }
+  .flow .ar { font-family: Caveat, cursive; font-size: 20pt; color: var(--red); line-height: 1; }
+  .lane { margin: 1mm 0 2mm; }
+  .lane .lbl { font-family: Caveat, cursive; font-size: 17pt; font-weight: 700; }
+  .lane .lbl small { font-family: "Patrick Hand"; font-size: 11pt; color: var(--ink-soft); font-weight: 400; }
+
+  /* dictionary cards */
+  .dict { columns: 2; column-gap: 6mm; }
+  .grp { break-inside: avoid; font-family: Caveat, cursive; font-weight: 700; font-size: 19pt; color: var(--red); margin: 1.5mm 0 .5mm; border-bottom: 2px dashed var(--red); }
+  .t { break-inside: avoid; margin: 0 0 2.2mm; font-size: 11.6pt; line-height: 1.26; }
+  .t .w { font-family: Caveat, cursive; font-weight: 700; font-size: 16.5pt; color: #0f2457; background: linear-gradient(transparent 55%, var(--hl-yellow) 55%, var(--hl-yellow) 92%, transparent 92%); padding: 0 2px; }
+  .t .an { display: block; font-size: 11.2pt; }
+
+  table.hand { width: 100%; border-collapse: collapse; font-size: 11.8pt; margin: 1mm 0; }
+  table.hand td, table.hand th { border-bottom: 1.5px dashed #9fb3d6; padding: 1mm 2mm; text-align: left; vertical-align: top; }
+  table.hand th { font-family: Caveat, cursive; font-size: 16pt; color: var(--red); border-bottom: 2px solid var(--red); }
+  .qa { margin: 0 0 1.8mm; font-size: 11.8pt; line-height: 1.26; }
+  .qa .q { font-family: Caveat, cursive; font-weight: 700; font-size: 16.5pt; color: var(--red); }
+  .stamp { position: absolute; right: 14mm; bottom: 16mm; font-family: Caveat, cursive; font-size: 20pt; color: var(--red); border: 3px solid var(--red); border-radius: 8px; padding: 1mm 4mm; transform: rotate(-8deg); opacity: .8; }
+  .p1 h2 { margin-top: 2.4mm; } .p1 .sub { margin-bottom: 2.5mm; } .p1 .sticky { margin: 2mm 0 0; }
+  .grpwrap { break-inside: avoid; }
+  .overflow-flag { position: absolute; top: 0; left: 0; right: 0; background: red; color: #fff; font: bold 14px sans-serif; padding: 4px; text-align: center; }
+</style>
+</head>
+<body>
+
+<!-- ======================= PAGE 1 ======================= -->
+<section class="page p1">
+  <div class="holes"><i></i><i></i><i></i></div>
+  <div class="tag">AI Track · Ch 04 · cheat notes</div>
+  <h1><span class="u">Rerank, secure, measure</span> 🏁</h1>
+  <div class="sub">The last 3 pieces of production RAG · written for a cloud / infra person</div>
+
+  <h2><span class="n">1</span>Reranking in one picture</h2>
+  <p>Retrieval gave us <b>5 chunks</b>, but we only want the <b>best 3</b> for the LLM. Their order isn't trustworthy (<span class="hl">similar ≠ relevant</span>).</p>
+  <div class="flow"><span class="s">Q + C1…C5</span><span class="ar">→</span><span class="s db">🏅 Reranker (1 API call)</span><span class="ar">→</span><span class="s">C1+Q 0.9 · C2+Q 0.1 · C3+Q 0.7 …</span></div>
+  <div class="flow"><span class="s">sort by score</span><span class="ar">→</span><span class="s">keep top 3</span><span class="ar">→</span><span class="s llm">🤖 LLM</span></div>
+  <div class="an">Cheap wide health check first (retrieval), then an expensive deep probe on the shortlist only (reranker).</div>
+
+  <div class="two">
+    <div class="box">
+      <h3>Bi-encoder 🏃</h3>
+      Embeds query and chunk <b>separately</b>, compares vectors. Precomputed, fast over <b>millions</b>. Good at "same topic".
+      <div class="an">Matching CVs by keywords.</div>
+    </div>
+    <div class="box purple">
+      <h3>Cross-encoder 🔬</h3>
+      Reads query + chunk <b>together</b> and outputs one score. Slow, per pair, so use it on the <b>top 20–50</b> only. Great at "does it answer?"
+      <div class="an">The actual interview.</div>
+    </div>
+  </div>
+
+  <h2><span class="n">2</span>Security in one rule</h2>
+  <div class="box red">
+    <b>Authorisation before evidence reaches the model.</b> Public consumer docs and internal partner docs can look alike. If an internal chunk lands in the prompt, assume it <b>leaks</b>.
+    <span class="hl">The LLM is not a security boundary</span>, so filter <b>before</b> search with metadata built on the server from the login.
+    <div class="an">RBAC + namespaces enforced by the API server. Deny by default.</div>
+  </div>
+
+  <h2><span class="n">3</span>Evaluation in one rule</h2>
+  <div class="sticky">
+    Every enhancement (hybrid, rerank, rewrite…) must <b>beat the baseline on a golden set</b>. Measure <b>retrieval</b> and <b>generation</b> separately, so you know what to fix.
+    <span class="an">SLOs + a CI regression gate for answer quality.</span>
+  </div>
+  <div class="pgno">1 / 4</div>
+</section>
+
+<!-- ======================= PAGE 2 ======================= -->
+<section class="page">
+  <div class="holes"><i></i><i></i><i></i></div>
+  <div class="tag">dictionary · part 1</div>
+  <h1><span class="u">Reranking &amp; security words</span> 🔐</h1>
+  <div class="sub">Each term has a one-line meaning plus <span class="green">🔧 an infra analogy</span></div>
+
+  <div class="dict">
+    <div class="grp">① Reranking</div>
+    <div class="t"><span class="w">Reranker</span>: a model that re-scores retrieved chunks against the question, then we keep the top K.</div>
+    <div class="t"><span class="w">Relevance score</span>: 0–1 per (chunk + query) pair. 0.9 = really answers it, 0.1 = off-topic.</div>
+    <div class="t"><span class="w">Cross-encoder</span>: reads both texts at once. Accurate, slow, no precompute.</div>
+    <div class="t"><span class="w">Bi-encoder</span>: the embedding model. Separate vectors, fast, precomputed.</div>
+    <div class="t"><span class="w">Retrieve wide, rerank narrow</span>: fetch 20–50, rerank, keep 3–5.<span class="an">Wide cheap scan, then a deep check on the shortlist.</span></div>
+    <div class="t"><span class="w">Voyage AI</span>: the class's reranker provider (now part of MongoDB). Others: Cohere, BGE, Jina.</div>
+    <div class="t"><span class="w">Rerank fallback</span>: API timeout → use the RRF order. Low best score → abstain.<span class="an">A circuit breaker with a degraded mode.</span></div>
+
+    <div class="grp">② Security</div>
+    <div class="t"><span class="w">Trust boundary</span>: a point where untrusted input enters (user, query rewrite, documents, model output).<span class="an">A network perimeter, where you inspect what crosses.</span></div>
+    <div class="t"><span class="w">Access metadata</span>: tenant_id, audience (consumer / partner / internal), role, status on <b>every chunk</b>.</div>
+    <div class="t"><span class="w">Server-built filter</span>: <code>must</code> conditions from the <b>session</b>, never from the question.<span class="an">IAM policy attached by the platform.</span></div>
+    <div class="t"><span class="w">Deterministic security</span>: plain-code filters, not LLM judgement. Same user → same rights.</div>
+    <div class="t"><span class="w">Prompt injection</span>: hidden instructions inside documents ("ignore previous rules…"). Treat retrieved text as <b>data</b>.<span class="an">SQL injection, but for prompts.</span></div>
+    <div class="t"><span class="w">Allowlisted filters</span>: self-query may suggest topic/locale; <span class="hlp">tenant/role are never model-controlled</span>.</div>
+    <div class="t"><span class="w">Masked logs</span>: prompts and answers in logs carry the same sensitivity as the data.</div>
+  </div>
+  <div class="pgno">2 / 4</div>
+</section>
+
+<!-- ======================= PAGE 3 ======================= -->
+<section class="page">
+  <div class="holes"><i></i><i></i><i></i></div>
+  <div class="tag">dictionary · part 2</div>
+  <h1><span class="u">Evaluation words</span> 📊</h1>
+  <div class="sub">Find out whether retrieval or generation broke</div>
+
+  <div class="dict">
+    <div class="grp">③ Retrieval metrics</div>
+    <div class="t"><span class="w">Golden set</span>: questions + the right chunk IDs + reference answers. Include traps: codes, follow-ups, other tenants, unanswerable.<span class="an">A test fixture / smoke-test suite.</span></div>
+    <div class="t"><span class="w">Recall@K</span>: relevant found ÷ <b>all relevant</b>. "Did we find them?"</div>
+    <div class="t"><span class="w">Precision@K</span>: relevant found ÷ <b>K</b>. "How much noise?"</div>
+    <div class="t"><span class="w">Hit rate@K</span>: at least one right chunk in the top K? yes/no.</div>
+    <div class="t"><span class="w">MRR</span>: 1 ÷ rank of the first right chunk (rank 1 → 1.0, rank 3 → 0.33).</div>
+    <div class="t"><span class="w">nDCG</span>: rewards putting the best chunks <b>first</b>, which is exactly what reranking improves.</div>
+
+    <div class="grp">④ Generation metrics</div>
+    <div class="t"><span class="w">Faithfulness</span>: is every claim backed by the context? <span class="hl">The hallucination metric.</span></div>
+    <div class="t"><span class="w">Answer relevance</span>: does it actually answer the question?</div>
+    <div class="t"><span class="w">Context precision / recall</span>: is the context mostly useful / complete?</div>
+    <div class="t"><span class="w">Citation accuracy</span>: cited IDs exist and support the claim.</div>
+    <div class="t"><span class="w">Correct abstention</span>: says "I don't know" for "laptop insurance?"</div>
+    <div class="t"><span class="w">LLM-as-judge / RAGAS</span>: an LLM scores answers against rubrics. Cheap at scale; spot-check it.</div>
+
+    <div class="grp">⑤ Ops metrics</div>
+    <div class="t"><span class="w">p95 latency per stage</span>: retrieval, rerank, LLM.<span class="an">Per-hop tracing.</span></div>
+    <div class="t"><span class="w">Cost per query</span>: tokens + rerank calls + embeddings.</div>
+    <div class="t"><span class="w">Fallback / error rate</span>: how often you degrade or fail closed.</div>
+  </div>
+  <div class="pgno">3 / 4</div>
+</section>
+
+<!-- ======================= PAGE 4 ======================= -->
+<section class="page">
+  <div class="holes"><i></i><i></i><i></i></div>
+  <div class="tag">interview cram sheet · RAG wrap-up</div>
+  <h1><span class="u">The whole RAG story</span> 🎯</h1>
+  <div class="sub">Chapters 01 → 04 · say this out loud once</div>
+
+  <div class="sticky green">
+    <h3>"Walk me through production RAG" 🗣️</h3>
+    "<b>Indexing:</b> parse (OCR for scans) → structure-aware chunks with tenant/audience metadata → optional contextualisation → dense + BM25 vectors in Qdrant.
+    <b>Query:</b> router → trusted identity → faithful rewrite → <b>server-built access filter</b> → dense + BM25 → RRF → <b>cross-encoder rerank</b> → top 3–5 → grounded LLM at temperature 0 with citations, or abstain.
+    <b>Around it:</b> timeouts and fallbacks that fail closed, plus a <b>golden-set evaluation</b> in CI for every change."
+  </div>
+
+  <h2><span class="n">Q</span>Quick answers</h2>
+  <div class="two">
+    <div>
+      <div class="qa"><span class="q">Why rerank?</span><br>Retrieval finds candidates; the reranker orders them so the right one survives top-K.</div>
+      <div class="qa"><span class="q">Bi vs cross encoder?</span><br>Separate vectors (fast) vs reading both together (accurate). Use both, in that order.</div>
+      <div class="qa"><span class="q">Rerank API down?</span><br>Timeout → RRF order → log it.</div>
+      <div class="qa"><span class="q">Secure RAG?</span><br>Filter before search from the session's identity. The LLM is not a boundary.</div>
+    </div>
+    <div>
+      <div class="qa"><span class="q">Prompt injection?</span><br>Docs are data, not instructions; delimit them; vet sources.</div>
+      <div class="qa"><span class="q">Evaluate RAG?</span><br>Retrieval (Recall@K, MRR, nDCG) + generation (faithfulness, relevance) + ops.</div>
+      <div class="qa"><span class="q">Faithfulness?</span><br>Every claim supported by the context.</div>
+      <div class="qa"><span class="q">Ship a change?</span><br>Only if it beats the baseline on the golden set.</div>
+    </div>
+  </div>
+
+  <div class="box purple">
+    <h3>The 4 chapters 📚</h3>
+    <table class="hand">
+      <tr><td><b>01</b> Fundamentals</td><td>embeddings · similarity · Qdrant · HNSW</td></tr>
+      <tr><td><b>02</b> LangChain</td><td>loaders · splitters · retriever · LCEL</td></tr>
+      <tr><td><b>03</b> Production</td><td>7 failures · chunking · hybrid + RRF · query intelligence</td></tr>
+      <tr><td><b>04</b> Finish line</td><td>rerank · security · evaluation</td></tr>
+    </table>
+  </div>
+  <div class="stamp">RAG track ✔</div>
+  <div class="pgno">4 / 4</div>
+</section>
+
+<script>
+  document.querySelectorAll('.grp').forEach(g => { const w = document.createElement('div'); w.className = 'grpwrap'; g.before(w); const nx = g.nextElementSibling; w.appendChild(g); if (nx) w.appendChild(nx); });
+  window.addEventListener('load', () => document.querySelectorAll('.page').forEach((p, i) => {
+    if (p.scrollHeight > p.clientHeight + 2) { const f = document.createElement('div'); f.className = 'overflow-flag'; f.textContent = 'PAGE ' + (i + 1) + ' OVERFLOWS by ' + (p.scrollHeight - p.clientHeight) + 'px'; p.appendChild(f); }
+  }));
+</script>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LangChain Cheat Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #fffdf6;
+    --rule: #dce7f5;
+    --margin: #f2a7a7;
+    --ink: #1f3a7a;
+    --ink-soft: #3d5a99;
+    --red: #c0392b;
+    --green: #2e7d32;
+    --purple: #6a3fa0;
+    --hl-yellow: #fff27a;
+    --hl-pink: #ffc9dc;
+    --hl-green: #c6f0c2;
+    --hl-blue: #c9e6ff;
+  }
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; background: #e9e4d8; font-family: "Patrick Hand", "Comic Sans MS", cursive; color: var(--ink); }
+  .page {
+    position: relative; width: 210mm; height: 297mm; overflow: hidden;
+    margin: 0 auto 10mm; padding: 14mm 12mm 12mm 24mm;
+    background:
+      linear-gradient(90deg, transparent 19mm, var(--margin) 19mm, var(--margin) 19.5mm, transparent 19.5mm),
+      repeating-linear-gradient(180deg, transparent 0, transparent 7.4mm, var(--rule) 7.4mm, var(--rule) 7.6mm),
+      var(--paper);
+    break-after: page; page-break-after: always;
+    font-size: 12.4pt; line-height: 1.32;
+  }
+  .page:last-child { break-after: auto; page-break-after: auto; }
+  @media screen { .page { box-shadow: 0 6px 24px rgba(0,0,0,.18); margin-top: 10mm; } }
+  @media print { body { background: none; } .page { margin: 0; } .overflow-flag { display: none; } }
+  .holes { position: absolute; left: 7mm; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: space-around; }
+  .holes i { width: 5mm; height: 5mm; border-radius: 50%; background: #e9e4d8; box-shadow: inset 0 1px 2px rgba(0,0,0,.25); }
+  .pgno { position: absolute; bottom: 6mm; right: 12mm; font-family: Caveat, cursive; font-size: 15pt; color: var(--ink-soft); }
+  .tag { position: absolute; top: 7mm; right: 12mm; font-family: Caveat, cursive; font-size: 13pt; color: var(--red); transform: rotate(2deg); }
+
+  h1, h2, h3 { font-family: Caveat, cursive; font-weight: 700; margin: 0; line-height: 1.05; }
+  h1 { font-size: 36pt; color: var(--ink); }
+  h1 .u { background: linear-gradient(transparent 58%, var(--hl-yellow) 58%, var(--hl-yellow) 92%, transparent 92%); padding: 0 4px; }
+  .sub { font-size: 12.5pt; color: var(--ink-soft); margin: 1mm 0 4mm; }
+  h2 { font-size: 22pt; color: var(--red); margin: 3.5mm 0 1.5mm; }
+  h2 .n { display: inline-grid; place-items: center; width: 9mm; height: 9mm; border: 2px solid var(--red); border-radius: 50%; font-size: 15pt; margin-right: 2mm; transform: rotate(-6deg); vertical-align: 1mm; }
+  h3 { font-size: 18pt; color: var(--purple); margin: 2mm 0 1mm; }
+  p { margin: 1mm 0; }
+  b { color: #0f2457; }
+  .hl  { background: var(--hl-yellow); padding: 0 3px; border-radius: 3px; }
+  .hlp { background: var(--hl-pink);   padding: 0 3px; border-radius: 3px; }
+  .hlg { background: var(--hl-green);  padding: 0 3px; border-radius: 3px; }
+  .hlb { background: var(--hl-blue);   padding: 0 3px; border-radius: 3px; }
+  .red { color: var(--red); } .green { color: var(--green); }
+  .an { color: var(--green); }
+  .an::before { content: "🔧 "; }
+  ul { margin: 1mm 0; padding-left: 6mm; } li { margin: .6mm 0; } li::marker { content: "✎  "; color: var(--red); }
+
+  /* hand-drawn boxes */
+  .box { border: 2.2px solid var(--ink); padding: 2.5mm 3.5mm; margin: 2mm 0;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background: rgba(255,255,255,.55); }
+  .box.red { border-color: var(--red); } .box.green { border-color: var(--green); } .box.purple { border-color: var(--purple); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .sticky { background: #fff59d; padding: 3mm 4mm; margin: 2.5mm 0; box-shadow: 2px 4px 8px rgba(0,0,0,.16); transform: rotate(-1.2deg); position: relative; }
+  .sticky.pink { background: #ffd6e4; transform: rotate(1deg); }
+  .sticky.green { background: #d6f5d0; transform: rotate(-.6deg); }
+  .sticky.blue { background: #d4ebff; transform: rotate(.8deg); }
+  .sticky::before { content: ""; position: absolute; top: -3mm; left: 50%; width: 18mm; height: 6mm; margin-left: -9mm; background: rgba(255,255,255,.6); transform: rotate(-3deg); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+  .sticky h3 { margin-top: 0; }
+
+  /* pipeline doodle */
+  .flow { display: flex; align-items: center; flex-wrap: nowrap; gap: 1.5mm; margin: 1.5mm 0 1mm; }
+  .flow .s { border: 2px solid var(--ink); padding: 1mm 2.4mm; background: #fff; font-size: 12pt; white-space: nowrap;
+    border-radius: 12px 4px 14px 5px / 5px 14px 4px 12px; }
+  .flow .s.db { border-color: var(--purple); background: #efe6fb; }
+  .flow .s.llm { border-color: var(--red); background: #ffe9e6; }
+  .flow .ar { font-family: Caveat, cursive; font-size: 20pt; color: var(--red); line-height: 1; }
+  .lane { margin: 1mm 0 2mm; }
+  .lane .lbl { font-family: Caveat, cursive; font-size: 17pt; font-weight: 700; }
+  .lane .lbl small { font-family: "Patrick Hand"; font-size: 11pt; color: var(--ink-soft); font-weight: 400; }
+
+  /* dictionary cards */
+  .dict { columns: 2; column-gap: 6mm; }
+  .grp { break-inside: avoid; font-family: Caveat, cursive; font-weight: 700; font-size: 19pt; color: var(--red); margin: 1.5mm 0 .5mm; border-bottom: 2px dashed var(--red); }
+  .t { break-inside: avoid; margin: 0 0 2.2mm; font-size: 11.6pt; line-height: 1.26; }
+  .t .w { font-family: Caveat, cursive; font-weight: 700; font-size: 16.5pt; color: #0f2457; background: linear-gradient(transparent 55%, var(--hl-yellow) 55%, var(--hl-yellow) 92%, transparent 92%); padding: 0 2px; }
+  .t .an { display: block; font-size: 11.2pt; }
+
+  table.hand { width: 100%; border-collapse: collapse; font-size: 11.8pt; margin: 1mm 0; }
+  table.hand td, table.hand th { border-bottom: 1.5px dashed #9fb3d6; padding: 1mm 2mm; text-align: left; vertical-align: top; }
+  table.hand th { font-family: Caveat, cursive; font-size: 16pt; color: var(--red); border-bottom: 2px solid var(--red); }
+  .qa { margin: 0 0 1.8mm; font-size: 11.8pt; line-height: 1.26; }
+  .qa .q { font-family: Caveat, cursive; font-weight: 700; font-size: 16.5pt; color: var(--red); }
+  .stamp { position: absolute; right: 14mm; bottom: 16mm; font-family: Caveat, cursive; font-size: 20pt; color: var(--red); border: 3px solid var(--red); border-radius: 8px; padding: 1mm 4mm; transform: rotate(-8deg); opacity: .8; }
+  .p1 h2 { margin-top: 2.4mm; } .p1 .sub { margin-bottom: 2.5mm; } .p1 .sticky { margin: 2mm 0 0; }
+  .grpwrap { break-inside: avoid; }
+  .overflow-flag { position: absolute; top: 0; left: 0; right: 0; background: red; color: #fff; font: bold 14px sans-serif; padding: 4px; text-align: center; }
+</style>
+</head>
+<body>
+
+<!-- ======================= PAGE 1 ======================= -->
+<section class="page p1">
+  <div class="holes"><i></i><i></i><i></i></div>
+  <div class="tag">AI Track · Ch 02 · cheat notes</div>
+  <h1><span class="u">LangChain in plain English</span> 🧩</h1>
+  <div class="sub">Written for a cloud / infra person, not a developer · a 10-minute read before an interview</div>
+
+  <h2><span class="n">1</span>What problem does it solve?</h2>
+  <p>In Chapter 01 we built RAG <b>by hand</b>: our own embed code, cosine maths, sorting and top-K. Real projects use <b>many vendors</b> (PDF readers, OpenAI, Qdrant, OpenRouter), each with a different SDK.
+  <span class="hl">LangChain gives every job one standard plug</span>, so you snap the pieces together and can <b>swap any vendor by changing one line</b>.</p>
+  <div class="an">Like a <b>Kubernetes CSI driver</b>: the Pod asks for "a volume", and EBS, Azure Disk or NFS sits underneath. Or Terraform core + providers.</div>
+
+  <div class="two">
+    <div class="box green">
+      <h3>It IS ✅</h3>
+      a <b>toolbox / framework</b>: loaders, splitters, embedding and vector-store wrappers, plus the <b>|</b> pipe to join steps (with streaming and batching free).
+    </div>
+    <div class="box red">
+      <h3>It is NOT ❌</h3>
+      <b>not RAG</b> (RAG is the design) · <b>not a database</b> (Qdrant stores) · <b>not a model</b> (OpenAI/OpenRouter do the AI)
+    </div>
+  </div>
+
+  <h2><span class="n">2</span>The 8 building blocks</h2>
+  <div class="lane"><span class="lbl">Prepare once <small>indexing, a batch job</small></span>
+    <div class="flow"><span class="s">📄 Loader</span><span class="ar">→</span><span class="s">✂️ Splitter</span><span class="ar">→</span><span class="s">🔢 Embeddings</span><span class="ar">→</span><span class="s db">🗄️ Vector store</span></div>
+  </div>
+  <div class="lane"><span class="lbl">Answer every time <small>querying, the live path</small></span>
+    <div class="flow"><span class="s db">🔍 Retriever</span><span class="ar">→</span><span class="s">📝 Prompt</span><span class="ar">→</span><span class="s llm">🤖 Chat model</span><span class="ar">→</span><span class="s">🧹 Output parser</span></div>
+  </div>
+
+  <h2><span class="n">3</span>The whole chain in one line (LCEL)</h2>
+  <div class="box purple" style="font-size:12pt">
+    <code>{context: retriever | format_docs, question: passthrough} | prompt | llm | StrOutputParser()</code>
+    <div class="an">It's a <b>Unix pipe</b>: <code>cat log | grep 500 | sort | uniq -c</code>. The output of the left feeds the right.</div>
+  </div>
+
+  <div class="two">
+    <div class="sticky">
+      <h3>Quantization 🗜️</h3>
+      Store vectors at lower precision: float32 <b>6.1 GB</b> → int8 <b>1.5 GB</b> → binary <b>0.19 GB</b> (1M chunks).
+      Like a tape with only <b>feet</b> marked: you lose the inches, not the answer.
+    </div>
+    <div class="sticky pink">
+      <h3>Debug rule 🔍</h3>
+      Wrong answer? Walk the stages: <b>retrieved?</b> → context → prompt → LLM. The "client dinner" question failed because <b>expense_policy.pdf was never indexed!</b>
+    </div>
+  </div>
+  <div class="pgno">1 / 4</div>
+</section>
+
+<!-- ======================= PAGE 2 ======================= -->
+<section class="page">
+  <div class="holes"><i></i><i></i><i></i></div>
+  <div class="tag">LangChain dictionary · part 1</div>
+  <h1><span class="u">Getting data in</span> 📥</h1>
+  <div class="sub">Each term has a one-line meaning plus <span class="green">🔧 an infra analogy</span></div>
+
+  <div class="dict">
+    <div class="grp">① Core objects</div>
+    <div class="t"><span class="w">Document</span>: <b>page_content</b> (the text) + <b>metadata</b> (source, page, any key).<span class="an">A log line + its labels (pod, namespace).</span></div>
+    <div class="t"><span class="w">Metadata</span>: becomes the <b>payload</b> in Qdrant. Used to filter and to cite "file X, page 3".</div>
+    <div class="t"><span class="w">Runnable</span>: anything with <code>.invoke()</code> (retriever, prompt, LLM, parser), so it can be piped.<span class="an">Like a container that follows a standard interface.</span></div>
+    <div class="t"><span class="w">langchain-core</span>: the hub package. Others (-community, -openai, -qdrant, -openrouter) plug in.<span class="an">Terraform core + providers.</span></div>
+
+    <div class="grp">② Loaders</div>
+    <div class="t"><span class="w">Document loader</span>: reads a source and returns <b>list[Document]</b>. Same output for every file type.<span class="an">Like Fluent Bit inputs: many sources, one format.</span></div>
+    <div class="t"><span class="w">TextLoader</span>: 1 file → 1 Document. Keeps the Markdown <b>headings</b> (good for splitting).</div>
+    <div class="t"><span class="w">PyPDF / PyMuPDF</span>: 1 Document <b>per page</b>. PyMuPDF is fastest but <span class="hlp">AGPL licence</span>.</div>
+    <div class="t"><span class="w">OCR</span>: reads <b>pictures of text</b> (scanned PDFs). Tesseract + Poppler, which must be <b>on the OS</b>. Slow (7 pages ≈ 2 min) and makes mistakes.<span class="an">Bake it into the indexing job's Docker image.</span></div>
+    <div class="t"><span class="w">Managed parser</span>: Textract, Azure Document Intelligence, LlamaParse. Paid, for hard layouts.</div>
+
+    <div class="grp">③ Chunking</div>
+    <div class="t"><span class="w">Text splitter</span>: cuts Documents into chunks about <b>one topic</b> each. A chunk is what the LLM reads.</div>
+    <div class="t"><span class="w">Recursive splitter</span>: tries paragraph → line → space, so it cuts at natural breaks. Handbook: <b>8 pages → 16 chunks</b> (900 size).</div>
+    <div class="t"><span class="w">Chunk overlap</span>: neighbours share ~120 characters, so a sentence at a cut isn't lost.<span class="an">Like overlapping maintenance windows.</span></div>
+    <div class="t"><span class="w">Token</span>: the word-piece the model reads and <b>bills</b>. ~4 characters each. Encodings r50k / cl100k / o200k count differently.</div>
+
+    <div class="grp">④ Safe storage</div>
+    <div class="t"><span class="w">Stable chunk ID</span>: <code>uuid5(filename + sha1(text))</code>. The same text always gets the same ID, so a re-run doesn't duplicate.<span class="an">Idempotent like <code>kubectl apply</code>; content hash like an image digest.</span></div>
+    <div class="t"><span class="w">PII redaction</span>: mask names, phones, Aadhaar <b>before</b> embedding. Vectors end up in backups too!</div>
+    <div class="t"><span class="w">Multi-tenancy</span>: <code>tenant_id</code> in the payload + a <b>filter on every search</b>.<span class="an">Namespaces + RBAC, a mandatory <code>WHERE tenant_id=?</code></span></div>
+  </div>
+  <div class="pgno">2 / 4</div>
+</section>
+
+<!-- ======================= PAGE 3 ======================= -->
+<section class="page">
+  <div class="holes"><i></i><i></i><i></i></div>
+  <div class="tag">LangChain dictionary · part 2</div>
+  <h1><span class="u">Search & answer words</span> 💬</h1>
+  <div class="sub">From vectors to a grounded answer</div>
+
+  <div class="dict">
+    <div class="grp">⑤ Embeddings & store</div>
+    <div class="t"><span class="w">embed_documents / embed_query</span>: the two methods <b>every</b> embedding class has (many texts / one question).</div>
+    <div class="t"><span class="w">OpenAI vs HuggingFace/Ollama</span>: hosted (pay per call) vs <b>local</b> (free, data never leaves).<span class="an">SaaS vs self-hosted: a privacy and cost decision.</span></div>
+    <div class="t"><span class="w">QdrantVectorStore</span>: LangChain's Qdrant wrapper. <code>from_documents</code> = embed + create + upsert in one call.<span class="an">Like <code>kubectl run</code>; creating the collection yourself is the reviewed manifest.</span></div>
+    <div class="t"><span class="w">add_documents / similarity_search</span>: write (indexing) / read (top-k).</div>
+    <div class="t"><span class="w">401 "User not found"</span>: the API key wasn't loaded. <b>Restart the kernel</b>, then <code>load_dotenv()</code>.</div>
+
+    <div class="grp">⑥ Retrieve</div>
+    <div class="t"><span class="w">Retriever</span>: the search wrapped as a Runnable: <code>.invoke(q) → Documents</code>. <code>k=4</code> = how many.</div>
+    <div class="t"><span class="w">Always returns k</span>: even if the right doc isn't indexed, you get the "closest" junk. Check coverage!</div>
+
+    <div class="grp">⑦ Generate</div>
+    <div class="t"><span class="w">ChatOpenRouter</span>: LangChain's chat model for OpenRouter. Returns an <b>AIMessage</b> (text in <code>.content</code>).</div>
+    <div class="t"><span class="w">Temperature</span>: a creativity dial. <b>0</b> = same answer every time (RAG, help desk). 0.7+ = creative.<span class="an">0 = a pinned, deterministic config.</span></div>
+    <div class="t"><span class="w">System / human message</span>: system = the bot's rules, human = the user's question.</div>
+    <div class="t"><span class="w">Prompt template</span>: a reusable prompt with <code>{context}</code> and <code>{question}</code> slots.<span class="an">A Helm/Jinja template: fixed structure, values per request.</span></div>
+    <div class="t"><span class="w">Grounding rules</span>: "answer only from context · say you don't know · never invent amounts".</div>
+    <div class="t"><span class="w">format_docs</span>: turns Documents into one numbered text block with filenames, so the bot can cite.</div>
+
+    <div class="grp">⑧ Chain it</div>
+    <div class="t"><span class="w">LCEL</span>: LangChain Expression Language. Join Runnables with <b>|</b> and get .invoke / .stream / .batch free.</div>
+    <div class="t"><span class="w">RunnablePassthrough</span>: passes the question through unchanged, while the other branch builds the context.<span class="an">Like <code>tee</code>: same input, two paths.</span></div>
+    <div class="t"><span class="w">Output parser</span>: <code>StrOutputParser</code> turns an AIMessage into a plain string.</div>
+    <div class="t"><span class="w">Two-step vs agentic RAG</span>: retrieve once then answer, vs an <b>agent</b> deciding when and what to search (coming later).</div>
+  </div>
+  <div class="pgno">3 / 4</div>
+</section>
+
+<!-- ======================= PAGE 4 ======================= -->
+<section class="page">
+  <div class="holes"><i></i><i></i><i></i></div>
+  <div class="tag">interview cram sheet</div>
+  <h1><span class="u">Before the interview</span> 🎯</h1>
+  <div class="sub">Read this page last. Say it out loud once.</div>
+
+  <div class="sticky green">
+    <h3>"How would you build RAG with LangChain?" 🗣️</h3>
+    "<b>Indexing job:</b> loaders turn PDFs, wiki and CSVs into Documents with metadata. OCR handles scans. The recursive splitter makes ~900-character chunks with overlap. Each chunk gets a deterministic ID, PII is redacted, and a tenant_id is added. Then <b>embed + upsert into Qdrant</b>. <b>Query path:</b> an LCEL chain, retriever (top-4, tenant filter) → prompt with grounding rules → LLM at temperature 0 → string parser. If an answer is wrong, I debug stage by stage, starting with retrieval."
+  </div>
+
+  <h2><span class="n">Q</span>Quick answers</h2>
+  <div class="two">
+    <div>
+      <div class="qa"><span class="q">Why LangChain?</span><br>One interface per job, swappable vendors, ready loaders, <b>|</b> pipelines with streaming and batching.</div>
+      <div class="qa"><span class="q">What's a Document?</span><br>page_content + metadata. Metadata → payload → filters + citations.</div>
+      <div class="qa"><span class="q">Scanned PDF?</span><br>OCR (Tesseract + Poppler on the OS), slow, so spot-check it. Or Textract / Azure.</div>
+      <div class="qa"><span class="q">No duplicates on re-index?</span><br>Content-hash IDs (sha1 + uuid5) + upsert. Idempotent.</div>
+      <div class="qa"><span class="q">Compliance?</span><br>Redact PII first, skip ID scans, tenant_id + mandatory filter.</div>
+    </div>
+    <div>
+      <div class="qa"><span class="q">Quantization?</span><br>int8 = 4× less RAM, binary = 32×, for a small accuracy loss.</div>
+      <div class="qa"><span class="q">Vector store vs retriever?</span><br>Store = save + search. Retriever = search as a pluggable Runnable.</div>
+      <div class="qa"><span class="q">Temperature for RAG?</span><br><b>0</b>: factual and repeatable.</div>
+      <div class="qa"><span class="q">What's LCEL?</span><br>The Runnable <b>|</b> pipe: output of the left → input of the right.</div>
+      <div class="qa"><span class="q">Local vs hosted embeddings?</span><br>Local (HF/Ollama) = private and free. Hosted = no infra. A business call.</div>
+    </div>
+  </div>
+
+  <div class="two">
+    <div class="box purple">
+      <h3>The lab in numbers 🔢</h3>
+      <table class="hand">
+        <tr><td>Handbook</td><td>8 pages · 11,016 chars</td></tr>
+        <tr><td>Chunks</td><td>16 (900 / 120)</td></tr>
+        <tr><td>Embedding dims</td><td>1536 (3-small)</td></tr>
+        <tr><td>Retriever k</td><td>4 → 3,084 chars</td></tr>
+        <tr><td>OCR scan</td><td>56 elements · 1m54s</td></tr>
+      </table>
+    </div>
+    <div class="box red">
+      <h3>Errors seen in class 🐞</h3>
+      <table class="hand">
+        <tr><td>No module 'unstructured'</td><td>uv add unstructured</td></tr>
+        <tr><td>import markdown fails</td><td>uv add markdown</td></tr>
+        <tr><td>zsh: no matches […]</td><td>quote "unstructured[pdf]"</td></tr>
+        <tr><td>401 User not found</td><td>restart kernel + .env</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="stamp">Chapter 02 ✔</div>
+  <div class="pgno">4 / 4</div>
+</section>
+
+<script>
+  // keep each group heading together with its first term (no stranded headings at a column bottom)
+  document.querySelectorAll('.grp').forEach(g => { const w = document.createElement('div'); w.className = 'grpwrap'; g.before(w); const nx = g.nextElementSibling; w.appendChild(g); if (nx) w.appendChild(nx); });
+  // screen-only check: flag any page whose content overflows A4
+  window.addEventListener('load', () => document.querySelectorAll('.page').forEach((p, i) => {
+    if (p.scrollHeight > p.clientHeight + 2) { const f = document.createElement('div'); f.className = 'overflow-flag'; f.textContent = 'PAGE ' + (i + 1) + ' OVERFLOWS by ' + (p.scrollHeight - p.clientHeight) + 'px'; p.appendChild(f); }
+  }));
+</script>
+</body>
+</html>

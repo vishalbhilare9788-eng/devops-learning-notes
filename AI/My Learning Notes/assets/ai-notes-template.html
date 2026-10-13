@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /* AI track theme: indigo / violet / teal */
+  :root {
+    --ink: #1b1d3a;
+    --ink-soft: #4a4f73;
+    --muted: #7a7f9e;
+    --line: #e4e2f3;
+    --bg: #ffffff;
+    --tint: #f6f5ff;
+    --indigo: #4f46e5;
+    --violet: #7c3aed;
+    --teal: #0d9488;
+    --amber: #d97706;
+    --rose: #e11d48;
+    --code-bg: #15172b;
+    --code-ink: #e6e7f5;
+  }
+  @page { size: A4; margin: 16mm 15mm 18mm 15mm;
+    @bottom-left { content: "AI Track \00B7  {{SHORT}}"; font: 500 8pt Inter, "Segoe UI", sans-serif; color: #9a9cb8; }
+    @bottom-right { content: "Page " counter(page); font: 600 8pt Inter, "Segoe UI", sans-serif; color: #7c3aed; }
+  }
+  @page :first { margin: 0; @bottom-left { content: none; } @bottom-right { content: none; } }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: Inter, "Segoe UI", Calibri, Arial, sans-serif;
+    font-size: 10.6pt; line-height: 1.62;
+  }
+  #content { max-width: 880px; margin: 0 auto; padding: 0 28px 40px; }
+  @media print { #content { max-width: none; padding: 0; } }
+
+  /* ---------- cover ---------- */
+  .cover {
+    position: relative; overflow: hidden;
+    height: 297mm; width: 100%; margin: 0 0 0;
+    padding: 34mm 22mm 24mm;
+    background:
+      radial-gradient(circle at 85% 12%, rgba(45,212,191,.55) 0, rgba(45,212,191,0) 38%),
+      radial-gradient(circle at 10% 90%, rgba(236,72,153,.35) 0, rgba(236,72,153,0) 40%),
+      linear-gradient(140deg, #1e1b4b 0%, #3730a3 45%, #6d28d9 100%);
+    color: #fff; page-break-after: always; break-after: page;
+    display: flex; flex-direction: column;
+  }
+  @media screen { .cover { height: auto; min-height: 640px; margin: 0 -28px 28px; border-radius: 0 0 22px 22px; } }
+  .cover .grid {
+    position: absolute; inset: 0; opacity: .13;
+    background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px);
+    background-size: 28px 28px;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 55%, transparent 100%);
+  }
+  .cover .kicker { position: relative; display: inline-flex; gap: 10px; align-items: center;
+    font-size: 9.5pt; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: #c7d2fe; }
+  .cover .kicker .pill { background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.28);
+    padding: 4px 12px; border-radius: 999px; color: #fff; letter-spacing: .12em; }
+  .cover .chapno { position: relative; font-size: 120pt; font-weight: 800; line-height: .9; margin: 26mm 0 4mm;
+    background: linear-gradient(180deg, #ffffff 10%, rgba(255,255,255,.25) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .cover h1.cover-title { position: relative; font-size: 30pt; line-height: 1.12; font-weight: 800; margin: 0 0 6mm; letter-spacing: -.01em; border: 0; }
+  .cover .meta { position: relative; font-size: 11pt; color: #ddd6fe; max-width: 150mm; } .cover .meta em, .cover .meta strong { color: #e9e5ff; }
+  .cover .chips { position: relative; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12mm; }
+  .cover .chips span { font-size: 9.5pt; font-weight: 600; padding: 6px 12px; border-radius: 8px;
+    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22); }
+  .cover .foot { position: relative; margin-top: auto; display: flex; justify-content: space-between;
+    font-size: 9pt; color: #c4b5fd; border-top: 1px solid rgba(255,255,255,.2); padding-top: 5mm; }
+
+  /* ---------- contents ---------- */
+  nav.toc { page-break-after: always; break-after: page; padding-top: 4mm; }
+  nav.toc h2.toc-title { font-size: 22pt; font-weight: 800; margin: 0 0 2mm; border: 0; padding: 0; display: block; }
+  nav.toc .toc-sub { color: var(--muted); font-size: 9.5pt; margin-bottom: 8mm; }
+  nav.toc ol { list-style: none; margin: 0; padding: 0; }
+  nav.toc li.l2 > a { display: flex; align-items: center; gap: 12px; padding: 9px 12px; margin-top: 6px;
+    border-radius: 10px; background: var(--tint); border: 1px solid var(--line);
+    color: var(--ink); text-decoration: none; font-weight: 700; font-size: 11pt; }
+  nav.toc li.l2 > a .n { flex: 0 0 auto; width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center;
+    background: linear-gradient(135deg, var(--indigo), var(--violet)); color: #fff; font-size: 10pt; }
+  nav.toc li.l2 > a .go { margin-left: auto; color: var(--violet); font-size: 9pt; font-weight: 600; }
+  nav.toc ol ol { margin: 4px 0 4px 52px; }
+  nav.toc li.l3 a { display: block; padding: 2px 0; color: var(--ink-soft); text-decoration: none; font-size: 9.6pt; border-bottom: 1px dotted var(--line); }
+  nav.toc .hint { margin-top: 8mm; font-size: 9pt; color: var(--muted); }
+
+  /* ---------- headings ---------- */
+  h2 { display: flex; align-items: center; gap: 12px; font-size: 17pt; font-weight: 800; letter-spacing: -.01em;
+    margin: 30px 0 12px; padding-bottom: 8px; border-bottom: 2px solid var(--line);
+    break-after: avoid; page-break-after: avoid; }
+  h2 .badge { flex: 0 0 auto; min-width: 34px; height: 34px; padding: 0 8px; border-radius: 10px; display: grid; place-items: center;
+    background: linear-gradient(135deg, var(--indigo), var(--violet)); color: #fff; font-size: 12pt; box-shadow: 0 4px 12px rgba(79,70,229,.25); }
+  h2 .top { margin-left: auto; font-size: 8pt; font-weight: 600; color: var(--muted); text-decoration: none; border: 1px solid var(--line); padding: 2px 8px; border-radius: 999px; }
+  h3 { font-size: 12.5pt; font-weight: 700; color: var(--indigo); margin: 22px 0 8px; break-after: avoid; page-break-after: avoid; }
+  h3::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 9px; vertical-align: 2px;
+    background: linear-gradient(135deg, var(--teal), var(--indigo)); }
+  hr { border: 0; height: 0; margin: 10px 0; }
+  p { margin: 7px 0; }
+  ul, ol { padding-left: 22px; } li { margin: 3px 0; } li::marker { color: var(--violet); }
+  strong { color: #12143a; font-weight: 700; }
+  a { color: var(--indigo); }
+  em { color: var(--ink-soft); }
+
+  /* ---------- inline + block code ---------- */
+  code { font-family: "JetBrains Mono", Consolas, monospace; font-size: 8.9pt; background: #efedff; color: #5b21b6;
+    padding: 1px 5px; border-radius: 4px; }
+  .codeblock { position: relative; margin: 12px 0 16px; border-radius: 12px; overflow: hidden;
+    background: var(--code-bg); box-shadow: 0 6px 18px rgba(21,23,43,.18); break-inside: avoid; page-break-inside: avoid; }
+  .codeblock .bar { display: flex; align-items: center; gap: 6px; padding: 7px 12px; background: #1f2240; border-bottom: 1px solid #2c2f55; }
+  .codeblock .bar i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .codeblock .bar .lang { margin-left: auto; font: 600 7.8pt "JetBrains Mono", Consolas, monospace; color: #a5b4fc; text-transform: uppercase; letter-spacing: .08em; }
+  pre { margin: 0; padding: 12px 16px; color: var(--code-ink); font-size: 8.7pt; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
+  pre code { background: none; color: inherit; padding: 0; font-size: inherit; }
+  .hljs-keyword, .hljs-built_in, .hljs-literal { color: #c4a7ff; }
+  .hljs-string, .hljs-attr + .hljs-string { color: #86efac; }
+  .hljs-comment { color: #8b90b8; font-style: italic; }
+  .hljs-title, .hljs-title.function_, .hljs-title.class_ { color: #7dd3fc; }
+  .hljs-number { color: #fca5a5; }
+  .hljs-attr, .hljs-variable, .hljs-params { color: #fcd34d; }
+  .hljs-meta, .hljs-section { color: #f9a8d4; }
+
+  /* ---------- tables ---------- */
+  .table-wrap { margin: 12px 0 16px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; break-inside: avoid; page-break-inside: avoid; }
+  table { border-collapse: collapse; width: 100%; font-size: 9.4pt; }
+  thead th { background: linear-gradient(90deg, #eef0ff, #f5efff); color: #312e81; text-align: left; font-weight: 700; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  td { padding: 7px 10px; border-top: 1px solid #f0eef9; vertical-align: top; }
+  tbody tr:nth-child(even) td { background: #fbfaff; }
+
+  /* ---------- callouts ---------- */
+  .callout { margin: 14px 0; padding: 11px 14px 11px 16px; border-radius: 12px; border: 1px solid; border-left-width: 5px; break-inside: avoid; page-break-inside: avoid; }
+  .callout .ct { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 9pt; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 3px; }
+  .callout .ct .ic { width: 20px; height: 20px; border-radius: 6px; display: grid; place-items: center; color: #fff; font-size: 10pt; letter-spacing: 0; }
+  .callout p { margin: 4px 0; }
+  .callout.note      { background: #eff6ff; border-color: #bfdbfe; border-left-color: #3b82f6; } .callout.note .ct { color: #1d4ed8; } .callout.note .ic { background: #3b82f6; }
+  .callout.tip       { background: #ecfdf5; border-color: #a7f3d0; border-left-color: #10b981; } .callout.tip .ct { color: #047857; } .callout.tip .ic { background: #10b981; }
+  .callout.important { background: #f5f3ff; border-color: #ddd6fe; border-left-color: #7c3aed; } .callout.important .ct { color: #6d28d9; } .callout.important .ic { background: #7c3aed; }
+  .callout.warning, .callout.caution { background: #fffbeb; border-color: #fde68a; border-left-color: #f59e0b; } .callout.warning .ct, .callout.caution .ct { color: #b45309; } .callout.warning .ic, .callout.caution .ic { background: #f59e0b; }
+  blockquote { margin: 12px 0; padding: 8px 14px; border-left: 4px solid var(--violet); background: var(--tint); border-radius: 0 10px 10px 0; }
+
+  /* ---------- figures ---------- */
+  figure { margin: 14px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid; }
+  figure img { max-width: 100%; max-height: 108mm; border-radius: 10px; border: 1px solid var(--line); box-shadow: 0 8px 22px rgba(27,29,58,.14); }
+  figcaption { margin-top: 7px; font-size: 8.8pt; color: var(--muted); }
+  figcaption b { color: var(--violet); }
+
+  /* ---------- special sections ---------- */
+  section.interview ol { counter-reset: q; list-style: none; padding: 0; }
+  section.interview ol > li { counter-increment: q; position: relative; padding: 10px 12px 10px 48px; margin: 8px 0; border: 1px solid var(--line); border-radius: 12px; background: #fff; break-inside: avoid; }
+  section.interview ol > li::before { content: "Q" counter(q); position: absolute; left: 10px; top: 10px; width: 28px; height: 22px; border-radius: 6px;
+    background: linear-gradient(135deg, var(--teal), var(--indigo)); color: #fff; font: 800 8.5pt Inter, sans-serif; display: grid; place-items: center; }
+  section.next ul { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  section.next li { padding: 9px 12px; border-radius: 10px; border: 1px dashed #c4b5fd; background: #faf8ff; font-size: 9.6pt; }
+
+  .print-hint { background: #fff8e1; border: 1px solid #f0d98c; color: #6b5410; padding: 8px 14px; border-radius: 8px; font-size: 9.5pt; margin: 16px auto; max-width: 880px; }
+  @media print { .print-hint { display: none; } }
+</style>
+<script>
+{{MARKED}}
+</script>
+<script>
+{{HLJS}}
+</script>
+</head>
+<body>
+<div class="print-hint">Print-ready page. Use <b>Print &rarr; Save as PDF</b> to regenerate <code>{{PDFNAME}}</code>.</div>
+<div id="content"></div>
+<script type="text/markdown" id="md">
+{{MD}}
+</script>
+<script>
+(function () {
+  const root = document.getElementById('content');
+  root.innerHTML = marked.parse(document.getElementById('md').textContent, { gfm: true });
+  const slug = t => t.toLowerCase().replace(/<[^>]+>/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+  // 1) cover from the H1 + first italic meta line
+  const h1 = root.querySelector('h1');
+  const meta = h1 && h1.nextElementSibling && h1.nextElementSibling.tagName === 'P' ? h1.nextElementSibling : null;
+  const m = (h1 ? h1.textContent : '').match(/^Chapter\s+(\d+)\s*[:—-]\s*(.*)$/i);
+  const chapNo = m ? m[1] : '';
+  const title = m ? m[2] : (h1 ? h1.textContent : '');
+  const agenda = [...root.querySelectorAll('table')][0];
+  const chips = agenda ? [...agenda.querySelectorAll('tbody tr')].map(r => r.children[1] ? r.children[1].textContent.replace(/\(.*?\)/g, '').trim() : '').filter(Boolean) : [];
+  const cover = document.createElement('section');
+  cover.className = 'cover';
+  cover.innerHTML = '<div class="grid"></div>' +
+    '<div class="kicker"><span class="pill">AI Track</span> My Learning Notes</div>' +
+    (chapNo ? '<div class="chapno">' + chapNo.padStart(2, '0') + '</div>' : '') +
+    '<h1 class="cover-title">' + title + '</h1>' +
+    '<div class="meta">' + (meta ? meta.innerHTML : '') + '</div>' +
+    '<div class="chips">' + chips.map(c => '<span>' + c + '</span>').join('') + '</div>' +
+    '<div class="foot"><span>Vishal Bhilare &middot; Interview &amp; production reference</span><span>Built from session notes + screenshots</span></div>';
+  if (h1) h1.remove(); if (meta) meta.remove();
+  root.prepend(cover);
+
+  // 2) GitHub-style callouts: > [!TIP]
+  const icons = { note: 'i', tip: '✓', important: '!', warning: '⚠', caution: '⚠' };
+  root.querySelectorAll('blockquote').forEach(bq => {
+    const p = bq.querySelector('p'); if (!p) return;
+    const mm = p.innerHTML.match(/^\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(<br>)?\s*/i);
+    if (!mm) return;
+    const kind = mm[1].toLowerCase();
+    p.innerHTML = p.innerHTML.slice(mm[0].length);
+    const div = document.createElement('div');
+    div.className = 'callout ' + kind;
+    div.innerHTML = '<div class="ct"><span class="ic">' + icons[kind] + '</span>' + kind + '</div>' + bq.innerHTML;
+    bq.replaceWith(div);
+  });
+
+  // 3) figures: images live beside the .md, this page lives in PDF/ -> prefix ../
+  let fig = 0;
+  root.querySelectorAll('img').forEach(img => {
+    const src = img.getAttribute('src');
+    if (src && !/^(https?:|data:|\.\.\/|\/)/.test(src)) img.setAttribute('src', '../' + src);
+    const f = document.createElement('figure');
+    const holder = img.parentElement.tagName === 'P' && img.parentElement.children.length === 1 ? img.parentElement : img;
+    holder.replaceWith(f);
+    f.appendChild(img);
+    if (img.alt) { fig++; const c = document.createElement('figcaption'); c.innerHTML = '<b>Figure ' + fig + '</b> &middot; ' + img.alt; f.appendChild(c); }
+  });
+
+  // 4) tables + code blocks
+  root.querySelectorAll('table').forEach(t => { const w = document.createElement('div'); w.className = 'table-wrap'; t.replaceWith(w); w.appendChild(t); });
+  root.querySelectorAll('pre > code').forEach(code => {
+    let lang = ((code.className.match(/language-(\w+)/) || [])[1] || 'text').toLowerCase();
+    const map = { toml: 'ini', text: 'plaintext', sh: 'bash', shell: 'bash' };
+    code.className = 'language-' + (map[lang] || lang);
+    try { hljs.highlightElement(code); } catch (e) {}
+    const pre = code.parentElement, box = document.createElement('div');
+    box.className = 'codeblock';
+    box.innerHTML = '<div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="lang">' + lang + '</span></div>';
+    pre.replaceWith(box); box.appendChild(pre);
+  });
+  root.querySelectorAll('hr').forEach(h => h.remove());
+
+  // 5) headings: ids, number badges, sections for special blocks, contents page
+  const toc = [];
+  let cur = null;
+  root.querySelectorAll('h2, h3').forEach(h => {
+    const text = h.textContent.trim();
+    h.id = slug(text);
+    if (h.tagName === 'H2') {
+      const nm = text.match(/^(\d+)\.\s*(.*)$/);
+      const label = nm ? nm[2] : text;
+      const badge = nm ? nm[1] : (/interview/i.test(text) ? '?' : /come|next/i.test(text) ? '→' : '•');
+      h.innerHTML = '<span class="badge">' + badge + '</span><span>' + label + '</span><a class="top" href="#contents">↑ contents</a>';
+      cur = { id: h.id, badge, label, kids: [] }; toc.push(cur);
+    } else if (cur) {
+      cur.kids.push({ id: h.id, label: text });
+    }
+  });
+  // wrap interview / next sections so they get special styling
+  root.querySelectorAll('h2').forEach(h => {
+    const t = h.textContent;
+    const cls = /interview/i.test(t) ? 'interview' : /still to come|coming next|what.s next/i.test(t) ? 'next' : null;
+    if (!cls) return;
+    const sec = document.createElement('section'); sec.className = cls;
+    h.before(sec);
+    let n = h; const nodes = [];
+    while (n && !(n !== h && n.tagName === 'H2')) { nodes.push(n); n = n.nextElementSibling; }
+    nodes.forEach(x => sec.appendChild(x));
+  });
+  const nav = document.createElement('nav');
+  nav.className = 'toc'; nav.id = 'contents';
+  nav.innerHTML = '<h2 class="toc-title">Contents</h2><div class="toc-sub">Every entry is a clickable link. Each section heading has an ↑ contents link back here.</div><ol>' +
+    toc.map(s => '<li class="l2"><a href="#' + s.id + '"><span class="n">' + s.badge + '</span>' + s.label + '<span class="go">Go →</span></a>' +
+      (s.kids.length ? '<ol>' + s.kids.map(k => '<li class="l3"><a href="#' + k.id + '">' + k.label + '</a></li>').join('') + '</ol>' : '') + '</li>').join('') +
+    '</ol>';
+  cover.after(nav);
+})();
+</script>
+</body>
+</html>

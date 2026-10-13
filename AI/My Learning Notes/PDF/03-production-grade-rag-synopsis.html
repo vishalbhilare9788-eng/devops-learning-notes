@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Production RAG Cheat Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #fffdf6;
+    --rule: #dce7f5;
+    --margin: #f2a7a7;
+    --ink: #1f3a7a;
+    --ink-soft: #3d5a99;
+    --red: #c0392b;
+    --green: #2e7d32;
+    --purple: #6a3fa0;
+    --hl-yellow: #fff27a;
+    --hl-pink: #ffc9dc;
+    --hl-green: #c6f0c2;
+    --hl-blue: #c9e6ff;
+  }
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; background: #e9e4d8; font-family: "Patrick Hand", "Comic Sans MS", cursive; color: var(--ink); }
+  .page {
+    position: relative; width: 210mm; height: 297mm; overflow: hidden;
+    margin: 0 auto 10mm; padding: 14mm 12mm 12mm 24mm;
+    background:
+      linear-gradient(90deg, transparent 19mm, var(--margin) 19mm, var(--margin) 19.5mm, transparent 19.5mm),
+      repeating-linear-gradient(180deg, transparent 0, transparent 7.4mm, var(--rule) 7.4mm, var(--rule) 7.6mm),
+      var(--paper);
+    break-after: page; page-break-after: always;
+    font-size: 12.4pt; line-height: 1.32;
+  }
+  .page:last-child { break-after: auto; page-break-after: auto; }
+  @media screen { .page { box-shadow: 0 6px 24px rgba(0,0,0,.18); margin-top: 10mm; } }
+  @media print { body { background: none; } .page { margin: 0; } .overflow-flag { display: none; } }
+  .holes { position: absolute; left: 7mm; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: space-around; }
+  .holes i { width: 5mm; height: 5mm; border-radius: 50%; background: #e9e4d8; box-shadow: inset 0 1px 2px rgba(0,0,0,.25); }
+  .pgno { position: absolute; bottom: 6mm; right: 12mm; font-family: Caveat, cursive; font-size: 15pt; color: var(--ink-soft); }
+  .tag { position: absolute; top: 7mm; right: 12mm; font-family: Caveat, cursive; font-size: 13pt; color: var(--red); transform: rotate(2deg); }
+
+  h1, h2, h3 { font-family: Caveat, cursive; font-weight: 700; margin: 0; line-height: 1.05; }
+  h1 { font-size: 36pt; color: var(--ink); }
+  h1 .u { background: linear-gradient(transparent 58%, var(--hl-yellow) 58%, var(--hl-yellow) 92%, transparent 92%); padding: 0 4px; }
+  .sub { font-size: 12.5pt; color: var(--ink-soft); margin: 1mm 0 4mm; }
+  h2 { font-size: 22pt; color: var(--red); margin: 3.5mm 0 1.5mm; }
+  h2 .n { display: inline-grid; place-items: center; width: 9mm; height: 9mm; border: 2px solid var(--red); border-radius: 50%; font-size: 15pt; margin-right: 2mm; transform: rotate(-6deg); vertical-align: 1mm; }
+  h3 { font-size: 18pt; color: var(--purple); margin: 2mm 0 1mm; }
+  p { margin: 1mm 0; }
+  b { color: #0f2457; }
+  .hl  { background: var(--hl-yellow); padding: 0 3px; border-radius: 3px; }
+  .hlp { background: var(--hl-pink);   padding: 0 3px; border-radius: 3px; }
+  .hlg { background: var(--hl-green);  padding: 0 3px; border-radius: 3px; }
+  .hlb { background: var(--hl-blue);   padding: 0 3px; border-radius: 3px; }
+  .red { color: var(--red); } .green { color: var(--green); }
+  .an { color: var(--green); }
+  .an::before { content: "🔧 "; }
+  ul { margin: 1mm 0; padding-left: 6mm; } li { margin: .6mm 0; } li::marker { content: "✎  "; color: var(--red); }
+
+  /* hand-drawn boxes */
+  .box { border: 2.2px solid var(--ink); padding: 2.5mm 3.5mm; margin: 2mm 0;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background: rgba(255,255,255,.55); }
+  .box.red { border-color: var(--red); } .box.green { border-color: var(--green); } .box.purple { border-color: var(--purple); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .sticky { background: #fff59d; padding: 3mm 4mm; margin: 2.5mm 0; box-shadow: 2px 4px 8px rgba(0,0,0,.16); transform: rotate(-1.2deg); position: relative; }
+  .sticky.pink { background: #ffd6e4; transform: rotate(1deg); }
+  .sticky.green { background: #d6f5d0; transform: rotate(-.6deg); }
+  .sticky.blue { background: #d4ebff; transform: rotate(.8deg); }
+  .sticky::before { content: ""; position: absolute; top: -3mm; left: 50%; width: 18mm; height: 6mm; margin-left: -9mm; background: rgba(255,255,255,.6); transform: rotate(-3deg); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+  .sticky h3 { margin-top: 0; }
+
+  /* pipeline doodle */
+  .flow { display: flex; align-items: center; flex-wrap: nowrap; gap: 1.5mm; margin: 1.5mm 0 1mm; }
+  .flow .s { border: 2px solid var(--ink); padding: 1mm 2.4mm; background: #fff; font-size: 12pt; white-space: nowrap;
+    border-radius: 12px 4px 14px 5px / 5px 14px 4px 12px; }
+  .flow .s.db { border-color: var(--purple); background: #efe6fb; }
+  .flow .s.llm { border-color: var(--red); background: #ffe9e6; }
+  .flow .ar { font-family: Caveat, cursive; font-size: 20pt; color: var(--red); line-height: 1; }
+  .lane { margin: 1mm 0 2mm; }
+  .lane .lbl { font-family: Caveat, cursive; font-size: 17pt; font-weight: 700; }
+  .lane .lbl small { font-family: "Patrick Hand"; font-size: 11pt; color: var(--ink-soft); font-weight: 400; }
+
+  /* dictionary cards */
+  .dict { columns: 2; column-gap: 6mm; }
+  .grp { break-inside: avoid; font-family: Caveat, cursive; font-weight: 700; font-size: 19pt; color: var(--red); margin: 1.5mm 0 .5mm; border-bottom: 2px dashed var(--red); }
+  .t { break-inside: avoid; margin: 0 0 2.2mm; font-size: 11.6pt; line-height: 1.26; }
+  .t .w { font-family: Caveat, cursive; font-weight: 700; font-size: 16.5pt; color: #0f2457; background: linear-gradient(transparent 55%, var(--hl-yellow) 55%, var(--hl-yellow) 92%, transparent 92%); padding: 0 2px; }
+  .t .an { display: block; font-size: 11.2pt; }
+
+  table.hand { width: 100%; border-collapse: collapse; font-size: 11.8pt; margin: 1mm 0; }
+  table.hand td, table.hand th { border-bottom: 1.5px dashed #9fb3d6; padding: 1mm 2mm; text-align: left; vertical-align: top; }
+  table.hand th { font-family: Caveat, cursive; font-size: 16pt; color: var(--red); border-bottom: 2px solid var(--red); }
+  .qa { margin: 0 0 1.8mm; font-size: 11.8pt; line-height: 1.26; }
+  .qa .q { font-family: Caveat, cursive; font-weight: 700; font-size: 16.5pt; color: var(--red); }
+  .stamp { position: absolute; right: 14mm; bottom: 16mm; font-family: Caveat, cursive; font-size: 20pt; color: var(--red); border: 3px solid var(--red); border-radius: 8px; padding: 1mm 4mm; transform: rotate(-8deg); opacity: .8; }
+  .p1 h2 { margin-top: 2.4mm; } .p1 .sub { margin-bottom: 2.5mm; } .p1 .sticky { margin: 2mm 0 0; }
+  .grpwrap { break-inside: avoid; }
+  .overflow-flag { position: absolute; top: 0; left: 0; right: 0; background: red; color: #fff; font: bold 14px sans-serif; padding: 4px; text-align: center; }
+</style>
+</head>
+<body>
+
+<!-- ======================= PAGE 1 ======================= -->
+<section class="page p1">
+  <div class="holes"><i></i><i></i><i></i></div>
+  <div class="tag">AI Track · Ch 03 · cheat notes</div>
+  <h1><span class="u">Production RAG in plain English</span> 🏭</h1>
+  <div class="sub">Written for a cloud / infra person, not a developer · a 10-minute read before an interview</div>
+
+  <h2><span class="n">1</span>Why basic RAG isn't enough</h2>
+  <p>Basic RAG = embed the question → find the <b>most similar</b> chunks → give the top-K to the LLM. Fine in a demo, but at scale <span class="hl">similar ≠ relevant</span>.
+  Zomato example: "order says delivered, never got it, refund?" The right record (ZH-002) ranked <b>3rd</b>. With <b>K = 2</b> the LLM never saw it.</p>
+  <div class="an">A health check that only tests "port open": it looks healthy (similar) but the app is broken (not relevant).</div>
+
+  <div class="box red" style="font-size:11.6pt">
+    <h3>7 ways it breaks → the fix</h3>
+    <table class="hand">
+      <tr><td>Similar mistaken for relevant</td><td>hybrid search + rerank</td></tr>
+      <tr><td>Missing evidence ("definitely refunded!")</td><td>grounded prompt + "I don't know"</td></tr>
+      <tr><td>Poor chunking (rule cut in half)</td><td>structure-aware / parent-child</td></tr>
+      <tr><td>No metadata filter (H&amp;M policy to a Zomato user)</td><td>trusted tenant filter</td></tr>
+      <tr><td>No attribution</td><td>citations</td></tr>
+      <tr><td>No evaluation ("demo looked good")</td><td>labelled eval set</td></tr>
+      <tr><td>No failure handling</td><td>timeouts, fallbacks, fail closed</td></tr>
+    </table>
+  </div>
+
+  <h2><span class="n">2</span>The production pipeline</h2>
+  <div class="flow"><span class="s">❓ Question</span><span class="ar">→</span><span class="s">🪪 Identity</span><span class="ar">→</span><span class="s">✍️ Rewrite</span><span class="ar">→</span><span class="s db">🔒 Access filter</span></div>
+  <div class="flow"><span class="s db">🧠 Dense</span><span class="ar">+</span><span class="s db">🔤 BM25</span><span class="ar">→</span><span class="s">🔀 RRF</span><span class="ar">→</span><span class="s">🏅 Rerank</span><span class="ar">→</span><span class="s llm">🤖 LLM</span><span class="ar">→</span><span class="s">📎 Cite</span></div>
+  <p style="font-size:11.6pt">Example: dense <b>A,B,D,L</b> + BM25 <b>B,A,M,L</b> → RRF <b>A,B,L,D</b> → rerank <b>D,A,L,B</b> → top-2 <b>D,A</b> to the LLM. Without the rerank, D (the answer) is lost.</p>
+
+  <div class="two">
+    <div class="sticky">
+      <h3>Router first 🚦</h3>
+      "What is 2 + 2?" Vector search <b>always</b> returns something. A router decides: RAG, a live API, analytics, or "not my job".
+      <span class="an">Ingress path rules.</span>
+    </div>
+    <div class="sticky pink">
+      <h3>Baseline first 📏</h3>
+      Measure plain dense RAG on a fixed query set, then add <b>one</b> improvement at a time.
+      <span class="an">Load-test before tuning.</span>
+    </div>
+  </div>
+  <div class="pgno">1 / 4</div>
+</section>
+
+<!-- ======================= PAGE 2 ======================= -->
+<section class="page">
+  <div class="holes"><i></i><i></i><i></i></div>
+  <div class="tag">dictionary · part 1</div>
+  <h1><span class="u">Chunking &amp; retrieval words</span> ✂️</h1>
+  <div class="sub">Each term has a one-line meaning plus <span class="green">🔧 an infra analogy</span></div>
+
+  <div class="dict">
+    <div class="grp">① Chunking</div>
+    <div class="t"><span class="w">Fixed-size</span>: cut every N characters (e.g. 120, overlap 20). Cuts words and rules in half.<span class="an">Splitting a log file every 1 MB, mid-line.</span></div>
+    <div class="t"><span class="w">Recursive</span>: paragraph → sentence → word. The sensible default.</div>
+    <div class="t"><span class="w">Structure-aware</span>: one chunk per <b>section / FAQ item</b> (split on headings). Complete rules, easy citations.<span class="an">One chunk per Kubernetes manifest, not per 50 lines.</span></div>
+    <div class="t"><span class="w">Semantic</span>: embed each sentence, cut where the <b>distance jumps</b> (0.12, 0.16, <span class="hlp">0.71</span>, 0.14 → cut). Costs more; the threshold depends on the model.<span class="an">Alerting on a sudden spike, not a fixed value.</span></div>
+    <div class="t"><span class="w">Parent-child</span>: <b>search</b> small children (~300 chars), <b>return</b> the big parent (~1000).<span class="an">grep the error line, then open the whole trace.</span></div>
+    <div class="t"><span class="w">Contextual retrieval</span>: an LLM adds "where this chunk comes from" <b>before</b> embedding. Anthropic: <b>−35%</b> failures (−49% with BM25).<span class="an">Labels on every log line at ingest time.</span></div>
+    <div class="t"><span class="w">Chunk metadata</span>: document_id, section_path, version, updated_at, product, locale, status, <b>access scope</b>.</div>
+
+    <div class="grp">② Retrieval</div>
+    <div class="t"><span class="w">Dense vector</span>: 1536 numbers, <b>all filled</b>. Stores <b>meaning</b>. Finds paraphrases.</div>
+    <div class="t"><span class="w">Sparse vector</span>: 50,000 word slots, <b>almost all 0</b>. Stores <b>words</b>. Finds exact codes.<span class="an">Search by employee ID vs by description.</span></div>
+    <div class="t"><span class="w">BM25</span>: keyword scoring: frequency (diminishing), <b>rare words count more</b> (IDF), length fairness. Knobs k1, b.<span class="an">How Elasticsearch / log search ranks.</span></div>
+    <div class="t"><span class="w">Inverted index</span>: word → list of chunks containing it.<span class="an">The index at the back of a book.</span></div>
+    <div class="t"><span class="w">PAY-403 problem</span>: dense search <b>misses error codes</b> it has never seen. BM25 catches them.</div>
+    <div class="t"><span class="w">Hybrid search</span>: dense + sparse <b>in parallel</b>, then merge. The production default.</div>
+    <div class="t"><span class="w">RRF</span>: Reciprocal Rank Fusion. <code>Σ 1/(60 + rank)</code>. Merges <b>ranks</b>, because cosine 0.77 and BM25 12.4 can't be added.<span class="an">Merging two monitoring rankings by position, not raw values.</span></div>
+  </div>
+  <div class="pgno">2 / 4</div>
+</section>
+
+<!-- ======================= PAGE 3 ======================= -->
+<section class="page">
+  <div class="holes"><i></i><i></i><i></i></div>
+  <div class="tag">dictionary · part 2</div>
+  <h1><span class="u">Query &amp; safety words</span> 🛡️</h1>
+  <div class="sub">Fixing the question side, and keeping it safe</div>
+
+  <div class="dict">
+    <div class="grp">③ Query intelligence</div>
+    <div class="t"><span class="w">Query rewriting</span>: "What if it has already passed?" → "What if my Zomato order's ETA has passed?" ZH-001 jumps to #1 (0.86).</div>
+    <div class="t"><span class="w">Faithful rewrite</span>: keeps IDs (ZM-123), adds <b>no facts</b>. Harmful = drops the ID or promises a refund.</div>
+    <div class="t"><span class="w">Structured output</span>: the LLM must return a fixed shape (<code>SearchQuery</code>, 3–400 chars).<span class="an">A JSON schema validating an API response.</span></div>
+    <div class="t"><span class="w">Self-query</span>: the LLM extracts a query + <b>filters</b> (topic, product, locale) from the question.</div>
+    <div class="t"><span class="w">Query routing</span>: policy RAG vs <b>order API</b> (live status) vs <b>analytics</b> ("how many failed?") vs <b>action workflow</b> ("cancel my order").<span class="an">Ingress rules: /docs → RAG, /orders → API.</span></div>
+    <div class="t"><span class="w">Multi-query</span>: several phrasings, search each, merge.</div>
+    <div class="t"><span class="w">HyDE</span>: write a fake answer first, search with it.</div>
+    <div class="t"><span class="w">Step-back</span>: ask a broader question first for background.</div>
+
+    <div class="grp">④ Safety &amp; quality</div>
+    <div class="t"><span class="w">Trusted identity</span>: who is asking, checked <b>before</b> anything else (auth + RBAC).</div>
+    <div class="t"><span class="w">Access filter</span>: metadata <code>must / must_not</code>: tenant, team (sales / marketing / infra).<span class="an">Namespaces + RBAC; a mandatory WHERE clause.</span></div>
+    <div class="t"><span class="w">Never model-controlled</span>: <span class="hlp">tenant_id comes from login</span>, not from the LLM or user text. Self-query proposals are an <b>allowlist</b> check.</div>
+    <div class="t"><span class="w">Grounded prompt</span>: answer only from context.</div>
+    <div class="t"><span class="w">Abstention</span>: "I don't have that information, please contact support."</div>
+    <div class="t"><span class="w">Citations</span>: every claim → [ZH-002]. Makes answers auditable.</div>
+    <div class="t"><span class="w">Recall@K vs Precision@K</span>: found ÷ <b>all relevant</b> vs found ÷ <b>K</b>.</div>
+    <div class="t"><span class="w">Eval set</span>: fixed questions → expected chunks. Run on every change.<span class="an">A CI regression suite.</span></div>
+    <div class="t"><span class="w">Fail closed</span>: retrieval timed out? <b>Refuse</b>, don't improvise.<span class="an">A firewall that denies when rules can't load.</span></div>
+  </div>
+  <div class="pgno">3 / 4</div>
+</section>
+
+<!-- ======================= PAGE 4 ======================= -->
+<section class="page">
+  <div class="holes"><i></i><i></i><i></i></div>
+  <div class="tag">interview cram sheet</div>
+  <h1><span class="u">Before the interview</span> 🎯</h1>
+  <div class="sub">Read this page last. Say it out loud once.</div>
+
+  <div class="sticky green">
+    <h3>"How do you make RAG production-grade?" 🗣️</h3>
+    "First I build a <b>baseline</b> and an <b>eval set</b>. Then I fix it stage by stage. A <b>router</b> sends only document questions to RAG. <b>Identity</b> comes from the session and drives a <b>tenant/role filter</b>. Chunks are <b>structure-aware</b> with rich metadata, optionally <b>contextualised</b>. Retrieval is <b>hybrid</b>, dense + BM25 fused with <b>RRF</b>, then <b>reranked</b>. Follow-ups are <b>rewritten</b> into standalone queries. The LLM answers <b>only from context, with citations</b>, or abstains. Every external call has <b>timeouts and fallbacks</b>, and failures <b>fail closed</b>."
+  </div>
+
+  <h2><span class="n">Q</span>Quick answers</h2>
+  <div class="two">
+    <div>
+      <div class="qa"><span class="q">Similar vs relevant?</span><br>Close in meaning ≠ answers the question. The right chunk ranked #3 and K = 2 cut it.</div>
+      <div class="qa"><span class="q">Why hybrid?</span><br>Dense = paraphrases, BM25 = exact codes (PAY-403). Users mix both.</div>
+      <div class="qa"><span class="q">Why RRF?</span><br>Scores are on different scales, so fuse <b>ranks</b>: Σ 1/(60 + rank).</div>
+      <div class="qa"><span class="q">Best chunking?</span><br>Structure-aware by default. Semantic / parent-child only if eval proves it.</div>
+      <div class="qa"><span class="q">Contextual retrieval?</span><br>Prepend a source description per chunk. −35% / −49% failures, but one LLM call per chunk.</div>
+    </div>
+    <div>
+      <div class="qa"><span class="q">Query rewrite risk?</span><br>Dropping IDs or adding facts. Use the rewrite only to search; answer the original question.</div>
+      <div class="qa"><span class="q">Self-query security?</span><br>Allowlist the fields. Tenant/role always come from authentication.</div>
+      <div class="qa"><span class="q">"Live status of my order"?</span><br>Route it to the order API. Documents can't know live state.</div>
+      <div class="qa"><span class="q">Multi-tenant RAG?</span><br>tenant_id on every chunk + a mandatory server-side filter.</div>
+      <div class="qa"><span class="q">How do you know it improved?</span><br>Eval set before vs after: Recall@K, answer quality.</div>
+    </div>
+  </div>
+
+  <div class="two">
+    <div class="box purple">
+      <h3>Numbers to remember 🔢</h3>
+      <table class="hand">
+        <tr><td>Dense vector</td><td>1536 floats</td></tr>
+        <tr><td>Sparse vocab</td><td>~50,000 slots</td></tr>
+        <tr><td>RRF k</td><td>60</td></tr>
+        <tr><td>Parent / child</td><td>1000 / 300 chars</td></tr>
+        <tr><td>Anthropic contextual</td><td>−35% / −49%</td></tr>
+      </table>
+    </div>
+    <div class="box red">
+      <h3>Watch outs ⚠️</h3>
+      <table class="hand">
+        <tr><td>Semantic threshold</td><td>not universal</td></tr>
+        <tr><td>langchain-classic</td><td>fixes end Dec 2026</td></tr>
+        <tr><td>Rewrites</td><td>untrusted proposals</td></tr>
+        <tr><td>Next lecture</td><td>reranking</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="stamp">Chapter 03 ✔</div>
+  <div class="pgno">4 / 4</div>
+</section>
+
+<script>
+  document.querySelectorAll('.grp').forEach(g => { const w = document.createElement('div'); w.className = 'grpwrap'; g.before(w); const nx = g.nextElementSibling; w.appendChild(g); if (nx) w.appendChild(nx); });
+  window.addEventListener('load', () => document.querySelectorAll('.page').forEach((p, i) => {
+    if (p.scrollHeight > p.clientHeight + 2) { const f = document.createElement('div'); f.className = 'overflow-flag'; f.textContent = 'PAGE ' + (i + 1) + ' OVERFLOWS by ' + (p.scrollHeight - p.clientHeight) + 'px'; p.appendChild(f); }
+  }));
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><title>Screenshots &mdash; Git Fundamentals</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4 landscape; margin: 10mm 12mm 12mm;
+    @bottom-right { content: "Page " counter(page); font: 600 8pt Inter, sans-serif; color: #7c3aed; }
+    @bottom-left { content: "Git Track \00B7  Ch 01 screenshots"; font: 500 8pt Inter, sans-serif; color: #9a9cb8; } }
+  @page :first { margin: 0; @bottom-right { content: none; } @bottom-left { content: none; } }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; font-family: Inter, "Segoe UI", sans-serif; color: #1b1d3a; }
+  code { font-family: "JetBrains Mono", Consolas, monospace; font-size: .9em; background: #efedff; color: #5b21b6; padding: 0 4px; border-radius: 4px; }
+  .cover { height: 210mm; padding: 30mm 24mm; color: #fff; display: flex; flex-direction: column; break-after: page;
+    background: radial-gradient(circle at 85% 15%, rgba(45,212,191,.5) 0, rgba(45,212,191,0) 38%), linear-gradient(140deg, #1e1b4b 0%, #3730a3 45%, #6d28d9 100%); }
+  .cover .k { font-size: 10pt; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: #c7d2fe; }
+  .cover h1 { font-size: 34pt; font-weight: 800; margin: 18mm 0 4mm; line-height: 1.1; }
+  .cover p { font-size: 12pt; color: #ddd6fe; margin: 0; }
+  .cover .big { margin-top: auto; font-size: 64pt; font-weight: 800; color: rgba(255,255,255,.9); }
+  .cover .big small { font-size: 14pt; font-weight: 600; color: #c4b5fd; margin-left: 10px; }
+  .shot { break-after: page; break-inside: avoid; padding-top: 2mm; }
+  .shot:last-child { break-after: auto; }
+  .hd { display: flex; align-items: center; gap: 14px; padding: 8px 14px; border-radius: 12px; margin-bottom: 8px;
+    background: linear-gradient(90deg, #eef0ff, #f7f2ff); border: 1px solid #e4e2f3; }
+  .num { font-weight: 800; font-size: 15pt; color: #fff; background: linear-gradient(135deg, #4f46e5, #7c3aed); padding: 3px 12px; border-radius: 9px; white-space: nowrap; }
+  .num small { font-size: 8.5pt; font-weight: 600; opacity: .8; margin-left: 3px; }
+  .cap { font-size: 11pt; font-weight: 600; }
+  .frame { text-align: center; }
+  .frame img { max-width: 100%; max-height: 158mm; border-radius: 10px; border: 1px solid #e4e2f3; box-shadow: 0 8px 22px rgba(27,29,58,.14); }
+</style></head><body>
+<section class="cover"><div class="k">Git Track &middot; Screenshots</div>
+<h1>Chapter 01 &mdash; Git Fundamentals<br>init, Architecture, Commits, config &amp; .gitignore</h1>
+<p>Git Masterclass &middot; Part 1 &middot; stills from the session, in order &middot; 2026-10-13</p>
+<div class="big">39<small>screenshots</small></div></section>
+<section class="shot"><div class="hd"><span class="num">01<small>/ 39</small></span><span class="cap">Part 1 agenda</span></div><div class="frame"><img src="assets/01-git-fundamentals/01.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">02<small>/ 39</small></span><span class="cap">Git fundamentals for modern engineering &mdash; why, what, hosting, DevOps</span></div><div class="frame"><img src="assets/01-git-fundamentals/02.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">03<small>/ 39</small></span><span class="cap">git-scm.com install page</span></div><div class="frame"><img src="assets/01-git-fundamentals/03.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">04<small>/ 39</small></span><span class="cap">git -v &rarr; 2.43.0; apt install git</span></div><div class="frame"><img src="assets/01-git-fundamentals/04.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">05<small>/ 39</small></span><span class="cap">git status in a normal folder &rarr; fatal: not a git repository</span></div><div class="frame"><img src="assets/01-git-fundamentals/05.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">06<small>/ 39</small></span><span class="cap">git init &rarr; Initialized empty Git repository (master hint)</span></div><div class="frame"><img src="assets/01-git-fundamentals/06.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">07<small>/ 39</small></span><span class="cap">git branch --show-current &rarr; master</span></div><div class="frame"><img src="assets/01-git-fundamentals/07.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">08<small>/ 39</small></span><span class="cap">ls -ltrha &rarr; hidden .git folder</span></div><div class="frame"><img src="assets/01-git-fundamentals/08.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">09<small>/ 39</small></span><span class="cap">Inside .git &mdash; 10 directories, 18 files</span></div><div class="frame"><img src="assets/01-git-fundamentals/09.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">10<small>/ 39</small></span><span class="cap">tree .git</span></div><div class="frame"><img src="assets/01-git-fundamentals/10.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">11<small>/ 39</small></span><span class="cap">Git architecture: core constructs</span></div><div class="frame"><img src="assets/01-git-fundamentals/11.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">12<small>/ 39</small></span><span class="cap">What is a commit? A &larr; B &larr; C</span></div><div class="frame"><img src="assets/01-git-fundamentals/12.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">13<small>/ 39</small></span><span class="cap">Commits are immutable</span></div><div class="frame"><img src="assets/01-git-fundamentals/13.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">14<small>/ 39</small></span><span class="cap">git log on an empty repo</span></div><div class="frame"><img src="assets/01-git-fundamentals/14.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">15<small>/ 39</small></span><span class="cap">git status &mdash; No commits yet</span></div><div class="frame"><img src="assets/01-git-fundamentals/15.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">16<small>/ 39</small></span><span class="cap">touch file1.txt &rarr; untracked</span></div><div class="frame"><img src="assets/01-git-fundamentals/16.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">17<small>/ 39</small></span><span class="cap">git add file1.txt &rarr; Changes to be committed</span></div><div class="frame"><img src="assets/01-git-fundamentals/17.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">18<small>/ 39</small></span><span class="cap">git rm --cached &rarr; back to untracked</span></div><div class="frame"><img src="assets/01-git-fundamentals/18.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">19<small>/ 39</small></span><span class="cap">Staged file1.txt is empty</span></div><div class="frame"><img src="assets/01-git-fundamentals/19.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">20<small>/ 39</small></span><span class="cap">echo &ldquo;God Is great&rdquo; &gt;&gt; file1.txt</span></div><div class="frame"><img src="assets/01-git-fundamentals/20.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">21<small>/ 39</small></span><span class="cap">Staged AND modified at the same time</span></div><div class="frame"><img src="assets/01-git-fundamentals/21.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">22<small>/ 39</small></span><span class="cap">git restore file1.txt &rarr; edit discarded</span></div><div class="frame"><img src="assets/01-git-fundamentals/22.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">23<small>/ 39</small></span><span class="cap">Edit again + git add</span></div><div class="frame"><img src="assets/01-git-fundamentals/23.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">24<small>/ 39</small></span><span class="cap">Commit fails &mdash; Author identity unknown</span></div><div class="frame"><img src="assets/01-git-fundamentals/24.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">25<small>/ 39</small></span><span class="cap">git config --global user.name</span></div><div class="frame"><img src="assets/01-git-fundamentals/25.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">26<small>/ 39</small></span><span class="cap">git config --global user.email</span></div><div class="frame"><img src="assets/01-git-fundamentals/26.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">27<small>/ 39</small></span><span class="cap">First commit &mdash; root-commit 255d82f</span></div><div class="frame"><img src="assets/01-git-fundamentals/27.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">28<small>/ 39</small></span><span class="cap">git log &mdash; hash, author, date, message</span></div><div class="frame"><img src="assets/01-git-fundamentals/28.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">29<small>/ 39</small></span><span class="cap">Conventional commit messages</span></div><div class="frame"><img src="assets/01-git-fundamentals/29.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">30<small>/ 39</small></span><span class="cap">Where git config is stored &mdash; system / global / local / worktree / file</span></div><div class="frame"><img src="assets/01-git-fundamentals/30.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">31<small>/ 39</small></span><span class="cap">cat ~/.gitconfig</span></div><div class="frame"><img src="assets/01-git-fundamentals/31.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">32<small>/ 39</small></span><span class="cap">file2.txt commit + git log</span></div><div class="frame"><img src="assets/01-git-fundamentals/32.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">33<small>/ 39</small></span><span class="cap">git log --oneline</span></div><div class="frame"><img src="assets/01-git-fundamentals/33.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">34<small>/ 39</small></span><span class="cap">Ignoring files with .gitignore</span></div><div class="frame"><img src="assets/01-git-fundamentals/34.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">35<small>/ 39</small></span><span class="cap">my.key and my.log are untracked</span></div><div class="frame"><img src="assets/01-git-fundamentals/35.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">36<small>/ 39</small></span><span class="cap">.gitignore &mdash; *.log, *.key</span></div><div class="frame"><img src="assets/01-git-fundamentals/36.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">37<small>/ 39</small></span><span class="cap">git status &rarr; only .gitignore remains</span></div><div class="frame"><img src="assets/01-git-fundamentals/37.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">38<small>/ 39</small></span><span class="cap">gitignore.io generator (Toptal)</span></div><div class="frame"><img src="assets/01-git-fundamentals/38.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">39<small>/ 39</small></span><span class="cap">Generated .gitignore example</span></div><div class="frame"><img src="assets/01-git-fundamentals/39.png"></div></section>
+</body></html>

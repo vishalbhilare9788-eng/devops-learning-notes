@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><title>Screenshots &mdash; Merge Conflicts &amp; Undoing Commits</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4 landscape; margin: 10mm 12mm 12mm;
+    @bottom-right { content: "Page " counter(page); font: 600 8pt Inter, sans-serif; color: #7c3aed; }
+    @bottom-left { content: "Git Track \00B7  Ch 03 screenshots"; font: 500 8pt Inter, sans-serif; color: #9a9cb8; } }
+  @page :first { margin: 0; @bottom-right { content: none; } @bottom-left { content: none; } }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; font-family: Inter, "Segoe UI", sans-serif; color: #1b1d3a; }
+  code { font-family: "JetBrains Mono", Consolas, monospace; font-size: .9em; background: #efedff; color: #5b21b6; padding: 0 4px; border-radius: 4px; }
+  .cover { height: 210mm; padding: 30mm 24mm; color: #fff; display: flex; flex-direction: column; break-after: page;
+    background: radial-gradient(circle at 85% 15%, rgba(45,212,191,.5) 0, rgba(45,212,191,0) 38%), linear-gradient(140deg, #1e1b4b 0%, #3730a3 45%, #6d28d9 100%); }
+  .cover .k { font-size: 10pt; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: #c7d2fe; }
+  .cover h1 { font-size: 34pt; font-weight: 800; margin: 18mm 0 4mm; line-height: 1.1; }
+  .cover p { font-size: 12pt; color: #ddd6fe; margin: 0; }
+  .cover .big { margin-top: auto; font-size: 64pt; font-weight: 800; color: rgba(255,255,255,.9); }
+  .cover .big small { font-size: 14pt; font-weight: 600; color: #c4b5fd; margin-left: 10px; }
+  .shot { break-after: page; break-inside: avoid; padding-top: 2mm; }
+  .shot:last-child { break-after: auto; }
+  .hd { display: flex; align-items: center; gap: 14px; padding: 8px 14px; border-radius: 12px; margin-bottom: 8px;
+    background: linear-gradient(90deg, #eef0ff, #f7f2ff); border: 1px solid #e4e2f3; }
+  .num { font-weight: 800; font-size: 15pt; color: #fff; background: linear-gradient(135deg, #4f46e5, #7c3aed); padding: 3px 12px; border-radius: 9px; white-space: nowrap; }
+  .num small { font-size: 8.5pt; font-weight: 600; opacity: .8; margin-left: 3px; }
+  .cap { font-size: 11pt; font-weight: 600; }
+  .frame { text-align: center; }
+  .frame img { max-width: 100%; max-height: 158mm; border-radius: 10px; border: 1px solid #e4e2f3; box-shadow: 0 8px 22px rgba(27,29,58,.14); }
+</style></head><body>
+<section class="cover"><div class="k">Git Track &middot; Screenshots</div>
+<h1>Chapter 03 &mdash; Merge Conflicts &amp; Undoing Commits<br>Conflict Markers, Reset (soft / mixed / hard) &amp; Revert</h1>
+<p>Git Masterclass &middot; Part 1 &middot; stills from the session, in order &middot; 2026-10-13</p>
+<div class="big">26<small>screenshots</small></div></section>
+<section class="shot"><div class="hd"><span class="num">01<small>/ 26</small></span><span class="cap">Why a merge conflict occurs &mdash; overlapping changes</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/01.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">02<small>/ 26</small></span><span class="cap">Starting point: master at b18b077</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/02.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">03<small>/ 26</small></span><span class="cap">git checkout -b conflict/demo</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/03.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">04<small>/ 26</small></span><span class="cap">conflict/demo: footer color blue (272dbc9)</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/04.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">05<small>/ 26</small></span><span class="cap">master: footer colour green (7900065)</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/05.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">06<small>/ 26</small></span><span class="cap">app.txt on master</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/06.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">07<small>/ 26</small></span><span class="cap">CONFLICT (content): Merge conflict in app.txt</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/07.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">08<small>/ 26</small></span><span class="cap">Conflict markers in app.txt</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/08.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">09<small>/ 26</small></span><span class="cap">git add + git commit &rarr; merge commit 09ba6f9</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/09.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">10<small>/ 26</small></span><span class="cap">git log --oneline after the merge</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/10.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">11<small>/ 26</small></span><span class="cap">git log --oneline --graph</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/11.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">12<small>/ 26</small></span><span class="cap">git reflog &mdash; commit (merge)</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/12.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">13<small>/ 26</small></span><span class="cap">git branch -m master main</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/13.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">14<small>/ 26</small></span><span class="cap">Undoing commits: reset vs revert</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/14.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">15<small>/ 26</small></span><span class="cap">Three commits: feature A, B, c</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/15.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">16<small>/ 26</small></span><span class="cap">cat app.txt</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/16.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">17<small>/ 26</small></span><span class="cap">git log --oneline</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/17.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">18<small>/ 26</small></span><span class="cap">git reset d516faa &rarr; unstaged changes</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/18.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">19<small>/ 26</small></span><span class="cap">c is gone from the branch</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/19.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">20<small>/ 26</small></span><span class="cap">git status: app.txt modified</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/20.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">21<small>/ 26</small></span><span class="cap">Edit app.txt</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/21.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">22<small>/ 26</small></span><span class="cap">Recommit 7b015bd</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/22.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">23<small>/ 26</small></span><span class="cap">git reflog &mdash; 522bf5f still recorded</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/23.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">24<small>/ 26</small></span><span class="cap">Types of reset &mdash; setup</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/24.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">25<small>/ 26</small></span><span class="cap">Reset types table: soft / mixed / hard</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/25.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">26<small>/ 26</small></span><span class="cap">Simple rule: local &rarr; reset, pushed &rarr; revert</span></div><div class="frame"><img src="assets/03-merge-conflicts-and-undoing-commits/26.png"></div></section>
+</body></html>

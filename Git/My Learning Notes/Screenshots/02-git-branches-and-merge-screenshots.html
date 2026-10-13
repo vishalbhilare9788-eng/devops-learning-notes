@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><title>Screenshots &mdash; Git Branches &amp; Merge</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4 landscape; margin: 10mm 12mm 12mm;
+    @bottom-right { content: "Page " counter(page); font: 600 8pt Inter, sans-serif; color: #7c3aed; }
+    @bottom-left { content: "Git Track \00B7  Ch 02 screenshots"; font: 500 8pt Inter, sans-serif; color: #9a9cb8; } }
+  @page :first { margin: 0; @bottom-right { content: none; } @bottom-left { content: none; } }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; font-family: Inter, "Segoe UI", sans-serif; color: #1b1d3a; }
+  code { font-family: "JetBrains Mono", Consolas, monospace; font-size: .9em; background: #efedff; color: #5b21b6; padding: 0 4px; border-radius: 4px; }
+  .cover { height: 210mm; padding: 30mm 24mm; color: #fff; display: flex; flex-direction: column; break-after: page;
+    background: radial-gradient(circle at 85% 15%, rgba(45,212,191,.5) 0, rgba(45,212,191,0) 38%), linear-gradient(140deg, #1e1b4b 0%, #3730a3 45%, #6d28d9 100%); }
+  .cover .k { font-size: 10pt; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: #c7d2fe; }
+  .cover h1 { font-size: 34pt; font-weight: 800; margin: 18mm 0 4mm; line-height: 1.1; }
+  .cover p { font-size: 12pt; color: #ddd6fe; margin: 0; }
+  .cover .big { margin-top: auto; font-size: 64pt; font-weight: 800; color: rgba(255,255,255,.9); }
+  .cover .big small { font-size: 14pt; font-weight: 600; color: #c4b5fd; margin-left: 10px; }
+  .shot { break-after: page; break-inside: avoid; padding-top: 2mm; }
+  .shot:last-child { break-after: auto; }
+  .hd { display: flex; align-items: center; gap: 14px; padding: 8px 14px; border-radius: 12px; margin-bottom: 8px;
+    background: linear-gradient(90deg, #eef0ff, #f7f2ff); border: 1px solid #e4e2f3; }
+  .num { font-weight: 800; font-size: 15pt; color: #fff; background: linear-gradient(135deg, #4f46e5, #7c3aed); padding: 3px 12px; border-radius: 9px; white-space: nowrap; }
+  .num small { font-size: 8.5pt; font-weight: 600; opacity: .8; margin-left: 3px; }
+  .cap { font-size: 11pt; font-weight: 600; }
+  .frame { text-align: center; }
+  .frame img { max-width: 100%; max-height: 158mm; border-radius: 10px; border: 1px solid #e4e2f3; box-shadow: 0 8px 22px rgba(27,29,58,.14); }
+</style></head><body>
+<section class="cover"><div class="k">Git Track &middot; Screenshots</div>
+<h1>Chapter 02 &mdash; Git Branches &amp; Merge<br>Pointers, HEAD, Fast-forward &amp; Three-way Merge</h1>
+<p>Git Masterclass &middot; Part 1 &middot; stills from the session, in order &middot; 2026-10-13</p>
+<div class="big">45<small>screenshots</small></div></section>
+<section class="shot"><div class="hd"><span class="num">01<small>/ 45</small></span><span class="cap">Git branches &mdash; why and what</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/01.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">02<small>/ 45</small></span><span class="cap">Branch naming conventions</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/02.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">03<small>/ 45</small></span><span class="cap">Atomic development</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/03.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">04<small>/ 45</small></span><span class="cap">Key idea: one branch one purpose</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/04.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">05<small>/ 45</small></span><span class="cap">Visualizing branches &mdash; pointers, feature branch, parallel development</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/05.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">06<small>/ 45</small></span><span class="cap">git init</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/06.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">07<small>/ 45</small></span><span class="cap">chore: initialize application (0e3ffcd)</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/07.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">08<small>/ 45</small></span><span class="cap">Commit without git add &rarr; no changes added</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/08.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">09<small>/ 45</small></span><span class="cap">feat: add footer section</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/09.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">10<small>/ 45</small></span><span class="cap">git log --oneline &mdash; 3 commits</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/10.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">11<small>/ 45</small></span><span class="cap">cat app.txt</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/11.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">12<small>/ 45</small></span><span class="cap">Full git log</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/12.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">13<small>/ 45</small></span><span class="cap">git log --oneline</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/13.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">14<small>/ 45</small></span><span class="cap">git branch feature/login + git checkout</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/14.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">15<small>/ 45</small></span><span class="cap">git branch &mdash; * current</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/15.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">16<small>/ 45</small></span><span class="cap">Cannot delete the current branch</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/16.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">17<small>/ 45</small></span><span class="cap">Switch to master, then git branch -d</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/17.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">18<small>/ 45</small></span><span class="cap">git checkout -b feature/login</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/18.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">19<small>/ 45</small></span><span class="cap">Switched to a new branch</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/19.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">20<small>/ 45</small></span><span class="cap">HEAD -> feature/login, master</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/20.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">21<small>/ 45</small></span><span class="cap">Switching branches &mdash; only HEAD moves</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/21.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">22<small>/ 45</small></span><span class="cap">feature/login sees app.txt</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/22.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">23<small>/ 45</small></span><span class="cap">feat: implement login functionality (13b779a)</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/23.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">24<small>/ 45</small></span><span class="cap">login exists only on feature/login</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/24.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">25<small>/ 45</small></span><span class="cap">Git merge &mdash; fast-forward vs three-way</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/25.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">26<small>/ 45</small></span><span class="cap">git merge feature/login &rarr; Fast-forward</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/26.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">27<small>/ 45</small></span><span class="cap">git reflog &mdash; merge feature/login: Fast-forward</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/27.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">28<small>/ 45</small></span><span class="cap">Demo: branch creation &amp; fast-forward merge</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/28.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">29<small>/ 45</small></span><span class="cap">git checkout -b bugfix/typo from the tip</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/29.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">30<small>/ 45</small></span><span class="cap">log --oneline on bugfix/typo</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/30.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">31<small>/ 45</small></span><span class="cap">git checkout -b bugfix/typo 0e3ffcd</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/31.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">32<small>/ 45</small></span><span class="cap">Only the first commit in history</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/32.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">33<small>/ 45</small></span><span class="cap">app.txt has one line</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/33.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">34<small>/ 45</small></span><span class="cap">Delete and recreate bugfix/typo from master</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/34.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">35<small>/ 45</small></span><span class="cap">All three branches at 13b779a</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/35.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">36<small>/ 45</small></span><span class="cap">fix: correct footer typo (3fc7beb)</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/36.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">37<small>/ 45</small></span><span class="cap">bugfix/typo one commit ahead</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/37.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">38<small>/ 45</small></span><span class="cap">Demo: three-way merge plan</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/38.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">39<small>/ 45</small></span><span class="cap">style: improve footer spacing on master (d40c83f)</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/39.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">40<small>/ 45</small></span><span class="cap">Different new files per branch</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/40.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">41<small>/ 45</small></span><span class="cap">git log --oneline --all</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/41.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">42<small>/ 45</small></span><span class="cap">git merge bugfix/typo &rarr; ort strategy</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/42.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">43<small>/ 45</small></span><span class="cap">Merge commit b18b077</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/43.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">44<small>/ 45</small></span><span class="cap">git show &rarr; Merge: d40c83f 3fc7beb</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/44.png"></div></section>
+<section class="shot"><div class="hd"><span class="num">45<small>/ 45</small></span><span class="cap">git log --oneline --graph</span></div><div class="frame"><img src="assets/02-git-branches-and-merge/45.png"></div></section>
+</body></html>

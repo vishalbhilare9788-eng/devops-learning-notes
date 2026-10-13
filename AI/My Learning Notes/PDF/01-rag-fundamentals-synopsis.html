@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RAG Cheat Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #fffdf6;
+    --rule: #dce7f5;
+    --margin: #f2a7a7;
+    --ink: #1f3a7a;
+    --ink-soft: #3d5a99;
+    --red: #c0392b;
+    --green: #2e7d32;
+    --purple: #6a3fa0;
+    --hl-yellow: #fff27a;
+    --hl-pink: #ffc9dc;
+    --hl-green: #c6f0c2;
+    --hl-blue: #c9e6ff;
+  }
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; background: #e9e4d8; font-family: "Patrick Hand", "Comic Sans MS", cursive; color: var(--ink); }
+  .page {
+    position: relative; width: 210mm; height: 297mm; overflow: hidden;
+    margin: 0 auto 10mm; padding: 14mm 12mm 12mm 24mm;
+    background:
+      linear-gradient(90deg, transparent 19mm, var(--margin) 19mm, var(--margin) 19.5mm, transparent 19.5mm),
+      repeating-linear-gradient(180deg, transparent 0, transparent 7.4mm, var(--rule) 7.4mm, var(--rule) 7.6mm),
+      var(--paper);
+    break-after: page; page-break-after: always;
+    font-size: 12.4pt; line-height: 1.32;
+  }
+  .page:last-child { break-after: auto; page-break-after: auto; }
+  @media screen { .page { box-shadow: 0 6px 24px rgba(0,0,0,.18); margin-top: 10mm; } }
+  @media print { body { background: none; } .page { margin: 0; } .overflow-flag { display: none; } }
+  .holes { position: absolute; left: 7mm; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: space-around; }
+  .holes i { width: 5mm; height: 5mm; border-radius: 50%; background: #e9e4d8; box-shadow: inset 0 1px 2px rgba(0,0,0,.25); }
+  .pgno { position: absolute; bottom: 6mm; right: 12mm; font-family: Caveat, cursive; font-size: 15pt; color: var(--ink-soft); }
+  .tag { position: absolute; top: 7mm; right: 12mm; font-family: Caveat, cursive; font-size: 13pt; color: var(--red); transform: rotate(2deg); }
+
+  h1, h2, h3 { font-family: Caveat, cursive; font-weight: 700; margin: 0; line-height: 1.05; }
+  h1 { font-size: 36pt; color: var(--ink); }
+  h1 .u { background: linear-gradient(transparent 58%, var(--hl-yellow) 58%, var(--hl-yellow) 92%, transparent 92%); padding: 0 4px; }
+  .sub { font-size: 12.5pt; color: var(--ink-soft); margin: 1mm 0 4mm; }
+  h2 { font-size: 22pt; color: var(--red); margin: 3.5mm 0 1.5mm; }
+  h2 .n { display: inline-grid; place-items: center; width: 9mm; height: 9mm; border: 2px solid var(--red); border-radius: 50%; font-size: 15pt; margin-right: 2mm; transform: rotate(-6deg); vertical-align: 1mm; }
+  h3 { font-size: 18pt; color: var(--purple); margin: 2mm 0 1mm; }
+  p { margin: 1mm 0; }
+  b { color: #0f2457; }
+  .hl  { background: var(--hl-yellow); padding: 0 3px; border-radius: 3px; }
+  .hlp { background: var(--hl-pink);   padding: 0 3px; border-radius: 3px; }
+  .hlg { background: var(--hl-green);  padding: 0 3px; border-radius: 3px; }
+  .hlb { background: var(--hl-blue);   padding: 0 3px; border-radius: 3px; }
+  .red { color: var(--red); } .green { color: var(--green); }
+  .an { color: var(--green); }
+  .an::before { content: "🔧 "; }
+  ul { margin: 1mm 0; padding-left: 6mm; } li { margin: .6mm 0; } li::marker { content: "✎  "; color: var(--red); }
+
+  /* hand-drawn boxes */
+  .box { border: 2.2px solid var(--ink); padding: 2.5mm 3.5mm; margin: 2mm 0;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; background: rgba(255,255,255,.55); }
+  .box.red { border-color: var(--red); } .box.green { border-color: var(--green); } .box.purple { border-color: var(--purple); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .sticky { background: #fff59d; padding: 3mm 4mm; margin: 2.5mm 0; box-shadow: 2px 4px 8px rgba(0,0,0,.16); transform: rotate(-1.2deg); position: relative; }
+  .sticky.pink { background: #ffd6e4; transform: rotate(1deg); }
+  .sticky.green { background: #d6f5d0; transform: rotate(-.6deg); }
+  .sticky.blue { background: #d4ebff; transform: rotate(.8deg); }
+  .sticky::before { content: ""; position: absolute; top: -3mm; left: 50%; width: 18mm; height: 6mm; margin-left: -9mm; background: rgba(255,255,255,.6); transform: rotate(-3deg); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+  .sticky h3 { margin-top: 0; }
+
+  /* pipeline doodle */
+  .flow { display: flex; align-items: center; flex-wrap: nowrap; gap: 1.5mm; margin: 1.5mm 0 1mm; }
+  .flow .s { border: 2px solid var(--ink); padding: 1mm 2.4mm; background: #fff; font-size: 12pt; white-space: nowrap;
+    border-radius: 12px 4px 14px 5px / 5px 14px 4px 12px; }
+  .flow .s.db { border-color: var(--purple); background: #efe6fb; }
+  .flow .s.llm { border-color: var(--red); background: #ffe9e6; }
+  .flow .ar { font-family: Caveat, cursive; font-size: 20pt; color: var(--red); line-height: 1; }
+  .lane { margin: 1mm 0 2mm; }
+  .lane .lbl { font-family: Caveat, cursive; font-size: 17pt; font-weight: 700; }
+  .lane .lbl small { font-family: "Patrick Hand"; font-size: 11pt; color: var(--ink-soft); font-weight: 400; }
+
+  /* dictionary cards */
+  .dict { columns: 2; column-gap: 6mm; }
+  .grp { break-inside: avoid; font-family: Caveat, cursive; font-weight: 700; font-size: 19pt; color: var(--red); margin: 1.5mm 0 .5mm; border-bottom: 2px dashed var(--red); }
+  .t { break-inside: avoid; margin: 0 0 2.2mm; font-size: 11.6pt; line-height: 1.26; }
+  .t .w { font-family: Caveat, cursive; font-weight: 700; font-size: 16.5pt; color: #0f2457; background: linear-gradient(transparent 55%, var(--hl-yellow) 55%, var(--hl-yellow) 92%, transparent 92%); padding: 0 2px; }
+  .t .an { display: block; font-size: 11.2pt; }
+
+  table.hand { width: 100%; border-collapse: collapse; font-size: 11.8pt; margin: 1mm 0; }
+  table.hand td, table.hand th { border-bottom: 1.5px dashed #9fb3d6; padding: 1mm 2mm; text-align: left; vertical-align: top; }
+  table.hand th { font-family: Caveat, cursive; font-size: 16pt; color: var(--red); border-bottom: 2px solid var(--red); }
+  .qa { margin: 0 0 1.8mm; font-size: 11.8pt; line-height: 1.26; }
+  .qa .q { font-family: Caveat, cursive; font-weight: 700; font-size: 16.5pt; color: var(--red); }
+  .stamp { position: absolute; right: 14mm; bottom: 16mm; font-family: Caveat, cursive; font-size: 20pt; color: var(--red); border: 3px solid var(--red); border-radius: 8px; padding: 1mm 4mm; transform: rotate(-8deg); opacity: .8; }
+  .p1 h2 { margin-top: 2.4mm; } .p1 .sub { margin-bottom: 2.5mm; } .p1 .sticky { margin: 2mm 0 0; }
+  .grpwrap { break-inside: avoid; }
+  .overflow-flag { position: absolute; top: 0; left: 0; right: 0; background: red; color: #fff; font: bold 14px sans-serif; padding: 4px; text-align: center; }
+</style>
+</head>
+<body>
+
+<!-- ======================= PAGE 1 ======================= -->
+<section class="page p1">
+  <div class="holes"><i></i><i></i><i></i></div>
+  <div class="tag">AI Track · Ch 01 · cheat notes</div>
+  <h1><span class="u">RAG in plain English</span> ✍️</h1>
+  <div class="sub">Written for a cloud / infra person, not a developer · a 10-minute read before an interview</div>
+
+  <h2><span class="n">1</span>The problem</h2>
+  <p>An <b>LLM</b> (ChatGPT, Claude, DeepSeek…) is like a <span class="hl">very well-read new joiner</span>. It read the whole internet up to a date, but:</p>
+  <ul>
+    <li>it doesn't know <b>recent</b> things (its <i>knowledge cut-off</i>)</li>
+    <li>it has <b>never seen your company's data</b>: Confluence, runbooks, HR policy</li>
+    <li>when it doesn't know, it often <span class="hlp">makes things up confidently</span>, which is called <b>hallucination</b></li>
+  </ul>
+  <p>Example: <i>"How many leaves do I get?"</i> The model has no idea which company you mean, or what its policy says.</p>
+
+  <h2><span class="n">2</span>Two ways to fix it</h2>
+  <div class="two">
+    <div class="box red">
+      <h3>Fine-tuning</h3>
+      Re-train the model on your data, so the knowledge goes <b>inside</b> the model.
+      <div class="an">Like <b>re-baking the golden AMI</b> every time one config line changes. Slow and costly.</div>
+      <b>Use for:</b> changing <u>behaviour</u> or tone.
+    </div>
+    <div class="box green">
+      <h3>RAG ✅</h3>
+      Leave the model alone. At question time, <b>look up</b> the right pages and hand them to it.
+      <div class="an">Like <b>mounting a ConfigMap at runtime</b>: update the doc, no rebuild.</div>
+      <b>Use for:</b> company <u>knowledge</u> that changes.
+    </div>
+  </div>
+
+  <h2><span class="n">3</span>RAG = Retrieval · Augmented · Generation</h2>
+  <p><span class="hlb"><b>R</b>etrieve</span> the relevant pieces of your data → <span class="hlg"><b>A</b>ugment</span> (staple them to the question as <b>context</b>) → the LLM <span class="hl"><b>G</b>enerates</span> the answer from them.
+  The model never changes. <b>Only its input does.</b> It's like an <i>open-book exam</i> instead of answering from memory.</p>
+
+  <h2><span class="n">4</span>Two pipelines + one database in the middle</h2>
+  <div class="lane"><span class="lbl">Indexing <small>offline, once per document, like a CI build job</small></span>
+    <div class="flow"><span class="s">📄 Docs</span><span class="ar">→</span><span class="s">Parse</span><span class="ar">→</span><span class="s">Chunk</span><span class="ar">→</span><span class="s">Embed</span><span class="ar">→</span><span class="s db">🗄️ Vector DB (Qdrant)</span></div>
+  </div>
+  <div class="lane"><span class="lbl">Querying <small>online, every question, like the live request path</small></span>
+    <div class="flow"><span class="s">❓ Question</span><span class="ar">→</span><span class="s">Embed</span><span class="ar">→</span><span class="s db">Search DB</span><span class="ar">→</span><span class="s">Top-K chunks</span><span class="ar">→</span><span class="s llm">🤖 LLM</span><span class="ar">→</span><span class="s">Answer</span></div>
+  </div>
+  <p>The build job <b>writes</b> into the vector DB and the live path <b>reads</b> from it. Two kinds of model are involved: an <span class="hl">embedding model</span> for finding, and an <span class="hlp">LLM</span> for writing.</p>
+
+  <div class="two">
+    <div class="sticky">
+      <h3>Golden rule 🔍</h3>
+      Wrong answer? <b>First check retrieval</b>: did the right chunk even reach the LLM?<br>
+      <span class="an">Like checking the upstream before blaming the app.</span>
+    </div>
+    <div class="sticky pink">
+      <h3>Don't dump everything 🚫</h3>
+      Sending all 100 pages costs <b>$ per token</b>, it's <b>slower</b>, and the one fact gets <b>buried</b>, which leads to hallucination. Send only the <b>best 2–3 chunks</b>.
+    </div>
+  </div>
+  <div class="pgno">1 / 4</div>
+</section>
+
+<!-- ======================= PAGE 2 ======================= -->
+<section class="page">
+  <div class="holes"><i></i><i></i><i></i></div>
+  <div class="tag">AI dictionary · part 1</div>
+  <h1><span class="u">AI words, decoded</span> 📖</h1>
+  <div class="sub">Each word gets its meaning in one line, plus <span class="green">🔧 an infra analogy</span> to help it stick</div>
+
+  <div class="dict">
+    <div class="grp">① Talking to the model</div>
+    <div class="t"><span class="w">LLM</span> (Large Language Model): AI that reads text and writes text. GPT, Claude, DeepSeek.<span class="an">A very well-read on-call engineer with no access to your wiki.</span></div>
+    <div class="t"><span class="w">Token</span>: a word-piece (~¾ of a word). Models read, limit and <b>bill</b> in tokens.<span class="an">Like billable request units on a cloud bill.</span></div>
+    <div class="t"><span class="w">Context window</span>: the max tokens the model can see at once (e.g. 128K, 1M).<span class="an">Like RAM: go past it and things fall out.</span></div>
+    <div class="t"><span class="w">Prompt / Context</span>: what you send: the question + instructions + retrieved pages (the <i>context</i>).</div>
+    <div class="t"><span class="w">Hallucination</span>: a confident but made-up answer.<span class="an">Like a stale DNS cache: fast, sure, and wrong.</span></div>
+    <div class="t"><span class="w">Streaming</span>: the answer arrives word by word instead of all at the end.<span class="an"><code>tail -f</code> vs downloading the whole log file.</span></div>
+    <div class="t"><span class="w">OpenRouter</span>: one gateway and one key in front of hundreds of models. Swap models by name. It has Compare and Logs pages.<span class="an">An API gateway / load balancer in front of many backends.</span></div>
+    <div class="t"><span class="w">API key + credit limit</span>: the password to call models, with a $ cap.<span class="an">An IAM access key with a billing alarm.</span></div>
+    <div class="t"><span class="w">SDK</span>: a library to call a service from code (we used the <i>openai</i> SDK).<span class="an">Like boto3 for AWS.</span></div>
+
+    <div class="grp">② Preparing documents</div>
+    <div class="t"><span class="w">Parsing</span>: turn a PDF, image or wiki page into clean text.<span class="an">Log parsing: raw blob → structured lines.</span></div>
+    <div class="t"><span class="w">Chunking</span>: cut the text into small pieces (by size, paragraph, meaning…).<span class="an">Like splitting one giant log into rotated files. A card number reads easier as 4128-0012-3456-7890.</span></div>
+    <div class="t"><span class="w">Indexing vs Querying</span>: the offline prep job vs the live per-question path.<span class="an">Build pipeline vs runtime traffic.</span></div>
+
+    <div class="grp">③ Embeddings (the magic part)</div>
+    <div class="t"><span class="w">Embedding</span>: text turned into a list of numbers that captures its <b>meaning</b>.<span class="an">Like a hash, except similar text gets <u>similar</u> numbers (a hash does the opposite).</span></div>
+    <div class="t"><span class="w">Vector</span>: just an array of numbers: [0.12, −0.31, 0.81 …].</div>
+    <div class="t"><span class="w">Dimension</span>: how many numbers are in the vector (384 … 3072). Food example: [spicy, sweet] = 2D, add crunchy = 3D.<span class="an">Like the number of metrics you track per server.</span></div>
+    <div class="t"><span class="w">Embedding model</span>: the model that makes vectors (text-embedding-3-small = 1536, NVIDIA nemotron-embed = 2048). <b class="red">Use the same model for docs and questions!</b></div>
+    <div class="t"><span class="w">Semantic</span>: about meaning, not exact words. "PTO" matches "leaves". <i>bank</i> + river ≠ <i>bank</i> + money.</div>
+    <div class="t"><span class="w">Tokenizer → Transformer</span>: chops text into tokens, then <b>attention</b> layers let each word look at its neighbours to get the meaning in context.</div>
+    <div class="t"><span class="w">Normalise</span>: scale a vector to length 1, so only its direction (meaning) counts.</div>
+  </div>
+  <div class="pgno">2 / 4</div>
+</section>
+
+<!-- ======================= PAGE 3 ======================= -->
+<section class="page">
+  <div class="holes"><i></i><i></i><i></i></div>
+  <div class="tag">AI dictionary · part 2</div>
+  <h1><span class="u">Search & vector DB words</span> 🗄️</h1>
+  <div class="sub">How we find the right chunk, and where the chunks live</div>
+
+  <div class="dict">
+    <div class="grp">④ Measuring "how close"</div>
+    <div class="t"><span class="w">Similarity / distance metric</span>: the rule that decides how "close" two vectors are.<span class="an">Like choosing the SLO metric before saying which server is "best".</span></div>
+    <div class="t"><span class="w">Cosine similarity</span>: the angle between two arrows. 1 = same, 0 = unrelated, −1 = opposite. <b class="green">Higher = better.</b> The default for text and RAG.</div>
+    <div class="t"><span class="w">Euclidean (L2)</span>: straight-line distance. <b class="red">Lower = better.</b> Used for photos and coordinates.</div>
+    <div class="t"><span class="w">Dot product</span>: alignment + size. The same ranking as cosine when vectors are normalised, and the fastest.</div>
+    <div class="t"><span class="w">Manhattan (L1)</span>: city-block distance. One glitchy value can't dominate the score.</div>
+    <div class="t"><span class="w">Top-K</span>: return the K best matches.<span class="an"><code>sort -r | head -n K</code></span></div>
+    <div class="t"><span class="w">Score threshold</span>: drop matches below a score (e.g. 0.5). Top-K <u>always</u> returns K, even junk.<span class="an">Like an alert threshold: it kills the noise.</span></div>
+    <div class="t"><span class="w">Recall</span>: of all the truly relevant chunks, how many did we find? (3 of 4 = 75%)<span class="an">Of all real incidents, how many fired an alert?</span></div>
+    <div class="t"><span class="w">Precision</span>: of what we returned, how many were useful? (3 of 10 = 30%)<span class="an">Of all alerts fired, how many were real?</span></div>
+
+    <div class="grp">⑤ Vector database</div>
+    <div class="t"><span class="w">Vector database</span>: stores vectors + text, searches fast, filters, persists and scales. Qdrant, pgvector, Pinecone.<span class="an">A purpose-built DB, just as Prometheus is for metrics.</span></div>
+    <div class="t"><span class="w">Qdrant</span>: an open-source vector DB (Rust). <code>:memory:</code> for learning → Docker → cloud. Ports <b>6333</b> REST + dashboard, <b>6334</b> gRPC.</div>
+    <div class="t"><span class="w">Collection</span>: like a <b>table</b>, with a fixed vector size and metric.</div>
+    <div class="t"><span class="w">Point / Payload</span>: one row = id + vector + payload (JSON: text, topic, source).</div>
+    <div class="t"><span class="w">Upsert</span>: insert, or update if the id exists. Safe to re-run.<span class="an">Idempotent, like <code>kubectl apply</code>.</span></div>
+    <div class="t"><span class="w">Exact search</span>: compare the question with <u>every</u> vector. Perfect, but slow at millions.<span class="an">A full table scan.</span></div>
+    <div class="t"><span class="w">ANN</span> (Approximate Nearest Neighbour): use an index to check only likely candidates. Much faster, and rarely misses one.</div>
+    <div class="t"><span class="w">HNSW</span>: Qdrant's ANN index, a layered graph: highway → main road → street.<span class="an">Like DNS lookup: root → .com → domain.</span></div>
+    <div class="t"><span class="w">IVF</span>: the other ANN family. Group vectors into clusters and search only the nearest clusters.<span class="an">Like routing to the nearest region first.</span></div>
+  </div>
+
+  <div class="sticky blue" style="margin-top:3mm">
+    <b>DevOps catch from class:</b> Qdrant in Docker <u>without a volume</u> loses its data when the container is re-created. Always run<br>
+    <code>docker run -p 6333:6333 -p 6334:6334 -v qdrant_storage:/qdrant/storage qdrant/qdrant</code>
+  </div>
+  <div class="pgno">3 / 4</div>
+</section>
+
+<!-- ======================= PAGE 4 ======================= -->
+<section class="page">
+  <div class="holes"><i></i><i></i><i></i></div>
+  <div class="tag">interview cram sheet</div>
+  <h1><span class="u">Before the interview</span> 🎯</h1>
+  <div class="sub">Read this page last. Say it out loud once.</div>
+
+  <div class="sticky green">
+    <h3>"Explain RAG" in 30 seconds 🗣️</h3>
+    "LLMs don't know our private or recent data, and they hallucinate when they're unsure. With RAG we <b>index</b> our documents offline: parse, chunk, turn the chunks into <b>embeddings</b> and store them in a <b>vector DB</b> like Qdrant. At question time we embed the question, find the <b>closest chunks</b> with cosine similarity, and pass the top few to the LLM as <b>context</b>. Updating knowledge means re-indexing documents. We never retrain the model."
+  </div>
+
+  <h2><span class="n">Q</span>Quick answers</h2>
+  <div class="two">
+    <div>
+      <div class="qa"><span class="q">RAG or fine-tuning?</span><br>Needs <b>information</b> → RAG. Needs to <b>behave</b> differently → fine-tune.</div>
+      <div class="qa"><span class="q">Bot gave a wrong answer?</span><br>Check <b>retrieval first</b>: was the right chunk in the top-K?</div>
+      <div class="qa"><span class="q">Why not send all the docs?</span><br>Cost per token, latency, and the fact gets buried → hallucination.</div>
+      <div class="qa"><span class="q">What's an embedding?</span><br>A fixed-length vector of meaning. Similar text → nearby vectors.</div>
+      <div class="qa"><span class="q">More dimensions = better?</span><br>Not by itself. More memory and $; chunking + model matter more. Measure recall.</div>
+    </div>
+    <div>
+      <div class="qa"><span class="q">Switched embedding model?</span><br><b>Re-embed and re-index everything</b> into a new collection. Never mix models.</div>
+      <div class="qa"><span class="q">Classic similarity bug?</span><br>Reading it backwards: cosine <b>high</b> = good, L2 <b>low</b> = good.</div>
+      <div class="qa"><span class="q">Top-K problem?</span><br>It always returns K, even junk. Add a <b>score threshold</b> and say "I don't know".</div>
+      <div class="qa"><span class="q">Why a vector DB?</span><br>Brute force is too slow at millions. It gives an ANN index (HNSW), filters, persistence and scaling.</div>
+      <div class="qa"><span class="q">Streaming vs non-streaming?</span><br>Word by word (feels fast) vs everything at the end.</div>
+    </div>
+  </div>
+
+  <div class="two">
+    <div class="box purple">
+      <h3>Which metric? 🧭</h3>
+      <table class="hand">
+        <tr><td>Text / RAG chatbot</td><td><b>Cosine</b></td></tr>
+        <tr><td>Vectors normalised</td><td><b>Dot</b> (fastest)</td></tr>
+        <tr><td>"Customers also liked"</td><td><b>Dot</b> (popularity counts)</td></tr>
+        <tr><td>Similar photos</td><td><b>Euclidean</b></td></tr>
+        <tr><td>City delivery / glitchy sensors</td><td><b>Manhattan</b></td></tr>
+      </table>
+    </div>
+    <div class="box red">
+      <h3>Numbers to remember 🔢</h3>
+      <table class="hand">
+        <tr><td>1 dimension</td><td>4 bytes</td></tr>
+        <tr><td>1536-dim vector</td><td>≈ 6 KB</td></tr>
+        <tr><td>1M chunks × 1536</td><td>≈ 6 GB</td></tr>
+        <tr><td>Good cosine (our lab)</td><td>0.614 vs ≤0.2 junk</td></tr>
+        <tr><td>Qdrant ports</td><td>6333 · 6334</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="stamp">Chapter 01 ✔</div>
+  <div class="pgno">4 / 4</div>
+</section>
+
+<script>
+  // keep each group heading together with its first term (no stranded headings at a column bottom)
+  document.querySelectorAll('.grp').forEach(g => { const w = document.createElement('div'); w.className = 'grpwrap'; g.before(w); const nx = g.nextElementSibling; w.appendChild(g); if (nx) w.appendChild(nx); });
+  // screen-only check: flag any page whose content overflows A4
+  window.addEventListener('load', () => document.querySelectorAll('.page').forEach((p, i) => {
+    if (p.scrollHeight > p.clientHeight + 2) { const f = document.createElement('div'); f.className = 'overflow-flag'; f.textContent = 'PAGE ' + (i + 1) + ' OVERFLOWS by ' + (p.scrollHeight - p.clientHeight) + 'px'; p.appendChild(f); }
+  }));
+</script>
+</body>
+</html>
